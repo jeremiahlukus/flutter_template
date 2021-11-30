@@ -9,7 +9,7 @@ import 'dart:developer';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class Logger extends ProviderObserver {
+class ProviderLogger extends ProviderObserver {
   @override
   void providerDidFail(
     ProviderBase provider,
@@ -27,6 +27,12 @@ class Logger extends ProviderObserver {
     Object? newValue,
     ProviderContainer container,
   ) {
-    log('didUpdateProvider(${provider.runtimeType}, $newValue)');
+    log(
+      'didUpdateProvider: { '
+      'type: {${provider.runtimeType}} '
+      'new_value: { ${newValue.toString()} } '
+      'old_value: { ${previousValue.toString()} } '
+      '}',
+    );
   }
 }

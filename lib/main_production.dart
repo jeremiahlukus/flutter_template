@@ -6,9 +6,8 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter_template/app/app.dart';
-import 'package:flutter_template/logger.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_template/bootstrap.dart';
 
 void main() {
-  ProviderScope(observers: [Logger()], child: const App());
+  bootstrap(() => const App());
 }
