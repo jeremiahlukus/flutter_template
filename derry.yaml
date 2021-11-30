@@ -4,6 +4,19 @@ lint:
   - flutter format lib
   - dart fix --apply
 
+test_all:
+  - flutter test --flavor development -d iPhone integration_test
+  - flutter test --coverage --test-randomize-ordering-seed random
+
+e2e_iphone:
+  - flutter test --flavor development -d iPhone integration_test
+
+e2e_web:
+  - flutter drive --driver=test_driver/integration_test.dart --target=integration_test/counter_integation_test.dart --flavor development -d web-server
+
+unit_test:
+  - flutter test --coverage --test-randomize-ordering-seed random
+
 start_ios:
   - xcrun simctl list
   - open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/

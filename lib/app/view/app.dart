@@ -9,13 +9,11 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:flutter_template/counter/counter.dart';
 import 'package:flutter_template/counter/model/counter.dart';
-import 'package:flutter_template/l10n/l10n.dart';
 
 final counterProvider = StateNotifierProvider<CounterNotifier, CounterModel>(
   (ref) => CounterNotifier(),
@@ -33,11 +31,6 @@ class App extends StatelessWidget {
           accentColor: const Color(0xFF13B9FF),
         ),
       ),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-      ],
-      supportedLocales: AppLocalizations.supportedLocales,
       home: const CounterPage(),
     );
   }

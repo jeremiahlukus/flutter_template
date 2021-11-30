@@ -10,16 +10,15 @@ dependencies:
   derry: ^1.4.3
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.0.0
   flutter_hooks: ^0.18.0
-  flutter_localizations:
-    sdk: flutter
   hooks_riverpod: ^1.0.1
   import_sorter: ^4.6.0
   intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  integration_test:
     sdk: flutter
   mocktail: ^0.2.0
   very_good_analysis: ^2.4.0
