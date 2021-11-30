@@ -11,8 +11,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Logger extends ProviderObserver {
   @override
-  void providerDidFail(ProviderBase provider, Object error,
-      StackTrace stackTrace, ProviderContainer container) {
+  void providerDidFail(
+    ProviderBase provider,
+    Object error,
+    StackTrace stackTrace,
+    ProviderContainer container,
+  ) {
     log('providerDidFail(${provider.runtimeType}, $error, $stackTrace)');
   }
 
