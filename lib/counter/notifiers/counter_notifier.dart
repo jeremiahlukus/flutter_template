@@ -5,8 +5,11 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import 'package:flutter_template/counter/model/counter.dart';
+// Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Project imports:
+import 'package:flutter_template/counter/model/counter.dart';
 
 class CounterNotifier extends StateNotifier<CounterModel> {
   CounterNotifier() : super(_initialValue);

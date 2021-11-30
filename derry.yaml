@@ -1,0 +1,30 @@
+lint:
+  - dart format lib .
+  - flutter pub run import_sorter:main
+  - flutter format lib
+  - dart fix --apply
+
+start_ios:
+  - xcrun simctl list
+  - open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/
+
+clean:
+  - flutter clean
+  - flutter pub get
+
+purge:
+  - pod deintegrate
+  #- rm Flutter/Flutter.podspec
+  - flutter clean
+  - flutter pub get
+  #- pod install
+  #- flutter run
+
+purge_all:
+  - pod deintegrate
+  - rm Flutter/Flutter.podspec
+  - flutter clean
+  - flutter pub cache repair
+  - flutter pub get
+  #- pod install
+  - flutter run

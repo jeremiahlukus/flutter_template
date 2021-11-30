@@ -5,6 +5,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+// Project imports:
 import 'package:flutter_template/app/app.dart';
 import 'package:flutter_template/bootstrap.dart';
 

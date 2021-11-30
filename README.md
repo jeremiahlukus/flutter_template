@@ -19,6 +19,10 @@
 
 ## Getting Started 🚀
 
+### First step
+Run `dart pub global activate derry`
+This will allow you to run commands defined in derry.yaml like `derry lint`
+
 This project contains 3 flavors:
 
 - development

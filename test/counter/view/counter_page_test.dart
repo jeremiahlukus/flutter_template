@@ -5,10 +5,15 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_template/app/app.dart';
+
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Project imports:
+import 'package:flutter_template/app/app.dart';
 
 void main() {
   group('CounterView', () {
