@@ -1,5 +1,8 @@
-import 'package:flutter_template/counter/model/counter.dart';
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
+
+// Project imports:
+import 'package:flutter_template/counter/model/counter.dart';
 
 void main() {
   group('CounterModel', () {

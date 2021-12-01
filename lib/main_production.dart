@@ -10,5 +10,9 @@ import 'package:flutter_template/app/app.dart';
 import 'package:flutter_template/bootstrap.dart';
 
 void main() {
-  bootstrap(() => const App());
+  bootstrap(
+    () => const App(),
+    sentryUrl: 'https://8a60663eda2040fea03dcb1516c256be@o240021.ingest'
+        '.sentry.io/6089800',
+  );
 }

@@ -1,7 +1,7 @@
 lint:
   - dart format lib .
   - flutter pub run import_sorter:main
-  - flutter format lib
+  - flutter format lib -l 80
   - dart fix --apply
 
 test_all:
