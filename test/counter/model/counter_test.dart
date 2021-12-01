@@ -11,7 +11,7 @@ void main() {
 
     test('Counter toString should print out Object attributes', () {
       const counter = CounterModel(2);
-      expect(counter.toString(), 'Counter: {count: 2}');
+      expect(counter.toString(), 'CounterModel: {count: 2}');
     });
   });
 }
