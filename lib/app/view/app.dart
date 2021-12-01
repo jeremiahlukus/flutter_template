@@ -7,13 +7,12 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 // Project imports:
 import 'package:flutter_template/counter/counter.dart';
 import 'package:flutter_template/counter/model/counter.dart';
+// Package imports:
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 final counterProvider = StateNotifierProvider<CounterNotifier, CounterModel>(
   (ref) => CounterNotifier(),
@@ -25,6 +24,15 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      builder: (context, widget) => ResponsiveWrapper.builder(
+        ClampingScrollWrapper.builder(context, widget!),
+        breakpoints: const [
+          ResponsiveBreakpoint.resize(350, name: MOBILE),
+          ResponsiveBreakpoint.autoScale(600, name: TABLET),
+          ResponsiveBreakpoint.resize(800, name: DESKTOP),
+          ResponsiveBreakpoint.autoScale(1700, name: 'XL'),
+        ],
+      ),
       theme: ThemeData(
         appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
         colorScheme: ColorScheme.fromSwatch(

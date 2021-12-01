@@ -28,6 +28,7 @@
 2) logging with sentry monitoring
 3) riverpod
 4) Flavors configured
+5) built in responsiveness
 
 
 ---
