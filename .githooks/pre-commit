@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
 derry lint
+
+git diff --cached --exit-code
