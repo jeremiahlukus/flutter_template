@@ -15,6 +15,21 @@
 8) built in responsiveness
 9) built in flavors (dev,staging,prod)
 
+
+# Top TODOs
+1) setup login flow
+2) make api call using dio and cache response using dio cacher
+3) Use auto route for navigtion
+4) setup guards for users that are not auth'ed
+
+
+# DONE
+1) full test suite running in github actions
+2) logging with sentry monitoring
+3) riverpod
+4) Flavors configured
+
+
 ---
 
 ## Getting Started 🚀
