@@ -60,6 +60,6 @@ jobs:
     # https://github.com/marketplace/actions/flutter-action
     - uses: subosito/flutter-action@v1
       with:
-        channel: 'stable' # or: 'dev' or 'beta'
+        channel: 'master' # or: 'stable', 'dev' or 'beta'
     - name: "Run Flutter Driver tests"
       run: "flutter test --flavor development -d iPhone integration_test"
