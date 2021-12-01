@@ -5,10 +5,8 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-// Dart imports:
-import 'dart:developer';
-
 // Package imports:
+import 'package:flutter_template/bootstrap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ProviderLogger extends ProviderObserver {
@@ -19,7 +17,11 @@ class ProviderLogger extends ProviderObserver {
     StackTrace stackTrace,
     ProviderContainer container,
   ) {
-    log('providerDidFail(${provider.runtimeType}, $error, $stackTrace)');
+    final errorMap = <String, String>{
+      'error': error.toString(),
+      'stackTrace': stackTrace.toString(),
+    };
+    logger.e(errorMap);
   }
 
   @override
@@ -29,12 +31,13 @@ class ProviderLogger extends ProviderObserver {
     Object? newValue,
     ProviderContainer container,
   ) {
-    log(
-      'didUpdateProvider: { '
-      'type: {${provider.runtimeType}} '
-      'new_value: { ${newValue.toString()} } '
-      'old_value: { ${previousValue.toString()} } '
-      '}',
-    );
+    final loggerMessage = {
+      'didUpdateProvider': {
+        'type': provider.runtimeType,
+        'new_value': newValue.toString(),
+        'old_value': previousValue.toString()
+      }
+    };
+    logger.i(loggerMessage);
   }
 }

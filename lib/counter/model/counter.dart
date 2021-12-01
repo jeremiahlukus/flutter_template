@@ -4,6 +4,6 @@ class CounterModel {
 
   @override
   String toString() {
-    return 'Counter: {count: $count}';
+    return 'CounterModel: {count: $count}';
   }
 }
