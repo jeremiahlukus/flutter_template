@@ -20,11 +20,4 @@ void main() {
       expect(find.byType(CounterPage), findsOneWidget);
     });
   });
-  group("App test", () {
-    testWidgets('renders CounterPage', (tester) async {
-      await tester.pumpWidget(const ProviderScope(child: App()));
-      await tester.pumpAndSettle();
-      expect(find.byType(CounterPage), findsOneWidget);
-    });
-  });
 }
