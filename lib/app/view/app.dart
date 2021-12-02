@@ -13,8 +13,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 // Project imports:
-import 'package:flutter_template/counter/counter.dart';
-import 'package:flutter_template/counter/model/counter.dart';
+import 'package:flutter_template/features/counter/model/counter.dart';
+import 'package:flutter_template/features/counter/notifiers/counter_notifier.dart';
+import 'package:flutter_template/features/counter/view/counter_page.dart';
 
 final counterProvider = StateNotifierProvider<CounterNotifier, CounterModel>(
   (ref) => CounterNotifier(),

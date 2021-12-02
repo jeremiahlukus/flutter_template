@@ -5,14 +5,15 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+// Project imports:
+
 // Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
 
 // Project imports:
-import 'package:flutter_template/counter/counter.dart';
-import 'package:flutter_template/counter/model/counter.dart';
+import 'package:flutter_template/features/counter/counter.dart';
 
 class MockStateNotifier extends Mock implements CounterNotifier {}
 

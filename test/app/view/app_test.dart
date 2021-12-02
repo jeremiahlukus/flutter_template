@@ -11,7 +11,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:flutter_template/app/app.dart';
-import 'package:flutter_template/counter/counter.dart';
+import 'package:flutter_template/features/counter/counter.dart';
 
 void main() {
   group('App', () {

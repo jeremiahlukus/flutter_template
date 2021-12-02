@@ -9,7 +9,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:flutter_template/counter/model/counter.dart';
+import 'package:flutter_template/features/counter/model/counter.dart';
 
 class CounterNotifier extends StateNotifier<CounterModel> {
   CounterNotifier() : super(_initialValue);
