@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 
 // Package imports:
 import 'package:responsive_framework/responsive_framework.dart';
@@ -25,12 +24,15 @@ const List<Condition> blockWidthConstraints = [
   ),
 ];
 
-EdgeInsets blockPadding(BuildContext context) => ResponsiveValue(context,
-        defaultValue: const EdgeInsets.symmetric(horizontal: 55, vertical: 80),
-        valueWhen: [
-          const Condition<dynamic>.smallerThan(
-              name: TABLET,
-              value: EdgeInsets.symmetric(horizontal: 15, vertical: 45))
-        ]).value!;
+EdgeInsets blockPadding(BuildContext context) => ResponsiveValue(
+      context,
+      defaultValue: const EdgeInsets.symmetric(horizontal: 55, vertical: 80),
+      valueWhen: [
+        const Condition<dynamic>.smallerThan(
+          name: TABLET,
+          value: EdgeInsets.symmetric(horizontal: 15, vertical: 45),
+        )
+      ],
+    ).value!;
 
 const EdgeInsets blockMargin = EdgeInsets.fromLTRB(10, 0, 10, 32);

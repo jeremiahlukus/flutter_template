@@ -69,6 +69,8 @@ _\*Flutter Template works on iOS, Android, and Web._
 
 ---
 
+## Running in Docker 
+
 ## Running Tests 🧪
 
 To run all unit and widget tests use the following command:

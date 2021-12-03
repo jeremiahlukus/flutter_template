@@ -4,7 +4,7 @@
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
-
+// This is a test
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -13,9 +13,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 // Project imports:
+import 'package:flutter_template/features/auth/view/loading_page.dart';
 import 'package:flutter_template/features/counter/model/counter.dart';
 import 'package:flutter_template/features/counter/notifiers/counter_notifier.dart';
-import 'package:flutter_template/features/counter/view/counter_page.dart';
 
 final counterProvider = StateNotifierProvider<CounterNotifier, CounterModel>(
   (ref) => CounterNotifier(),
@@ -45,7 +45,7 @@ class App extends StatelessWidget {
           accentColor: const Color(0xFF13B9FF),
         ),
       ),
-      home: const CounterPage(),
+      home: const LoadingScreen(),
     );
   }
 }
