@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:flutter_template/features/counter/counter.dart';
 
 class LoadingScreen extends StatelessWidget {
