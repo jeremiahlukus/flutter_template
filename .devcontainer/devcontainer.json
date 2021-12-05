@@ -6,6 +6,7 @@
   "settings": {},
   "extensions": ["dart-code.dart-code", "dart-code.flutter"],
 
+  "runArgs": ["--privileged", "-v", "/dev/bus/usb:/dev/bus/usb"],
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": "flutter pub get",
 }
