@@ -7,7 +7,7 @@ RUN yes "y" | sdkmanager "build-tools;30.0.2" \
   && yes "y" | sdkmanager "platforms;android-30" \
   && yes "y" | sdkmanager "platform-tools" \
   && yes "y" | sdkmanager "emulator" \
-  && yes "y" | sdkmanager "system-images;android-30;google_apis_playstore;x86"
+  && yes "y" | sdkmanager "system-images;android-30;google_apis_playstore;x86_64"
 
 RUN rm -rf /sdks/*
 RUN git clone https://github.com/flutter/flutter.git /sdks/flutter/

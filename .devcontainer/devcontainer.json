@@ -8,5 +8,5 @@
 
   "runArgs": ["--privileged", "-v", "/dev/bus/usb:/dev/bus/usb"],
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "flutter pub get",
+  "postCreateCommand": "flutter pub get && dart pub global activate derry",
 }

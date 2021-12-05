@@ -71,6 +71,25 @@ _\*Flutter Template works on iOS, Android, and Web._
 
 ## Running in Docker 
 
+For Web 
+In Docker 
+1) Run `sh flutter-web.sh `
+
+
+Locally:
+1) Open up an android emulator 
+2) type `adb devices` and make sure the device shows
+3) in your terminal type `adb tcpip 5555` 
+
+In the docker continer:
+1) Run `adb connect host.docker.internal:5555`
+2) `sh flutter-android-emulator.sh` 
+
+
+Errors: 
+If you get `The message received from the daemon indicates that the daemon has disappeared.` When trying to launch on android increase your docker memory to 4 gigs. Do this by going to the docker app -> preferences -> resourses 
+
+
 ## Running Tests 🧪
 
 To run all unit and widget tests use the following command:
