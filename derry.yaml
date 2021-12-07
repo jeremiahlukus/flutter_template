@@ -11,6 +11,9 @@ test_all:
 e2e_iphone:
   - flutter test --flavor development -d iPhone integration_test
 
+e2e_android:
+  - flutter test --flavor development -d iPhone integration_test
+
 e2e_web:
   - flutter drive --driver=test_driver/integration_test.dart --target=integration_test/counter_integation_test.dart --flavor development -d web-server
 

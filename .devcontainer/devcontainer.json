@@ -7,5 +7,5 @@
   "extensions": ["dart-code.dart-code", "dart-code.flutter"],
   "runArgs": ["--privileged", "-v", "/dev/bus/usb:/dev/bus/usb"],
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "flutter pub get && dart pub global activate derry",
+  "postCreateCommand": "flutter pub get && dart pub global activate derry && adb connect host.docker.internal:5555",
 }

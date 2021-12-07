@@ -71,13 +71,21 @@ _\*Flutter Template works on iOS, Android, and Web._
 
 ## Running in Docker 
 
-For Web 
+### Setup
+1) Download [Visual Studio](https://code.visualstudio.com/)
+2) Install [Docker Plugin](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+3) Install [Remote Development Plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+4) Optional Download [Docker Desktop](https://www.docker.com/products/docker-desktop)
+
+Once you have installed all of these, open Visual Studio and open this project. Visual Studio will auto detect the Dockerfile and build it for you as well as copy the project files in the docker container using settings from the devcontainer.json file. If you have a andriod emulator open and have typed `adb tcpip 5555` into your terminal the device should show up in the docker container type `adb devices` to make sure if not follow the steps below
+
+### For Web 
 In Docker 
 1) Run `sh flutter-web.sh `
 
 
-Locally:
-1) Open up an android emulator 
+### For Android:
+1) Open up an android emulator / or plugin your device
 2) type `adb devices` and make sure the device shows
 3) in your terminal type `adb tcpip 5555` 
 
