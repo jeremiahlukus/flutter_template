@@ -16,4 +16,5 @@ RUN dart pub global activate derry
 RUN flutter doctor
 RUN flutter emulators --create \
   && flutter update-packages \
-  && flutter emulators --launch flutter_emulator
+  && flutter emulators --launch flutter_emulator \
+  && rm -f ~/.gitconfig
