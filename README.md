@@ -71,6 +71,20 @@ _\*Flutter Template works on iOS, Android, and Web._
 
 ## Running in Docker 
 
+### Start local emulator 
+1) install android studio and set up a emulator 
+2) `ln -s ~/Library/Android/sdk/tools/emulator /usr/local/bin/emulator` 
+3) `emulator -list-avds` should list out your installed devices 
+4) export the paths 
+```
+export ANDROID_SDK=$HOME/LibraryAndroid/sdk
+export PATH=$ANDROID_SDK/emulator:$ANDROID_SDK/tools:$PATH
+
+```
+5) run `emulator -avd $(emulator -list-avds)` to open the emulator. 
+6) `adb tcpip 5555` 
+After doing all the setup above you only need to run this command from here on out.
+
 ### Setup
 1) Download [Visual Studio](https://code.visualstudio.com/)
 2) Install [Docker Plugin](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
@@ -91,7 +105,8 @@ In Docker
 
 In the docker continer:
 1) Run `adb connect host.docker.internal:5555`
-2) `sh flutter-android-emulator.sh` 
+2) clilck allow permission on the andriod 
+3) `sh flutter-android-emulator.sh` 
 
 
 Errors: 
