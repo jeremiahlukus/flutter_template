@@ -2,7 +2,7 @@
   "name": "flutter_dev",
   "build": {
     "dockerfile": "../Dockerfile",
-  },w
+  },
   "remoteEnv": { "PATH": "${containerEnv:PATH}:/root/.pub-cache/bin"},
   "extensions": ["dart-code.dart-code", "dart-code.flutter"],
   "runArgs": ["--privileged", "-v", "/dev/bus/usb:/dev/bus/usb"],
