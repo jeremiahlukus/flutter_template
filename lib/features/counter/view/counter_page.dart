@@ -6,6 +6,7 @@
 // https://opensource.org/licenses/MIT.
 
 // Flutter imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -31,9 +32,10 @@ class CounterView extends HookConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: AutoSizeText(
           'Flutter Template',
           style: textTheme.headline2,
+          maxLines: 1,
         ),
       ),
       body: const Center(child: CounterText()),
