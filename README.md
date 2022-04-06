@@ -77,13 +77,15 @@ _\*Flutter Template works on iOS, Android, and Web._
 3) `emulator -list-avds` should list out your installed devices 
 4) export the paths 
 ```
-export ANDROID_SDK=$HOME/LibraryAndroid/sdk
+export ANDROID_SDK=$HOME/Library/Android/sdk
 export PATH=$ANDROID_SDK/emulator:$ANDROID_SDK/tools:$PATH
 
 ```
 5) run `emulator -avd $(emulator -list-avds)` to open the emulator. 
 6) `adb tcpip 5555` 
 After doing all the setup above you only need to run this command from here on out.
+
+
 
 ### Setup
 1) Download [Visual Studio](https://code.visualstudio.com/)
@@ -100,7 +102,7 @@ In Docker
 
 ### For Android:
 1) Open up an android emulator / or plugin your device
-2) type `adb devices` and make sure the device shows
+2) type `adb devices` and make sure the device shows if it doesnt kill and restart your server `adb kill-server` & `adb start-server`
 3) in your terminal type `adb tcpip 5555` 
 
 In the docker continer:
