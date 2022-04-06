@@ -1,10 +1,3 @@
-// Copyright (c) 2021, Very Good Ventures
-// https://verygood.ventures
-//
-// Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file or at
-// https://opensource.org/licenses/MIT.
-
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
