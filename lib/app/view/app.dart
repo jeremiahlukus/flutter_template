@@ -7,6 +7,7 @@
 // This is a test
 
 // Flutter imports:
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -40,12 +41,7 @@ class App extends StatelessWidget {
           ResponsiveBreakpoint.autoScale(1700, name: 'XL'),
         ],
       ),
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
-        colorScheme: ColorScheme.fromSwatch(
-          accentColor: const Color(0xFF13B9FF),
-        ),
-      ),
+      theme: FlexThemeData.light(scheme: FlexScheme.blumineBlue),
       home: const LoadingScreen(),
     );
   }

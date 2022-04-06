@@ -28,8 +28,14 @@ class CounterView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Template')),
+      appBar: AppBar(
+        title: Text(
+          'Flutter Template',
+          style: textTheme.headline2,
+        ),
+      ),
       body: const Center(child: CounterText()),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
