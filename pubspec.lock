@@ -232,8 +232,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
-  derry:
+  dartz:
     dependency: "direct main"
+    description:
+      name: dartz
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.1"
+  derry:
+    dependency: "direct dev"
     description:
       name: derry
       url: "https://pub.dartlang.org"
