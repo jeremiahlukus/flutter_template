@@ -29,6 +29,7 @@ dependencies:
   riverpod: ^1.0.3
   sentry_flutter: ^6.1.2
   webview_flutter: ^3.0.2
+  mocktail: ^0.3.0
 
 
 dev_dependencies:
