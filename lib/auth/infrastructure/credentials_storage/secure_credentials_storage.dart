@@ -7,8 +7,6 @@ import 'package:oauth2/src/credentials.dart';
 // Project imports:
 import 'package:flutter_template/auth/infrastructure/credentials_storage/credentials_storage.dart';
 
-// ignore: implementation_imports
-
 class SecureCredentialsStorage implements CredentialsStorage {
   SecureCredentialsStorage(this._storage);
 
