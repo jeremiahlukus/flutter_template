@@ -38,6 +38,7 @@ class SignInPage extends ConsumerWidget {
                   const SizedBox(
                     height: 16,
                   ),
+                  const Text('test'),
                   AutoSizeText(
                     'Welcome to \nFlutter Template',
                     style: Theme.of(context).textTheme.headline3,

@@ -30,6 +30,7 @@ dependencies:
   sentry_flutter: ^6.1.2
   webview_flutter: ^3.0.2
 
+
 dev_dependencies:
   auto_route_generator: ^3.2.3
   build_runner: ^2.1.8
@@ -40,11 +41,9 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   json_serializable: ^6.1.5
-  mocktail: ^0.3.0
   very_good_analysis: ^2.4.0
 
 scripts: derry.yaml
 
 flutter:
   uses-material-design: true
-  generate: true
