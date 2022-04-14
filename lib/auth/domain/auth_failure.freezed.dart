@@ -75,9 +75,7 @@ mixin _$AuthFailure {
 
 /// @nodoc
 abstract class $AuthFailureCopyWith<$Res> {
-  factory $AuthFailureCopyWith(
-          AuthFailure value, $Res Function(AuthFailure) then) =
-      _$AuthFailureCopyWithImpl<$Res>;
+  factory $AuthFailureCopyWith(AuthFailure value, $Res Function(AuthFailure) then) = _$AuthFailureCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -91,16 +89,13 @@ class _$AuthFailureCopyWithImpl<$Res> implements $AuthFailureCopyWith<$Res> {
 
 /// @nodoc
 abstract class _$ServerCopyWith<$Res> {
-  factory _$ServerCopyWith(_Server value, $Res Function(_Server) then) =
-      __$ServerCopyWithImpl<$Res>;
+  factory _$ServerCopyWith(_Server value, $Res Function(_Server) then) = __$ServerCopyWithImpl<$Res>;
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$ServerCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res>
-    implements _$ServerCopyWith<$Res> {
-  __$ServerCopyWithImpl(_Server _value, $Res Function(_Server) _then)
-      : super(_value, (v) => _then(v as _Server));
+class __$ServerCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res> implements _$ServerCopyWith<$Res> {
+  __$ServerCopyWithImpl(_Server _value, $Res Function(_Server) _then) : super(_value, (v) => _then(v as _Server));
 
   @override
   _Server get _value => super._value as _Server;
@@ -140,13 +135,11 @@ class _$_Server extends _Server {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
 
   @JsonKey(ignore: true)
   @override
-  _$ServerCopyWith<_Server> get copyWith =>
-      __$ServerCopyWithImpl<_Server>(this, _$identity);
+  _$ServerCopyWith<_Server> get copyWith => __$ServerCopyWithImpl<_Server>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -222,15 +215,12 @@ abstract class _Server extends AuthFailure {
 
 /// @nodoc
 abstract class _$StorageCopyWith<$Res> {
-  factory _$StorageCopyWith(_Storage value, $Res Function(_Storage) then) =
-      __$StorageCopyWithImpl<$Res>;
+  factory _$StorageCopyWith(_Storage value, $Res Function(_Storage) then) = __$StorageCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$StorageCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res>
-    implements _$StorageCopyWith<$Res> {
-  __$StorageCopyWithImpl(_Storage _value, $Res Function(_Storage) _then)
-      : super(_value, (v) => _then(v as _Storage));
+class __$StorageCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res> implements _$StorageCopyWith<$Res> {
+  __$StorageCopyWithImpl(_Storage _value, $Res Function(_Storage) _then) : super(_value, (v) => _then(v as _Storage));
 
   @override
   _Storage get _value => super._value as _Storage;
@@ -248,8 +238,7 @@ class _$_Storage extends _Storage {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Storage);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _Storage);
   }
 
   @override

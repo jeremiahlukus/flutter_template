@@ -1,9 +1,14 @@
-import 'dart:async';
+// Dart imports:
 import 'dart:io';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_template/auth/infrastructure/webapp_authenticator.dart';
+
+// Package imports:
 import 'package:webview_flutter/webview_flutter.dart';
+
+// Project imports:
+import 'package:flutter_template/auth/infrastructure/webapp_authenticator.dart';
 
 class AuthorizationPage extends StatefulWidget {
   const AuthorizationPage({
@@ -42,14 +47,10 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                 CookieManager().clearCookies();
               },
               navigationDelegate: (navReq) async {
-                print("URL");
-                print(navReq.url);
-
                 if (navReq.url.startsWith(WebAppAuthenticator.redirectUrl.toString())) {
                   widget.onAuthorizationCodeRedirectAttempt(
                     Uri.parse(navReq.url),
                   );
-
                   return NavigationDecision.prevent;
                 }
                 return NavigationDecision.navigate;

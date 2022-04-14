@@ -1,13 +1,16 @@
-import 'dart:convert';
+// Flutter imports:
+import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:oauth2/oauth2.dart';
 
-import 'package:flutter/services.dart';
+// Project imports:
 import 'package:flutter_template/auth/domain/auth_failure.dart';
 import 'package:flutter_template/auth/infrastructure/credentials_storage/credentials_storage.dart';
 import 'package:flutter_template/core/infrastructure/dio_extensions.dart';
-import 'package:oauth2/oauth2.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_template/core/presentation/bootstrap.dart';
 
 class WebAppAuthenticator {
   WebAppAuthenticator(this._credentialsStorage, this._dio);
@@ -77,9 +80,9 @@ class WebAppAuthenticator {
         );
       } on DioError catch (e) {
         if (e.isNoConnectionError) {
-          //print('token not revoked');
+          logger.e('No internet connect, did not revoke token');
         } else {
-          print(e.error);
+          logger.e(e.error);
           rethrow;
         }
       }
@@ -89,7 +92,6 @@ class WebAppAuthenticator {
       return left(const AuthFailure.storage());
     }
   }
-}
 
 //   Future<Either<AuthFailure, Credentials>> refresh(Credentials credentials) async {
 //     try {
@@ -105,4 +107,4 @@ class WebAppAuthenticator {
 //       return left(const AuthFailure.storage());
 //     }
 //   }
-// }
+}

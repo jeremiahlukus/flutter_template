@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,6 +11,8 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
 import 'package:flutter_template/core/infrastructure/provider_logger.dart';
+
+// Flutter imports:
 
 Logger logger = Logger();
 Future<void> bootstrap(Widget Function() builder, {String? sentryUrl}) async {

@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:auto_route/auto_route.dart';
+
+// Project imports:
 import 'package:flutter_template/auth/presentation/authorization_page.dart';
 import 'package:flutter_template/auth/presentation/sign_in_page.dart';
 import 'package:flutter_template/counter/counter_page.dart';
