@@ -38,6 +38,15 @@
 ## Getting Started 🚀
 
 ### First step
+Setup your backend to login a user.
+On login the path needs to be be `/callback?state=6meYRKLtQMSGctx2UXsxCd4L` 
+the state is your api token. 
+I logout using the api part of my backend `/api/v1/auth` in this call i delete the users token. 
+Soon ill add a refresh token endpoint. 
+
+I separated the WebAppAuthenticator so you can easily replace with your solution. 
+
+### Second step
 Run `dart pub global activate derry`
 This will allow you to run commands defined in derry.yaml like `derry lint`
 Support for running integration tests with flavors is added

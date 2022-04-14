@@ -2,9 +2,8 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_template/firebase_options.dart';
 
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -12,14 +11,11 @@ import 'package:logger/logger.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
-import 'package:flutter_template/utils/provider_logger.dart';
+import 'package:flutter_template/core/infrastructure/provider_logger.dart';
 
 Logger logger = Logger();
 Future<void> bootstrap(Widget Function() builder, {String? sentryUrl}) async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
 
   FlutterError.onError = (details) {
     final errorMap = <String, String>{

@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
-import 'package:flutter_template/bootstrap.dart';
+import 'package:flutter_template/core/presentation/bootstrap.dart';
 
 class ProviderLogger extends ProviderObserver {
   @override
