@@ -18,11 +18,6 @@ if [ -n "$hasChanges" ]; then
 fi
 
 
-# Remove NSUserTrackingUsageDescription from plist
-printf "\e[33;1m%s\e[0m\n" '=== Running Remove NSUserTrackingUsageDescription from plist ==='
-sh remove_tracking_from_plist.sh
-
-
 # Flutter formatter
 printf "\e[33;1m%s\e[0m\n" '=== Running Flutter Formatter ==='
 flutter format lib test -l  120
