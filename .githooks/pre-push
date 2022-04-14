@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-dart pub global activate derry
-derry lint
-
-if [[ -n $(git status -s) ]]; then
-  git reset HEAD
-  exit 1
-fi

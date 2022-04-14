@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: subosito/flutter-action@v1.5.3
+      - uses: subosito/flutter-action@v2
 
       - name: Install Dependencies
         run: flutter packages get
@@ -58,10 +58,10 @@ jobs:
     # The branch or tag ref that triggered the workflow will be
     # checked out.
     # https://github.com/actions/checkout
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     # Sets up a flutter environment.
     # https://github.com/marketplace/actions/flutter-action
-    - uses: subosito/flutter-action@v1
+    - uses: subosito/flutter-action@v2
       with:
         channel: 'master' # or: 'stable', 'dev' or 'beta'
     - name: "Run Flutter Driver tests"
