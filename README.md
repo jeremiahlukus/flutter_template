@@ -17,11 +17,8 @@
 
 
 # Top TODOs
-1) setup login flow
-2) make api call using dio and cache response using dio cacher
-3) Use auto route for navigtion
-4) setup guards for users that are not auth'ed
-5) run web integration tests in github actions
+1) make api call using dio and cache response using dio cacher
+2) run web integration tests in github actions
 
 
 # DONE
@@ -32,6 +29,7 @@
 5) built in responsiveness
 6) full CI lint/unit/integration 
 7) Pre-Push githook to force lint before pushing
+8) setup login flow
 
 ---
 
