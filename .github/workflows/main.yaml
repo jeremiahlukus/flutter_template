@@ -15,7 +15,10 @@ jobs:
         run: flutter packages get
 
       - name: Format
-        run: flutter format --set-exit-if-changed lib test
+        run: flutter format -l  120 --set-exit-if-changed lib test
+
+      - name: Sort Imports
+        run: flutter pub run import_sorter:main --exit-if-changed
 
       - name: Analyze
         run: flutter analyze lib test
