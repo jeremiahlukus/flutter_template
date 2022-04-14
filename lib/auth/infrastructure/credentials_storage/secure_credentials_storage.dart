@@ -1,3 +1,5 @@
+// ignore_for_file: implementation_imports
+
 // Package imports:
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:oauth2/src/credentials.dart';
