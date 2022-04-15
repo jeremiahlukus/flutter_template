@@ -29,10 +29,10 @@ void main() {
         final secureCredentialsStorage =
             SecureCredentialsStorage(mockFlutterSecureStorage);
 
-        final actualCredentialJson = await secureCredentialsStorage.read();
-        const Credentials? expectedCredentialJson = null;
+        final actualCredential = await secureCredentialsStorage.read();
+        const Credentials? expectedCredential = null;
 
-        expect(actualCredentialJson, expectedCredentialJson);
+        expect(actualCredential, expectedCredential);
       });
 
       test(
@@ -47,12 +47,12 @@ void main() {
         final secureCredentialsStorage =
             SecureCredentialsStorage(mockFlutterSecureStorage);
 
-        final actualCredentialJson = await secureCredentialsStorage.read();
-        final expectedCredentialJson = Credentials.fromJson(mockCredentialJson);
+        final actualCredential = await secureCredentialsStorage.read();
+        final expectedCredential = Credentials.fromJson(mockCredentialJson);
 
         expect(
-          actualCredentialJson?.toJson(),
-          expectedCredentialJson.toJson(),
+          actualCredential?.toJson(),
+          expectedCredential.toJson(),
         );
       });
     });
