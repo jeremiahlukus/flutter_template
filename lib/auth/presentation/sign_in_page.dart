@@ -17,6 +17,8 @@ import 'package:flutter_template/core/presentation/routes/app_router.gr.dart';
 class SignInPage extends ConsumerWidget {
   const SignInPage({Key? key}) : super(key: key);
 
+  static const signInButtonKey = ValueKey('signInButtonKey');
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -49,6 +51,7 @@ class SignInPage extends ConsumerWidget {
                     height: 32,
                   ),
                   ElevatedButton(
+                    key: signInButtonKey,
                     onPressed: () {
                       ref.read(authNotifierProvider.notifier).signIn(
                         (authorizationUrl) {
@@ -56,7 +59,8 @@ class SignInPage extends ConsumerWidget {
                           AutoRouter.of(context).push(
                             AuthorizationRoute(
                               authorizationUrl: authorizationUrl,
-                              onAuthorizationCodeRedirectAttempt: completer.complete,
+                              onAuthorizationCodeRedirectAttempt:
+                                  completer.complete,
                             ),
                           );
                           return completer.future;

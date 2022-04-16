@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_template/auth/presentation/authorization_page.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,7 +12,7 @@ void main() {
       builder: (BuildContext context) {
         return Container();
       },
-    ));
+    ),);
   });
   group('AuthorizationPage', () {
     testWidgets('shows a WebView', (tester) async {
