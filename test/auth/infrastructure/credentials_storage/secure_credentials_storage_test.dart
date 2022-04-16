@@ -17,17 +17,12 @@ void main() {
   "scopes" :  ["admin"]
 }''';
     group('.read', () {
-      test(
-          'returns null if FlutterSecureStorage reurns null when its key is read',
-          () async {
-        final FlutterSecureStorage mockFlutterSecureStorage =
-            MockFlutterSecureStorage();
+      test('returns null if FlutterSecureStorage reurns null when its key is read', () async {
+        final FlutterSecureStorage mockFlutterSecureStorage = MockFlutterSecureStorage();
 
-        when(() => mockFlutterSecureStorage.read(key: any(named: 'key')))
-            .thenAnswer((_) => Future.value());
+        when(() => mockFlutterSecureStorage.read(key: any(named: 'key'))).thenAnswer((_) => Future.value());
 
-        final secureCredentialsStorage =
-            SecureCredentialsStorage(mockFlutterSecureStorage);
+        final secureCredentialsStorage = SecureCredentialsStorage(mockFlutterSecureStorage);
 
         final actualCredential = await secureCredentialsStorage.read();
         const Credentials? expectedCredential = null;
@@ -35,17 +30,13 @@ void main() {
         expect(actualCredential, expectedCredential);
       });
 
-      test(
-          'returns the exact Credentials return by FlutterSecureStorage when its key is read',
-          () async {
-        final FlutterSecureStorage mockFlutterSecureStorage =
-            MockFlutterSecureStorage();
+      test('returns the exact Credentials return by FlutterSecureStorage when its key is read', () async {
+        final FlutterSecureStorage mockFlutterSecureStorage = MockFlutterSecureStorage();
 
         when(() => mockFlutterSecureStorage.read(key: any(named: 'key')))
             .thenAnswer((_) => Future.value(mockCredentialJson));
 
-        final secureCredentialsStorage =
-            SecureCredentialsStorage(mockFlutterSecureStorage);
+        final secureCredentialsStorage = SecureCredentialsStorage(mockFlutterSecureStorage);
 
         final actualCredential = await secureCredentialsStorage.read();
         final expectedCredential = Credentials.fromJson(mockCredentialJson);
@@ -59,8 +50,7 @@ void main() {
 
     group('.save', () {
       test("calls FlutterSecureStorage 's write method", () async {
-        final FlutterSecureStorage mockFlutterSecureStorage =
-            MockFlutterSecureStorage();
+        final FlutterSecureStorage mockFlutterSecureStorage = MockFlutterSecureStorage();
 
         when(
           () => mockFlutterSecureStorage.write(
@@ -69,8 +59,7 @@ void main() {
           ),
         ).thenAnswer(Future<void>.value);
 
-        final secureCredentialsStorage =
-            SecureCredentialsStorage(mockFlutterSecureStorage);
+        final secureCredentialsStorage = SecureCredentialsStorage(mockFlutterSecureStorage);
 
         final mockCredentials = Credentials.fromJson(mockCredentialJson);
 
@@ -87,8 +76,7 @@ void main() {
 
     group('.clear', () {
       test("calls FlutterSecureStorage 's delete method", () async {
-        final FlutterSecureStorage mockFlutterSecureStorage =
-            MockFlutterSecureStorage();
+        final FlutterSecureStorage mockFlutterSecureStorage = MockFlutterSecureStorage();
 
         when(
           () => mockFlutterSecureStorage.delete(
@@ -96,8 +84,7 @@ void main() {
           ),
         ).thenAnswer(Future<void>.value);
 
-        final secureCredentialsStorage =
-            SecureCredentialsStorage(mockFlutterSecureStorage);
+        final secureCredentialsStorage = SecureCredentialsStorage(mockFlutterSecureStorage);
 
         await secureCredentialsStorage.clear();
         verify(

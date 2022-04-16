@@ -8,11 +8,13 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 void main() {
   setUpAll(() {
-    registerFallbackValue(MaterialPageRoute<dynamic>(
-      builder: (BuildContext context) {
-        return Container();
-      },
-    ),);
+    registerFallbackValue(
+      MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) {
+          return Container();
+        },
+      ),
+    );
   });
   group('AuthorizationPage', () {
     testWidgets('shows a WebView', (tester) async {
@@ -33,9 +35,8 @@ void main() {
 
       expect(backButtonFinder, findsOneWidget);
     });
-    
-    testWidgets('clicking on the back button pops the navigation',
-        (tester) async {
+
+    testWidgets('clicking on the back button pops the navigation', (tester) async {
       final mockObserver = MockNavigatorObserver();
       await tester.pumpWidget(
         MaterialApp(
