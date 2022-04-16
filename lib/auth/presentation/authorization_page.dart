@@ -17,6 +17,8 @@ class AuthorizationPage extends StatefulWidget {
     required this.onAuthorizationCodeRedirectAttempt,
   }) : super(key: key);
 
+  static const backButtonKey = ValueKey('backButton');
+
   final Uri authorizationUrl;
   final void Function(Uri redirectUri) onAuthorizationCodeRedirectAttempt;
 
@@ -47,7 +49,8 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                 CookieManager().clearCookies();
               },
               navigationDelegate: (navReq) async {
-                if (navReq.url.startsWith(WebAppAuthenticator.redirectUrl.toString())) {
+                if (navReq.url
+                    .startsWith(WebAppAuthenticator.redirectUrl.toString())) {
                   widget.onAuthorizationCodeRedirectAttempt(
                     Uri.parse(navReq.url),
                   );
@@ -63,10 +66,12 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
               child: AppBar(
                 title: const Text(''), // You can add title here
                 leading: IconButton(
+                  key: AuthorizationPage.backButtonKey,
                   icon: const Icon(Icons.arrow_back_ios, color: Colors.grey),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
-                backgroundColor: Colors.white.withOpacity(0.1), //You can make this transparent
+                backgroundColor: Colors.white
+                    .withOpacity(0.1), //You can make this transparent
                 elevation: 0, //No shadow
               ),
             ),
