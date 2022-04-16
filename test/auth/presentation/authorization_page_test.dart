@@ -1,8 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_template/auth/presentation/authorization_page.dart';
+
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+// Project imports:
+import 'package:flutter_template/auth/presentation/authorization_page.dart';
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 

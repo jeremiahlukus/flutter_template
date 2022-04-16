@@ -1,15 +1,21 @@
+// Dart imports:
 import 'dart:convert';
 import 'dart:io';
 
+// Flutter imports:
+import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_template/auth/domain/auth_failure.dart';
-import 'package:flutter_template/auth/infrastructure/credentials_storage/credentials_storage.dart';
-import 'package:flutter_template/auth/infrastructure/webapp_authenticator.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';
 import 'package:test/test.dart';
+
+// Project imports:
+import 'package:flutter_template/auth/domain/auth_failure.dart';
+import 'package:flutter_template/auth/infrastructure/credentials_storage/credentials_storage.dart';
+import 'package:flutter_template/auth/infrastructure/webapp_authenticator.dart';
 
 class MockCredentialStorage extends Mock implements CredentialsStorage {}
 

@@ -1,9 +1,12 @@
+// Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:test/test.dart';
+
+// Project imports:
 import 'package:flutter_template/auth/domain/auth_failure.dart';
 import 'package:flutter_template/auth/infrastructure/webapp_authenticator.dart';
 import 'package:flutter_template/auth/notifiers/auth_notifier.dart';
-import 'package:mocktail/mocktail.dart';
-import 'package:test/test.dart';
 
 class MockWebAppAuthenticator extends Mock implements WebAppAuthenticator {}
 

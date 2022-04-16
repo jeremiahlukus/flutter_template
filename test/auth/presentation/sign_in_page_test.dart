@@ -1,10 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
+// Project imports:
 import 'package:flutter_template/auth/notifiers/auth_notifier.dart';
 import 'package:flutter_template/auth/presentation/sign_in_page.dart';
 import 'package:flutter_template/auth/shared/providers.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
 class MockAuthNotifier extends Mock implements AuthNotifier {}
 
