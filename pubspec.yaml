@@ -29,6 +29,7 @@ dependencies:
   riverpod: ^1.0.3
   sentry_flutter: ^6.1.2
   webview_flutter: ^3.0.2
+  mocktail: ^0.3.0
 
 
 dev_dependencies:
@@ -42,6 +43,7 @@ dev_dependencies:
     sdk: flutter
   json_serializable: ^6.1.5
   very_good_analysis: ^2.4.0
+  test: ^1.19.5
 
 scripts: derry.yaml
 

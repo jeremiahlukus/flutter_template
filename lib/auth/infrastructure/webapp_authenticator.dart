@@ -66,7 +66,8 @@ class WebAppAuthenticator {
 
   Future<Either<AuthFailure, Unit>> signOut() async {
     try {
-      final accessToken = await _credentialsStorage.read().then((credentials) => credentials?.accessToken);
+      final credentials = await _credentialsStorage.read();
+      final accessToken = credentials?.accessToken;
 
       try {
         await _dio.deleteUri<dynamic>(
@@ -89,6 +90,8 @@ class WebAppAuthenticator {
       await _credentialsStorage.clear();
       return right(unit);
     } on PlatformException {
+      return left(const AuthFailure.storage());
+    } catch (e) {
       return left(const AuthFailure.storage());
     }
   }

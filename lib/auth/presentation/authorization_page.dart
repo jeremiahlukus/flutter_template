@@ -17,6 +17,8 @@ class AuthorizationPage extends StatefulWidget {
     required this.onAuthorizationCodeRedirectAttempt,
   }) : super(key: key);
 
+  static const backButtonKey = ValueKey('backButton');
+
   final Uri authorizationUrl;
   final void Function(Uri redirectUri) onAuthorizationCodeRedirectAttempt;
 
@@ -63,6 +65,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
               child: AppBar(
                 title: const Text(''), // You can add title here
                 leading: IconButton(
+                  key: AuthorizationPage.backButtonKey,
                   icon: const Icon(Icons.arrow_back_ios, color: Colors.grey),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
