@@ -1,9 +1,11 @@
 // Flutter imports:
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter_template/core/shared/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -14,6 +16,17 @@ import 'package:flutter_template/core/presentation/routes/app_router.gr.dart';
 
 final initializationProvider = FutureProvider<Unit>(
   (ref) async {
+        await ref.read(sembastProvider).init();
+    await ref.read(dioProvider)
+      ..options = BaseOptions(
+        headers: <String, String>{'Accept': 'application/vnd.github.v3.html+json'},
+        validateStatus: (status) => status != null && status >= 200 && status < 400,
+       
+      )
+      ..interceptors.add(
+        ref.read(oAuth2InterceptorProvider),
+      );
+
     final authNotifier = ref.read(authNotifierProvider.notifier);
     await authNotifier.checkAndUpdateAuthStatus();
     return unit;
@@ -33,7 +46,7 @@ class AppWidget extends ConsumerWidget {
           orElse: () {},
           authenticated: (_) {
             _appRouter.pushAndPopUntil(
-              const CounterRoute(),
+              const DashboardRoute(),
               predicate: (route) => false,
             );
           },

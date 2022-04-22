@@ -87,7 +87,7 @@ class WebAppAuthenticator {
           rethrow;
         }
       }
-      await _credentialsStorage.clear();
+      await clearCredentialsStorage();
       return right(unit);
     } on PlatformException {
       return left(const AuthFailure.storage());
@@ -96,18 +96,27 @@ class WebAppAuthenticator {
     }
   }
 
-//   Future<Either<AuthFailure, Credentials>> refresh(Credentials credentials) async {
-//     try {
-//       final refreshedCreds =
-//           await credentials.refresh(httpClient: client, identifier: clientId, secret: clientSecret);
-//       await _credentialsStorage.save(refreshedCreds);
-//       return right(refreshedCreds);
-//     } on FormatException {
-//       return left(const AuthFailure.server());
-//     } on AuthorizationException catch (e) {
-//       return left(AuthFailure.server('${e.error}: ${e.description}'));
-//     } on PlatformException {
-//       return left(const AuthFailure.storage());
-//     }
-//   }
+  Future<Either<AuthFailure, Unit>> clearCredentialsStorage() async {
+    try {
+      await _credentialsStorage.clear();
+      return right(unit);
+    } on PlatformException {
+      return left(const AuthFailure.storage());
+    }
+  }
+
+  // Future<Either<AuthFailure, Credentials>> refresh(Credentials credentials) async {
+  //   try {
+  //     final refreshedCreds =
+  //         await credentials.refresh(httpClient: client, identifier: clientId, secret: clientSecret);
+  //     await _credentialsStorage.save(refreshedCreds);
+  //     return right(refreshedCreds);
+  //   } on FormatException {
+  //     return left(const AuthFailure.server());
+  //   } on AuthorizationException catch (e) {
+  //     return left(AuthFailure.server('${e.error}: ${e.description}'));
+  //   } on PlatformException {
+  //     return left(const AuthFailure.storage());
+  //   }
+  // }
 }
