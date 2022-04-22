@@ -33,8 +33,7 @@ class UserRemoteService {
         ),
       );
       if (response.statusCode == 304) {
-        print("########  304 #########");
-        return RemoteResponse.notModified(maxPage: previousHeaders?.link?.maxPage ?? 0);
+        return const RemoteResponse.notModified();
       } else if (response.statusCode == 200) {
         final headers = BackendHeaders.parse(response);
         print(response.data);
