@@ -29,7 +29,6 @@ jobs:
       - uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
         with:
           path: './coverage/lcov.info'
-          min_coverage: 95
           exclude: '**/*freezed.dart **/*g.dart **/*gr.dart'
 
   # id of job, a string that is unique to the "jobs" node above.
