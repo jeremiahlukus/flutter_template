@@ -1,8 +1,9 @@
-import 'package:flutter_template/backend/core/domain/user.dart';
-import 'package:flutter_template/backend/core/infrastructure/backend_headers.dart';
+// Package imports:
+import 'package:sembast/sembast.dart';
+
+// Project imports:
 import 'package:flutter_template/backend/core/infrastructure/user_dto.dart';
 import 'package:flutter_template/core/infrastructure/sembast_database.dart';
-import 'package:sembast/sembast.dart';
 
 const key = 'user';
 
@@ -20,6 +21,7 @@ class UserLocalService {
   }
 
   Future<UserDTO> getUser() async {
+    // ignore: cast_nullable_to_non_nullable
     final json = await _store.record(key).get(_sembastDatabase.instance) as Map<String, dynamic>;
     return UserDTO.fromJson(json);
   }

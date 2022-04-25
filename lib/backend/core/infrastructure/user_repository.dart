@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:dartz/dartz.dart';
+
+// Project imports:
 import 'package:flutter_template/backend/core/domain/backend_failure.dart';
 import 'package:flutter_template/backend/core/domain/user.dart';
 import 'package:flutter_template/backend/core/infrastructure/user_local_service.dart';
@@ -16,8 +19,8 @@ class UserRepository {
 
       return right(
         await userDetails.when(
-          noConnection: () async => await _userLocalService.getUser().then((value) => value.toDomain()),
-          notModified: (maxPage) async => await _userLocalService.getUser().then((value) => value.toDomain()),
+          noConnection: () => _userLocalService.getUser().then((value) => value.toDomain()),
+          notModified: (maxPage) => _userLocalService.getUser().then((value) => value.toDomain()),
           withNewData: (data, maxPage) async {
             await _userLocalService.saveUser(data);
             return data.toDomain();

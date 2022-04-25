@@ -1,4 +1,6 @@
+// Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'remote_response.freezed.dart';
 
 @freezed

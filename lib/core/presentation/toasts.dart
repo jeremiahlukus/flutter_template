@@ -1,5 +1,8 @@
-import 'package:flash/flash.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flash/flash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 Future<void> showNoConnectionToast(
@@ -14,9 +17,9 @@ Future<void> showNoConnectionToast(
         controller: controller,
         backgroundColor: Colors.black.withOpacity(0.7),
         borderRadius: BorderRadius.circular(8),
-        margin: const EdgeInsets.all(8.0),
+        margin: const EdgeInsets.all(8),
         child: Container(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10),
           height: 200,
           child: Column(
             children: [

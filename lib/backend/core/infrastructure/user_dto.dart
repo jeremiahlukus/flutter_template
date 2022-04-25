@@ -1,5 +1,8 @@
-import 'package:flutter_template/backend/core/domain/user.dart';
+// Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+// Project imports:
+import 'package:flutter_template/backend/core/domain/user.dart';
 
 part 'user_dto.freezed.dart';
 part 'user_dto.g.dart';
@@ -8,7 +11,8 @@ part 'user_dto.g.dart';
 class UserDTO with _$UserDTO {
   const UserDTO._();
   const factory UserDTO({
-    @JsonKey(name: 'name') required String name,
+    required String name,
+    // ignore: invalid_annotation_target
     @JsonKey(name: 'avatar_url') required String avatarUrl,
   }) = _UserDTO;
 

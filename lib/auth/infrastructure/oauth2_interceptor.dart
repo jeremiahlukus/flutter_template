@@ -1,7 +1,9 @@
+// Package imports:
 import 'package:dio/dio.dart';
+
+// Project imports:
 import 'package:flutter_template/auth/infrastructure/webapp_authenticator.dart';
 import 'package:flutter_template/auth/notifiers/auth_notifier.dart';
-import 'package:oauth2/oauth2.dart';
 
 class OAuth2Interceptor extends Interceptor {
   final WebAppAuthenticator _authenticator;
@@ -17,9 +19,11 @@ class OAuth2Interceptor extends Interceptor {
   ) async {
     final credentials = await _authenticator.getSignedInCredentials();
     final modifiedRequestOptions = options
-      ..headers.addAll(credentials == null
-          ? <String, String>{}
-          : <String, String>{'Authorization': 'bearer ${credentials.accessToken}'});
+      ..headers.addAll(
+        credentials == null
+            ? <String, String>{}
+            : <String, String>{'Authorization': 'bearer ${credentials.accessToken}'},
+      );
     handler.next(modifiedRequestOptions);
   }
 
@@ -27,7 +31,7 @@ class OAuth2Interceptor extends Interceptor {
   Future<void> onError(DioError err, ErrorInterceptorHandler handler) async {
     final errorResponse = err.response;
     if (errorResponse != null && errorResponse.statusCode == 401) {
-      final credentials = await _authenticator.getSignedInCredentials();
+      // final credentials = await _authenticator.getSignedInCredentials();
 
       // credentials != null && credentials.canRefresh
       //     ? await _authenticator.refresh(credentials)

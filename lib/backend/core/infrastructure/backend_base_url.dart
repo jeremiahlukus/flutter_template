@@ -1,1 +1,1 @@
-final backendBaseUrl = '127.0.0.1:3000';
+const backendBaseUrl = '127.0.0.1:3000';

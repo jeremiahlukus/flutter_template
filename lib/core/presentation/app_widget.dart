@@ -1,11 +1,10 @@
 // Flutter imports:
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:flutter_template/core/shared/providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -13,15 +12,15 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:flutter_template/auth/notifiers/auth_notifier.dart';
 import 'package:flutter_template/auth/shared/providers.dart';
 import 'package:flutter_template/core/presentation/routes/app_router.gr.dart';
+import 'package:flutter_template/core/shared/providers.dart';
 
 final initializationProvider = FutureProvider<Unit>(
   (ref) async {
-        await ref.read(sembastProvider).init();
-    await ref.read(dioProvider)
+    await ref.read(sembastProvider).init();
+    ref.read(dioProvider)
       ..options = BaseOptions(
         headers: <String, String>{'Accept': 'application/vnd.github.v3.html+json'},
         validateStatus: (status) => status != null && status >= 200 && status < 400,
-       
       )
       ..interceptors.add(
         ref.read(oAuth2InterceptorProvider),

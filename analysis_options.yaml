@@ -14,3 +14,4 @@ linter:
     sort_pub_dependencies: false
     prefer_if_elements_to_conditional_expressions: false
     sort_constructors_first: false
+    sort_unnamed_constructors_first: false
