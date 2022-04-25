@@ -30,7 +30,7 @@ jobs:
         with:
           path: './coverage/lcov.info'
           min_coverage: 95
-          exclude: '**/*freezed.dart **/*g.dart'
+          exclude: '**/*freezed.dart **/*g.dart **/*gr.dart'
 
   # id of job, a string that is unique to the "jobs" node above.
   drive:
