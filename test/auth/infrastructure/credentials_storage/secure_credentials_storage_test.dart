@@ -20,6 +20,24 @@ void main() {
   "scopes" :  ["admin"]
 }''';
     group('.read', () {
+      test("returns the cached credentials if it's not null", () async {
+        final FlutterSecureStorage mockFlutterSecureStorage = MockFlutterSecureStorage();
+
+        final secureCredentialsStorage = SecureCredentialsStorage(mockFlutterSecureStorage);
+
+        final mockCredentials = Credentials.fromJson(mockCredentialJson);
+
+        secureCredentialsStorage.cachedCredentials = mockCredentials;
+
+        final actualCredential = await secureCredentialsStorage.read();
+        final expectedCredential = Credentials.fromJson(mockCredentialJson);
+
+        expect(
+          actualCredential?.toJson(),
+          expectedCredential.toJson(),
+        );
+      });
+
       test('returns null if FlutterSecureStorage reurns null when its key is read', () async {
         final FlutterSecureStorage mockFlutterSecureStorage = MockFlutterSecureStorage();
 
@@ -47,6 +65,27 @@ void main() {
         expect(
           actualCredential?.toJson(),
           expectedCredential.toJson(),
+        );
+      });
+
+      test(
+          'returns null if Credentials.fromJson() attempts returns a FormatException trying to parse a badly formatted JSON',
+          () async {
+        final FlutterSecureStorage mockFlutterSecureStorage = MockFlutterSecureStorage();
+
+        const badlyFormattedJson = '';
+
+        when(() => mockFlutterSecureStorage.read(key: any(named: 'key')))
+            .thenAnswer((_) => Future.value(badlyFormattedJson));
+
+        final secureCredentialsStorage = SecureCredentialsStorage(mockFlutterSecureStorage);
+
+        final actualCredential = await secureCredentialsStorage.read();
+        const Credentials? expectedCredential = null;
+
+        expect(
+          actualCredential,
+          expectedCredential,
         );
       });
     });
