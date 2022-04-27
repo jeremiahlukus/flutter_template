@@ -77,6 +77,38 @@ void main() {
       });
     });
 
+    group('.isSignedIn', () {
+      test('returns false if getSignedInCredentials return a non-null Credential', () async {
+        final CredentialsStorage mockCredentialsStorage = MockCredentialStorage();
+        final Dio mockDio = MockDio();
+
+        when(mockCredentialsStorage.read).thenThrow(PlatformException(code: ''));
+
+        final webAppAuthenticator = WebAppAuthenticator(mockCredentialsStorage, mockDio);
+
+        final actualSignInResult = await webAppAuthenticator.isSignedIn();
+        const expectedSignInResult = false;
+
+        expect(actualSignInResult, expectedSignInResult);
+      });
+
+      test('returns true if getSignedInCredentials return a null Credential', () async {
+        final CredentialsStorage mockCredentialsStorage = MockCredentialStorage();
+        final Dio mockDio = MockDio();
+
+        final credential = Credentials.fromJson(mockCredentialJson);
+
+        when(mockCredentialsStorage.read).thenAnswer((_) => Future.value(credential));
+
+        final webAppAuthenticator = WebAppAuthenticator(mockCredentialsStorage, mockDio);
+
+        final actualSignInResult = await webAppAuthenticator.isSignedIn();
+        const expectedSignInResult = true;
+
+        expect(actualSignInResult, expectedSignInResult);
+      });
+    });
+
     group('.handleAuthorizationResponse', () {
       test('returns Right<AuthFailure, Unit> when it runs without Exceptions', () async {
         final CredentialsStorage mockCredentialsStorage = MockCredentialStorage();
@@ -88,6 +120,42 @@ void main() {
 
         final actualResult = await webAppAuthenticator.handleAuthorizationResponse(queryParams);
         final expectedResult = isA<Right<AuthFailure, Unit>>();
+
+        expect(actualResult, expectedResult);
+      });
+
+      test("returns Left<AuthFailure, Unit> if queryParams['state'] is null ", () async {
+        final CredentialsStorage mockCredentialsStorage = MockCredentialStorage();
+        final Dio mockDio = MockDio();
+
+        when(
+          () => mockCredentialsStorage.save(any()),
+        ).thenThrow(AuthorizationException('', '', Uri()));
+
+        final webAppAuthenticator = WebAppAuthenticator(mockCredentialsStorage, mockDio);
+
+        final nullStateQueryParams = <String, String>{};
+
+        final actualResult = await webAppAuthenticator.handleAuthorizationResponse(nullStateQueryParams);
+        final expectedResult = isA<Left<AuthFailure, Unit>>();
+
+        expect(actualResult, expectedResult);
+      });
+
+      test("returns Left<AuthFailure, Unit> if queryParams['state'] is empty", () async {
+        final CredentialsStorage mockCredentialsStorage = MockCredentialStorage();
+        final Dio mockDio = MockDio();
+
+        when(
+          () => mockCredentialsStorage.save(any()),
+        ).thenThrow(AuthorizationException('', '', Uri()));
+
+        final webAppAuthenticator = WebAppAuthenticator(mockCredentialsStorage, mockDio);
+
+        final emptyStateQueryParams = <String, String>{'state': '[]'};
+
+        final actualResult = await webAppAuthenticator.handleAuthorizationResponse(emptyStateQueryParams);
+        final expectedResult = isA<Left<AuthFailure, Unit>>();
 
         expect(actualResult, expectedResult);
       });
@@ -253,6 +321,36 @@ void main() {
         final expectedSignOutReturnValue = isA<Left<AuthFailure, Unit>>();
 
         expect(actualSignOutReturnValue, expectedSignOutReturnValue);
+      });
+    });
+
+    group('.clearCredentialStorage', () {
+      test('returns Right<AuthFailure, Unit> if there are no Exceptions', () async {
+        final CredentialsStorage mockCredentialsStorage = MockCredentialStorage();
+        final Dio mockDio = MockDio();
+
+        when(mockCredentialsStorage.clear).thenAnswer((_) => Future.value());
+
+        final webAppAuthenticator = WebAppAuthenticator(mockCredentialsStorage, mockDio);
+
+        final actualClearCredentialStorageReturnValue = await webAppAuthenticator.clearCredentialsStorage();
+        final expectedClearCredentialStorageReturnValue = isA<Right<AuthFailure, Unit>>();
+
+        expect(actualClearCredentialStorageReturnValue, expectedClearCredentialStorageReturnValue);
+      });
+
+      test('returns Left<AuthFailure, Unit> on PlatformException', () async {
+        final CredentialsStorage mockCredentialsStorage = MockCredentialStorage();
+        final Dio mockDio = MockDio();
+
+        when(mockCredentialsStorage.clear).thenThrow(PlatformException(code: ''));
+
+        final webAppAuthenticator = WebAppAuthenticator(mockCredentialsStorage, mockDio);
+
+        final actualClearCredentialStorageReturnValue = await webAppAuthenticator.clearCredentialsStorage();
+        final expectedClearCredentialStorageReturnValue = isA<Left<AuthFailure, Unit>>();
+
+        expect(actualClearCredentialStorageReturnValue, expectedClearCredentialStorageReturnValue);
       });
     });
   });
