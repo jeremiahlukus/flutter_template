@@ -26,8 +26,7 @@ void main() {
     );
   });
   group('SignInPage', () {
-    testWidgets('contains the "Welcome to Flutter Template" text',
-        (tester) async {
+    testWidgets('contains the "Welcome to Flutter Template" text', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: SignInPage(),
@@ -37,20 +36,16 @@ void main() {
       await tester.pump(Duration.zero);
 
       final welcomeTextFinder = find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is Text && widget.data == 'Welcome to \nFlutter Template',
+        (Widget widget) => widget is Text && widget.data == 'Welcome to \nFlutter Template',
       );
 
       expect(welcomeTextFinder, findsOneWidget);
     });
 
-    testWidgets(
-        "clicking on Sign In button triggers provided AuthNotifier's signIn method",
-        (tester) async {
+    testWidgets("clicking on Sign In button triggers provided AuthNotifier's signIn method", (tester) async {
       final AuthNotifier mockAuthNotifier = MockAuthNotifier();
 
-      when(() => mockAuthNotifier.signIn(any()))
-          .thenAnswer((_) => Future.value());
+      when(() => mockAuthNotifier.signIn(any())).thenAnswer((_) => Future.value());
 
       await tester.pumpWidget(
         ProviderScope(
@@ -75,12 +70,10 @@ void main() {
 
       verify(() => mockAuthNotifier.signIn(any())).called(1);
     });
-    testWidgets('clicking on Sign In button navigates to AuthorizationPage',
-        (tester) async {
+    testWidgets('clicking on Sign In button navigates to AuthorizationPage', (tester) async {
       final AuthNotifier mockAuthNotifier = MockAuthNotifier();
 
-      when(() => mockAuthNotifier.signIn(any()))
-          .thenAnswer((_) => Future.value());
+      when(() => mockAuthNotifier.signIn(any())).thenAnswer((_) => Future.value());
 
       final mockObserver = MockNavigatorObserver();
 

@@ -22,8 +22,7 @@ class UserLocalService {
 
   Future<UserDTO> getUser() async {
     // ignore: cast_nullable_to_non_nullable
-    final json = await _store.record(key).get(_sembastDatabase.instance)
-        as Map<String, dynamic>;
+    final json = await _store.record(key).get(_sembastDatabase.instance) as Map<String, dynamic>;
     return UserDTO.fromJson(json);
   }
 

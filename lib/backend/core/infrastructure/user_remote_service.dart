@@ -37,8 +37,7 @@ class UserRemoteService {
         final headers = BackendHeaders.parse(response);
         await _backendHeadersCache.saveHeaders(requestUri, headers);
 
-        final convertedData =
-            UserDTO.fromJson(response.data as Map<String, dynamic>);
+        final convertedData = UserDTO.fromJson(response.data as Map<String, dynamic>);
         return RemoteResponse.withNewData(convertedData);
       } else {
         throw RestApiException(response.statusCode);

@@ -41,8 +41,7 @@ void main() {
       expect(backButtonFinder, findsOneWidget);
     });
 
-    testWidgets('clicking on the back button pops the navigation',
-        (tester) async {
+    testWidgets('clicking on the back button pops the navigation', (tester) async {
       final mockObserver = MockNavigatorObserver();
       await tester.pumpWidget(
         MaterialApp(

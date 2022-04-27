@@ -16,8 +16,7 @@ class UserDTO with _$UserDTO {
     @JsonKey(name: 'avatar_url') required String avatarUrl,
   }) = _UserDTO;
 
-  factory UserDTO.fromJson(Map<String, dynamic> json) =>
-      _$UserDTOFromJson(json);
+  factory UserDTO.fromJson(Map<String, dynamic> json) => _$UserDTOFromJson(json);
 
   factory UserDTO.fromDomain(User _) {
     return UserDTO(

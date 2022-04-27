@@ -27,16 +27,14 @@ class BackendHeaders with _$BackendHeaders {
     );
   }
 
-  factory BackendHeaders.fromJson(Map<String, dynamic> json) =>
-      _$BackendHeadersFromJson(json);
+  factory BackendHeaders.fromJson(Map<String, dynamic> json) => _$BackendHeadersFromJson(json);
 }
 
 @freezed
 class PaginationLink with _$PaginationLink {
   const PaginationLink._();
   const factory PaginationLink({required int maxPage}) = _PaginationLink;
-  factory PaginationLink.fromJson(Map<String, dynamic> json) =>
-      _$PaginationLinkFromJson(json);
+  factory PaginationLink.fromJson(Map<String, dynamic> json) => _$PaginationLinkFromJson(json);
 
   factory PaginationLink.parse(
     List<String> values, {
@@ -53,9 +51,9 @@ class PaginationLink with _$PaginationLink {
   }
 
   static int _extractPageNumber(String value) {
-    final uriString = RegExp(
-            r'[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)')
-        .stringMatch(value);
+    final uriString =
+        RegExp(r'[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)')
+            .stringMatch(value);
     return int.parse(Uri.parse(uriString!).queryParameters['page']!);
   }
 }
