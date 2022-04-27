@@ -1,6 +1,7 @@
 // ignore_for_file: implementation_imports
 
 // Package imports:
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:oauth2/src/credentials.dart';
 
@@ -12,19 +13,21 @@ class SecureCredentialsStorage implements CredentialsStorage {
 
   final FlutterSecureStorage _storage;
   static const _key = 'oath2_credentials';
-  Credentials? _cachedCredentials;
+  
+  @visibleForTesting
+  Credentials? cachedCredentials;
 
   @override
   Future<Credentials?> read() async {
-    if (_cachedCredentials != null) {
-      return _cachedCredentials;
+    if (cachedCredentials != null) {
+      return cachedCredentials;
     }
     final credentialJson = await _storage.read(key: _key);
     if (credentialJson == null) {
       return null;
     }
     try {
-      return _cachedCredentials = Credentials.fromJson(credentialJson);
+      return cachedCredentials = Credentials.fromJson(credentialJson);
     } on FormatException {
       return null;
     }
@@ -32,13 +35,13 @@ class SecureCredentialsStorage implements CredentialsStorage {
 
   @override
   Future<void> save(Credentials credentials) {
-    _cachedCredentials = credentials;
+    cachedCredentials = credentials;
     return _storage.write(key: _key, value: credentials.toJson());
   }
 
   @override
   Future<void> clear() {
-    _cachedCredentials = null;
+    cachedCredentials = null;
     return _storage.delete(key: _key);
   }
 }
