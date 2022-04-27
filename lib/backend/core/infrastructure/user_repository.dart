@@ -19,8 +19,10 @@ class UserRepository {
 
       return right(
         await userDetails.when(
-          noConnection: () => _userLocalService.getUser().then((value) => value.toDomain()),
-          notModified: (maxPage) => _userLocalService.getUser().then((value) => value.toDomain()),
+          noConnection: () =>
+              _userLocalService.getUser().then((value) => value.toDomain()),
+          notModified: (maxPage) =>
+              _userLocalService.getUser().then((value) => value.toDomain()),
           withNewData: (data, maxPage) async {
             await _userLocalService.saveUser(data);
             return data.toDomain();

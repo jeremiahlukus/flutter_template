@@ -58,7 +58,8 @@ class SignInPage extends ConsumerWidget {
                           AutoRouter.of(context).push(
                             AuthorizationRoute(
                               authorizationUrl: authorizationUrl,
-                              onAuthorizationCodeRedirectAttempt: completer.complete,
+                              onAuthorizationCodeRedirectAttempt:
+                                  completer.complete,
                             ),
                           );
                           return completer.future;

@@ -19,7 +19,8 @@ class BackendHeadersCache {
   }
 
   Future<BackendHeaders?> getHeaders(Uri uri) async {
-    final json = await _store.record(uri.toString()).get(_sembastDatabase.instance);
+    final json =
+        await _store.record(uri.toString()).get(_sembastDatabase.instance);
     return json == null ? null : BackendHeaders.fromJson(json);
   }
 

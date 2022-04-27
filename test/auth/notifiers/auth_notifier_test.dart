@@ -13,10 +13,14 @@ class MockWebAppAuthenticator extends Mock implements WebAppAuthenticator {}
 void main() {
   group('AuthNotifier', () {
     group('.checkAndUpdateAuthStatus', () {
-      test('sets state to AuthState.authenticated() if WebAppAuthenticator().isSignedIn returns true', () async {
-        final WebAppAuthenticator mockWebAppAuthenticator = MockWebAppAuthenticator();
+      test(
+          'sets state to AuthState.authenticated() if WebAppAuthenticator().isSignedIn returns true',
+          () async {
+        final WebAppAuthenticator mockWebAppAuthenticator =
+            MockWebAppAuthenticator();
 
-        when(mockWebAppAuthenticator.isSignedIn).thenAnswer((invocation) => Future.value(true));
+        when(mockWebAppAuthenticator.isSignedIn)
+            .thenAnswer((invocation) => Future.value(true));
 
         final authNotifier = AuthNotifier(mockWebAppAuthenticator);
 
@@ -30,10 +34,14 @@ void main() {
         expect(actualStateResult, expectedStateResult);
       });
 
-      test('sets state to AuthState.unauthenticated() if WebAppAuthenticator().isSignedIn returns false', () async {
-        final WebAppAuthenticator mockWebAppAuthenticator = MockWebAppAuthenticator();
+      test(
+          'sets state to AuthState.unauthenticated() if WebAppAuthenticator().isSignedIn returns false',
+          () async {
+        final WebAppAuthenticator mockWebAppAuthenticator =
+            MockWebAppAuthenticator();
 
-        when(mockWebAppAuthenticator.isSignedIn).thenAnswer((invocation) => Future.value(false));
+        when(mockWebAppAuthenticator.isSignedIn)
+            .thenAnswer((invocation) => Future.value(false));
 
         final authNotifier = AuthNotifier(mockWebAppAuthenticator);
 
@@ -42,22 +50,27 @@ void main() {
         // ignore: invalid_use_of_protected_member
         final actualStateResult = authNotifier.state;
 
-        final expectedStateResultMatcher = equals(const AuthState.unauthenticated());
+        final expectedStateResultMatcher =
+            equals(const AuthState.unauthenticated());
 
         expect(actualStateResult, expectedStateResultMatcher);
       });
     });
 
     group('.signIn', () {
-      test('sets state to AuthState.failure if WebAppAuthenticator().handleAuthorizationResponse() returns a Left',
+      test(
+          'sets state to AuthState.failure if WebAppAuthenticator().handleAuthorizationResponse() returns a Left',
           () async {
-        final WebAppAuthenticator mockWebAppAuthenticator = MockWebAppAuthenticator();
+        final WebAppAuthenticator mockWebAppAuthenticator =
+            MockWebAppAuthenticator();
 
-        final uri = Uri.http('example.org', '/path', <String, String>{'q': 'dart'});
+        final uri =
+            Uri.http('example.org', '/path', <String, String>{'q': 'dart'});
 
         when(mockWebAppAuthenticator.getAuthorizationUrl).thenReturn(uri);
 
-        when(() => mockWebAppAuthenticator.handleAuthorizationResponse(any())).thenAnswer(
+        when(() => mockWebAppAuthenticator.handleAuthorizationResponse(any()))
+            .thenAnswer(
           (invocation) => Future.value(left(const AuthFailure.storage())),
         );
 
@@ -67,7 +80,8 @@ void main() {
         // ignore: invalid_use_of_protected_member
         final actualStateResult = authNotifier.state;
 
-        final expectedStateResultMatcher = equals(const AuthState.failure(AuthFailure.storage()));
+        final expectedStateResultMatcher =
+            equals(const AuthState.failure(AuthFailure.storage()));
 
         expect(actualStateResult, expectedStateResultMatcher);
       });
@@ -75,9 +89,11 @@ void main() {
       test(
           'sets state to AuthState.authenticated() if WebAppAuthenticator().handleAuthorizationResponse() returns a Right',
           () async {
-        final WebAppAuthenticator mockWebAppAuthenticator = MockWebAppAuthenticator();
+        final WebAppAuthenticator mockWebAppAuthenticator =
+            MockWebAppAuthenticator();
 
-        final uri = Uri.http('example.org', '/path', <String, String>{'q': 'dart'});
+        final uri =
+            Uri.http('example.org', '/path', <String, String>{'q': 'dart'});
 
         when(mockWebAppAuthenticator.getAuthorizationUrl).thenReturn(uri);
 
@@ -90,15 +106,19 @@ void main() {
         // ignore: invalid_use_of_protected_member
         final actualStateResult = authNotifier.state;
 
-        final expectedStateResultMatcher = equals(const AuthState.authenticated());
+        final expectedStateResultMatcher =
+            equals(const AuthState.authenticated());
 
         expect(actualStateResult, expectedStateResultMatcher);
       });
     });
 
     group('.signOut', () {
-      test('sets state to AuthState.failure if WebAppAuthenticator().signOut returns a Left', () async {
-        final WebAppAuthenticator mockWebAppAuthenticator = MockWebAppAuthenticator();
+      test(
+          'sets state to AuthState.failure if WebAppAuthenticator().signOut returns a Left',
+          () async {
+        final WebAppAuthenticator mockWebAppAuthenticator =
+            MockWebAppAuthenticator();
 
         when(mockWebAppAuthenticator.signOut).thenAnswer(
           (invocation) => Future.value(left(const AuthFailure.storage())),
@@ -109,15 +129,20 @@ void main() {
 
         // ignore: invalid_use_of_protected_member
         final actualStateResult = authNotifier.state;
-        final expectedStateResultMatcher = equals(const AuthState.failure(AuthFailure.storage()));
+        final expectedStateResultMatcher =
+            equals(const AuthState.failure(AuthFailure.storage()));
 
         expect(actualStateResult, expectedStateResultMatcher);
       });
 
-      test('sets state to AuthState.unauthenticated if WebAppAuthenticator().signOut returns a Right', () async {
-        final WebAppAuthenticator mockWebAppAuthenticator = MockWebAppAuthenticator();
+      test(
+          'sets state to AuthState.unauthenticated if WebAppAuthenticator().signOut returns a Right',
+          () async {
+        final WebAppAuthenticator mockWebAppAuthenticator =
+            MockWebAppAuthenticator();
 
-        when(mockWebAppAuthenticator.signOut).thenAnswer((invocation) => Future.value(right(unit)));
+        when(mockWebAppAuthenticator.signOut)
+            .thenAnswer((invocation) => Future.value(right(unit)));
 
         final authNotifier = AuthNotifier(mockWebAppAuthenticator);
         await authNotifier.signOut();
@@ -125,7 +150,8 @@ void main() {
         // ignore: invalid_use_of_protected_member
         final actualStateResult = authNotifier.state;
 
-        final expectedStateResultMatcher = equals(const AuthState.unauthenticated());
+        final expectedStateResultMatcher =
+            equals(const AuthState.unauthenticated());
 
         expect(actualStateResult, expectedStateResultMatcher);
       });

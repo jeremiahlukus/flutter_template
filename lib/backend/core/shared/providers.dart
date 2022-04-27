@@ -31,6 +31,7 @@ final userRepositoryProvider = Provider(
   ),
 );
 
-final userNotifierProvider = StateNotifierProvider.autoDispose<UserNotifier, UserState>(
+final userNotifierProvider =
+    StateNotifierProvider.autoDispose<UserNotifier, UserState>(
   (ref) => UserNotifier(ref.watch(userRepositoryProvider)),
 );

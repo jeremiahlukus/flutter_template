@@ -23,15 +23,18 @@ import '../../../backend/dashboard/presentation/dashboard_page.dart' as _i4;
 import '../../../splash/presentation/splash_page.dart' as _i1;
 
 class AppRouter extends _i5.RootStackRouter {
-  AppRouter([_i6.GlobalKey<_i6.NavigatorState>? navigatorKey]) : super(navigatorKey);
+  AppRouter([_i6.GlobalKey<_i6.NavigatorState>? navigatorKey])
+      : super(navigatorKey);
 
   @override
   final Map<String, _i5.PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(routeData: routeData, child: const _i1.SplashPage());
+      return _i5.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i1.SplashPage());
     },
     SignInRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(routeData: routeData, child: const _i2.SignInPage());
+      return _i5.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i2.SignInPage());
     },
     AuthorizationRoute.name: (routeData) {
       final args = routeData.argsAs<AuthorizationRouteArgs>();
@@ -40,10 +43,12 @@ class AppRouter extends _i5.RootStackRouter {
           child: _i3.AuthorizationPage(
               key: args.key,
               authorizationUrl: args.authorizationUrl,
-              onAuthorizationCodeRedirectAttempt: args.onAuthorizationCodeRedirectAttempt));
+              onAuthorizationCodeRedirectAttempt:
+                  args.onAuthorizationCodeRedirectAttempt));
     },
     DashboardRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(routeData: routeData, child: const _i4.DashboardPage());
+      return _i5.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i4.DashboardPage());
     }
   };
 
@@ -76,20 +81,25 @@ class SignInRoute extends _i5.PageRouteInfo<void> {
 /// [_i3.AuthorizationPage]
 class AuthorizationRoute extends _i5.PageRouteInfo<AuthorizationRouteArgs> {
   AuthorizationRoute(
-      {_i6.Key? key, required Uri authorizationUrl, required void Function(Uri) onAuthorizationCodeRedirectAttempt})
+      {_i6.Key? key,
+      required Uri authorizationUrl,
+      required void Function(Uri) onAuthorizationCodeRedirectAttempt})
       : super(AuthorizationRoute.name,
             path: '/auth',
             args: AuthorizationRouteArgs(
                 key: key,
                 authorizationUrl: authorizationUrl,
-                onAuthorizationCodeRedirectAttempt: onAuthorizationCodeRedirectAttempt));
+                onAuthorizationCodeRedirectAttempt:
+                    onAuthorizationCodeRedirectAttempt));
 
   static const String name = 'AuthorizationRoute';
 }
 
 class AuthorizationRouteArgs {
   const AuthorizationRouteArgs(
-      {this.key, required this.authorizationUrl, required this.onAuthorizationCodeRedirectAttempt});
+      {this.key,
+      required this.authorizationUrl,
+      required this.onAuthorizationCodeRedirectAttempt});
 
   final _i6.Key? key;
 

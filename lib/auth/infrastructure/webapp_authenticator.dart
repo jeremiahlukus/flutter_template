@@ -17,8 +17,10 @@ class WebAppAuthenticator {
 
   final CredentialsStorage _credentialsStorage;
   final Dio _dio;
-  static final authorizationEndpoint = Uri.parse('http://127.0.0.1:3000/users/sign_in');
-  static final revocationEndpoint = Uri.parse('http://127.0.0.1:3000/api/v1/auth');
+  static final authorizationEndpoint =
+      Uri.parse('http://127.0.0.1:3000/users/sign_in');
+  static final revocationEndpoint =
+      Uri.parse('http://127.0.0.1:3000/api/v1/auth');
   static final redirectUrl = Uri.parse('http://127.0.0.1:3000/callback');
 
   Future<Credentials?> getSignedInCredentials() async {
@@ -37,7 +39,8 @@ class WebAppAuthenticator {
     }
   }
 
-  Future<bool> isSignedIn() => getSignedInCredentials().then((creds) => creds != null);
+  Future<bool> isSignedIn() =>
+      getSignedInCredentials().then((creds) => creds != null);
 
   // unit == void
   Future<Either<AuthFailure, Unit>> handleAuthorizationResponse(

@@ -13,7 +13,7 @@ class SecureCredentialsStorage implements CredentialsStorage {
 
   final FlutterSecureStorage _storage;
   static const _key = 'oath2_credentials';
-  
+
   @visibleForTesting
   Credentials? cachedCredentials;
 

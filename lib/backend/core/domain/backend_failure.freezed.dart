@@ -67,18 +67,21 @@ mixin _$BackendFailure {
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $BackendFailureCopyWith<BackendFailure> get copyWith => throw _privateConstructorUsedError;
+  $BackendFailureCopyWith<BackendFailure> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $BackendFailureCopyWith<$Res> {
-  factory $BackendFailureCopyWith(BackendFailure value, $Res Function(BackendFailure) then) =
+  factory $BackendFailureCopyWith(
+          BackendFailure value, $Res Function(BackendFailure) then) =
       _$BackendFailureCopyWithImpl<$Res>;
   $Res call({int? errorCode, String? message});
 }
 
 /// @nodoc
-class _$BackendFailureCopyWithImpl<$Res> implements $BackendFailureCopyWith<$Res> {
+class _$BackendFailureCopyWithImpl<$Res>
+    implements $BackendFailureCopyWith<$Res> {
   _$BackendFailureCopyWithImpl(this._value, this._then);
 
   final BackendFailure _value;
@@ -105,14 +108,17 @@ class _$BackendFailureCopyWithImpl<$Res> implements $BackendFailureCopyWith<$Res
 
 /// @nodoc
 abstract class _$ApiCopyWith<$Res> implements $BackendFailureCopyWith<$Res> {
-  factory _$ApiCopyWith(_Api value, $Res Function(_Api) then) = __$ApiCopyWithImpl<$Res>;
+  factory _$ApiCopyWith(_Api value, $Res Function(_Api) then) =
+      __$ApiCopyWithImpl<$Res>;
   @override
   $Res call({int? errorCode, String? message});
 }
 
 /// @nodoc
-class __$ApiCopyWithImpl<$Res> extends _$BackendFailureCopyWithImpl<$Res> implements _$ApiCopyWith<$Res> {
-  __$ApiCopyWithImpl(_Api _value, $Res Function(_Api) _then) : super(_value, (v) => _then(v as _Api));
+class __$ApiCopyWithImpl<$Res> extends _$BackendFailureCopyWithImpl<$Res>
+    implements _$ApiCopyWith<$Res> {
+  __$ApiCopyWithImpl(_Api _value, $Res Function(_Api) _then)
+      : super(_value, (v) => _then(v as _Api));
 
   @override
   _Api get _value => super._value as _Api;
@@ -161,11 +167,14 @@ class _$_Api extends _Api {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(errorCode), const DeepCollectionEquality().hash(message));
+      runtimeType,
+      const DeepCollectionEquality().hash(errorCode),
+      const DeepCollectionEquality().hash(message));
 
   @JsonKey(ignore: true)
   @override
-  _$ApiCopyWith<_Api> get copyWith => __$ApiCopyWithImpl<_Api>(this, _$identity);
+  _$ApiCopyWith<_Api> get copyWith =>
+      __$ApiCopyWithImpl<_Api>(this, _$identity);
 
   @override
   @optionalTypeArgs

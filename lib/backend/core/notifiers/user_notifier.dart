@@ -41,7 +41,8 @@ class UserNotifier extends StateNotifier<UserState> {
   Future<void> getUserPage() async {
     state = UserState.loadInProgress(state.user);
     final failureOrUser = await _userRepository.getUserPage();
-    state = failureOrUser.fold((l) => UserState.loadFailure(state.user, l), (r) {
+    state =
+        failureOrUser.fold((l) => UserState.loadFailure(state.user, l), (r) {
       return UserState.loadSuccess(r);
     });
   }

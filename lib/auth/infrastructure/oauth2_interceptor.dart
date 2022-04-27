@@ -22,7 +22,9 @@ class OAuth2Interceptor extends Interceptor {
       ..headers.addAll(
         credentials == null
             ? <String, String>{}
-            : <String, String>{'Authorization': 'bearer ${credentials.accessToken}'},
+            : <String, String>{
+                'Authorization': 'bearer ${credentials.accessToken}'
+              },
       );
     handler.next(modifiedRequestOptions);
   }
@@ -39,11 +41,13 @@ class OAuth2Interceptor extends Interceptor {
       await _authenticator.clearCredentialsStorage();
       await _authNotifier.checkAndUpdateAuthStatus();
 
-      final refreshedCredentials = await _authenticator.getSignedInCredentials();
+      final refreshedCredentials =
+          await _authenticator.getSignedInCredentials();
       if (refreshedCredentials != null) {
         handler.resolve(
           await _dio.fetch<Response<dynamic>>(
-            errorResponse.requestOptions..headers['Authorization'] = 'bearer $refreshedCredentials',
+            errorResponse.requestOptions
+              ..headers['Authorization'] = 'bearer $refreshedCredentials',
           ),
         );
       }

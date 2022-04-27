@@ -19,8 +19,11 @@ final initializationProvider = FutureProvider<Unit>(
     await ref.read(sembastProvider).init();
     ref.read(dioProvider)
       ..options = BaseOptions(
-        headers: <String, String>{'Accept': 'application/vnd.github.v3.html+json'},
-        validateStatus: (status) => status != null && status >= 200 && status < 400,
+        headers: <String, String>{
+          'Accept': 'application/vnd.github.v3.html+json'
+        },
+        validateStatus: (status) =>
+            status != null && status >= 200 && status < 400,
       )
       ..interceptors.add(
         ref.read(oAuth2InterceptorProvider),
