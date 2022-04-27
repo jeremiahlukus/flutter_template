@@ -200,7 +200,7 @@ void main() {
             .thenAnswer((invocation) => Future.value(left(const AuthFailure.storage())));
         when(mockAuthNotifier.checkAndUpdateAuthStatus).thenAnswer((invocation) => Future.value());
         when(() => mockDio.fetch<Response<dynamic>>(any())).thenAnswer((_) => Future.value(Response(
-            requestOptions: requestOptions, data: Response<dynamic>(requestOptions: requestOptions, statusCode: 401))));
+            requestOptions: requestOptions, data: Response<dynamic>(requestOptions: requestOptions, statusCode: 401),),),);
 
         final oAuth2Interceptor = OAuth2Interceptor(mockWebAppAuthenticator, mockAuthNotifier, mockDio);
 
