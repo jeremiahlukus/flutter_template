@@ -14,11 +14,11 @@ void main() {
 
       await tester.pump(Duration.zero);
 
-      final welcomeTextFinder = find.byWidgetPredicate(
+      final githubIconFinder = find.byWidgetPredicate(
         (Widget widget) => widget is FaIcon && widget.icon == FontAwesomeIcons.github,
       );
 
-      expect(welcomeTextFinder, findsOneWidget);
+      expect(githubIconFinder, findsOneWidget);
     });
 
     testWidgets('contains the LinearProgressIndicator', (tester) async {
@@ -30,11 +30,11 @@ void main() {
 
       await tester.pump(Duration.zero);
 
-      final welcomeTextFinder = find.byType(
+      final linearProgressIndicatorFinder = find.byType(
         LinearProgressIndicator,
       );
 
-      expect(welcomeTextFinder, findsOneWidget);
+      expect(linearProgressIndicatorFinder, findsOneWidget);
     });
   });
 }
