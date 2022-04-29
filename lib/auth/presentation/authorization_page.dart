@@ -28,11 +28,11 @@ class AuthorizationPage extends StatefulWidget {
 
 class _AuthorizationPageState extends State<AuthorizationPage> {
   @override
-  void initState() {
-    super.initState();
-    if (Platform.isAndroid) {
+  void didChangeDependencies() {
+    if (Theme.of(context).platform == TargetPlatform.android) {
       WebView.platform = SurfaceAndroidWebView();
     }
+    super.didChangeDependencies();
   }
 
   @override

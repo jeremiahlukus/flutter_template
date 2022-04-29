@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -142,6 +143,35 @@ void main() {
 
       // ignore: unnecessary_lambdas
       verify(() => mockOnAuthorizationCodeRedirectAttemptCallback()).called(1);
+    });
+
+    testWidgets('sets WebView.platform to SurfaceAndroidWebView when the running Platform is Android', (tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+
+      final mockObserver = MockNavigatorObserver();
+
+      final OnAuthorizationCodeRedirectAttemptCallback mockOnAuthorizationCodeRedirectAttemptCallback =
+          MockOnAuthorizationCodeRedirectAttemptCallback();
+
+      when(mockOnAuthorizationCodeRedirectAttemptCallback.call).thenReturn((_) {});
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: AuthorizationPage(
+            authorizationUrl: Uri(scheme: ''),
+            onAuthorizationCodeRedirectAttempt: mockOnAuthorizationCodeRedirectAttemptCallback(),
+          ),
+          navigatorObservers: [mockObserver],
+        ),
+      );
+
+      await tester.pump(Duration.zero);
+
+      final webViewIsSurfaceAndroidWebView = isA<SurfaceAndroidWebView>();
+
+      expect(WebView.platform, webViewIsSurfaceAndroidWebView);
+
+      debugDefaultTargetPlatformOverride = null;
     });
   });
 }
