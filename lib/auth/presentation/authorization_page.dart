@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -29,11 +26,18 @@ class AuthorizationPage extends StatefulWidget {
 class _AuthorizationPageState extends State<AuthorizationPage> {
   @override
   void didChangeDependencies() {
-    if (Theme.of(context).platform == TargetPlatform.android) {
+    if (Theme.of(context).platform == TargetPlatform.iOS) {
       WebView.platform = SurfaceAndroidWebView();
     }
     super.didChangeDependencies();
   }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // Enable virtual display.
+  //   if (Platform.isAndroid) WebView.platform = AndroidWebView();
+  // }
 
   @override
   Widget build(BuildContext context) {
