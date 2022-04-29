@@ -26,7 +26,8 @@ void main() {
         // ignore: invalid_use_of_protected_member
         final actualStateResult = userNotifier.state;
 
-        final expectedStateResultMatcher = equals(const UserState.loadFailure(defaultUser, BackendFailure.api(400, 'message')));
+        final expectedStateResultMatcher =
+            equals(const UserState.loadFailure(defaultUser, BackendFailure.api(400, 'message')));
 
         expect(actualStateResult, expectedStateResultMatcher);
       });
