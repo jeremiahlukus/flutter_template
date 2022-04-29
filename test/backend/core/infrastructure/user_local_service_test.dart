@@ -64,7 +64,7 @@ void main() {
       });
     });
 
-     group('.deleteUser', () {
+    group('.deleteUser', () {
       test('deletes the User object from the database', () async {
         final factory = newDatabaseFactoryMemory();
 
@@ -78,7 +78,7 @@ void main() {
 
         await UserLocalService.store.record(UserLocalService.key).put(fakeSembastDatabase.instance, userJson);
 
-       await userLocalService.deleteUser();
+        await userLocalService.deleteUser();
 
         final actualData = await UserLocalService.store.record(UserLocalService.key).get(fakeSembastDatabase.instance);
 

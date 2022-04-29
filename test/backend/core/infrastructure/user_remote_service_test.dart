@@ -110,13 +110,13 @@ void main() {
         expect(actualResult, expectedResult);
       });
 
-        test('throws RestApiException on a non No Connection DioError with non-null error response ', () async {
+      test('throws RestApiException on a non No Connection DioError with non-null error response ', () async {
         final Dio mockDio = MockDio();
         final BackendHeadersCache mockBackendHeadersCache = MockBackendHeadersCache();
 
-       when(() => mockDio.getUri<dynamic>(any(), options: any(named: 'options')))
-            .thenThrow(DioError(requestOptions: RequestOptions(path: ''), response: Response<dynamic>(requestOptions: RequestOptions(path: ''))));
-
+        when(() => mockDio.getUri<dynamic>(any(), options: any(named: 'options'))).thenThrow(DioError(
+            requestOptions: RequestOptions(path: ''),
+            response: Response<dynamic>(requestOptions: RequestOptions(path: ''))));
 
         when(() => mockBackendHeadersCache.getHeaders(any())).thenAnswer(
           (invocation) => Future.value(),
