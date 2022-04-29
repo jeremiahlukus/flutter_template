@@ -1,4 +1,9 @@
+// Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:test/test.dart';
+
+// Project imports:
 import 'package:flutter_template/backend/core/domain/backend_failure.dart';
 import 'package:flutter_template/backend/core/domain/user.dart';
 import 'package:flutter_template/backend/core/infrastructure/user_dto.dart';
@@ -7,8 +12,6 @@ import 'package:flutter_template/backend/core/infrastructure/user_remote_service
 import 'package:flutter_template/backend/core/infrastructure/user_repository.dart';
 import 'package:flutter_template/core/infrastructure/network_exceptions.dart';
 import 'package:flutter_template/core/infrastructure/remote_response.dart';
-import 'package:mocktail/mocktail.dart';
-import 'package:test/test.dart';
 
 class MockUserRemoteService extends Mock implements UserRemoteService {}
 

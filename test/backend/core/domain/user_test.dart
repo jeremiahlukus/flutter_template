@@ -1,5 +1,8 @@
-import 'package:flutter_template/backend/core/domain/user.dart';
+// Package imports:
 import 'package:test/test.dart';
+
+// Project imports:
+import 'package:flutter_template/backend/core/domain/user.dart';
 
 void main() {
   group('User', () {

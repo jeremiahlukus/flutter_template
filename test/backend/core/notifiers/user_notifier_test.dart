@@ -1,10 +1,13 @@
+// Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:test/test.dart';
+
+// Project imports:
 import 'package:flutter_template/backend/core/domain/backend_failure.dart';
 import 'package:flutter_template/backend/core/domain/user.dart';
 import 'package:flutter_template/backend/core/infrastructure/user_repository.dart';
 import 'package:flutter_template/backend/core/notifiers/user_notifier.dart';
-import 'package:mocktail/mocktail.dart';
-import 'package:test/test.dart';
 
 class MockUserRepository extends Mock implements UserRepository {}
 

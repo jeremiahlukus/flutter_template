@@ -1,4 +1,12 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
+// Project imports:
 import 'package:flutter_template/auth/notifiers/auth_notifier.dart';
 import 'package:flutter_template/auth/shared/providers.dart';
 import 'package:flutter_template/backend/core/domain/user.dart';
@@ -6,9 +14,6 @@ import 'package:flutter_template/backend/core/infrastructure/user_repository.dar
 import 'package:flutter_template/backend/core/notifiers/user_notifier.dart';
 import 'package:flutter_template/backend/core/shared/providers.dart';
 import 'package:flutter_template/backend/dashboard/presentation/dashboard_page.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/material.dart';
-import 'package:mocktail/mocktail.dart';
 
 class MockUserRepository extends Mock implements UserRepository {}
 

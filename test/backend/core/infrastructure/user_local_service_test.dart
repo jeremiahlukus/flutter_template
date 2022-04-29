@@ -1,10 +1,13 @@
-import 'package:flutter_template/backend/core/infrastructure/user_dto.dart';
-import 'package:flutter_template/backend/core/infrastructure/user_local_service.dart';
-import 'package:flutter_template/core/infrastructure/sembast_database.dart';
+// Package imports:
 import 'package:mocktail/mocktail.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
 import 'package:test/test.dart';
+
+// Project imports:
+import 'package:flutter_template/backend/core/infrastructure/user_dto.dart';
+import 'package:flutter_template/backend/core/infrastructure/user_local_service.dart';
+import 'package:flutter_template/core/infrastructure/sembast_database.dart';
 
 class FakeSembastDatabase extends Fake implements SembastDatabase {
   FakeSembastDatabase(this._database);
