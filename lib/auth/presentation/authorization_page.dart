@@ -26,7 +26,7 @@ class AuthorizationPage extends StatefulWidget {
 class _AuthorizationPageState extends State<AuthorizationPage> {
   @override
   void didChangeDependencies() {
-    if (Theme.of(context).platform == TargetPlatform.android) {
+    if (Theme.of(context).platform == TargetPlatform.iOS) {
       WebView.platform = SurfaceAndroidWebView();
     }
     super.didChangeDependencies();
