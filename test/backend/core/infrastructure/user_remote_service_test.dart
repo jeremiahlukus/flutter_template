@@ -56,7 +56,7 @@ void main() {
 
         when(() => mockDio.getUri<dynamic>(any(), options: any(named: 'options'))).thenAnswer(
           (invocation) => Future.value(
-              Response<dynamic>(requestOptions: RequestOptions(path: ''), statusCode: 200, data: mockData)),
+              Response<dynamic>(requestOptions: RequestOptions(path: ''), statusCode: 200, data: mockData),),
         );
 
         when(() => mockBackendHeadersCache.getHeaders(any())).thenAnswer(
@@ -120,7 +120,7 @@ void main() {
 
         when(() => mockDio.getUri<dynamic>(any(), options: any(named: 'options'))).thenThrow(DioError(
             requestOptions: RequestOptions(path: ''),
-            response: Response<dynamic>(requestOptions: RequestOptions(path: ''))));
+            response: Response<dynamic>(requestOptions: RequestOptions(path: '')),),);
 
         when(() => mockBackendHeadersCache.getHeaders(any())).thenAnswer(
           (invocation) => Future.value(),
