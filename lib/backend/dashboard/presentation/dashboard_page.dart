@@ -24,6 +24,8 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
     super.initState();
   }
 
+  static const signOutButtonKey = ValueKey('signOutButtonKey');
+
   bool hasShownNoConnectionToast = false;
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class DashboardPageState extends ConsumerState<DashboardPage> {
         title: const Text('Dashboard Screen'),
         actions: [
           IconButton(
+            key: signOutButtonKey,
             onPressed: () {
               ref.read(authNotifierProvider.notifier).signOut();
             },
