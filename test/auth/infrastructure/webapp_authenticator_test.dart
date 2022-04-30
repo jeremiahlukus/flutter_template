@@ -4,12 +4,14 @@ import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:oauth2/oauth2.dart';
+import 'package:platform/platform.dart';
 import 'package:test/test.dart';
 
 // Project imports:
@@ -209,7 +211,32 @@ void main() {
     });
 
     group('.getAuthorizationUrl', () {
-      test('returns the value of WebAppAuthenticator.authorizationEndpoint', () async {
+      group('When in debug mode', () {
+        test('returns the value of WebAppAuthenticator.localAuthorizationEndpoint when IOS', () async {
+          final CredentialsStorage mockCredentialsStorage = MockCredentialStorage();
+          final Dio mockDio = MockDio();
+
+          final webAppAuthenticator = WebAppAuthenticator(mockCredentialsStorage, mockDio);
+
+          final actualAuthorizationUrl = webAppAuthenticator.getAuthorizationUrl();
+          final expectedAuthorizationUrl = WebAppAuthenticator.localAuthorizationEndpoint;
+
+          expect(actualAuthorizationUrl, expectedAuthorizationUrl);
+        });
+        test('returns the value of WebAppAuthenticator.localAuthorizationEndpoint when Android', () async {
+          final CredentialsStorage mockCredentialsStorage = MockCredentialStorage();
+          final Dio mockDio = MockDio();
+
+          final webAppAuthenticator = WebAppAuthenticator(mockCredentialsStorage, mockDio);
+
+          final actualAuthorizationUrl = webAppAuthenticator.getAuthorizationUrl();
+          final expectedAuthorizationUrl = Uri.parse('http://10.0.2.2:3000/users/sign_in');
+
+          expect(actualAuthorizationUrl, expectedAuthorizationUrl);
+        });
+      });
+
+      test('returns the value of WebAppAuthenticator.authorizationEndpoint when in release mode', () async {
         final CredentialsStorage mockCredentialsStorage = MockCredentialStorage();
         final Dio mockDio = MockDio();
 
@@ -219,6 +246,7 @@ void main() {
         final expectedAuthorizationUrl = WebAppAuthenticator.authorizationEndpoint;
 
         expect(actualAuthorizationUrl, expectedAuthorizationUrl);
+        debugDefaultTargetPlatformOverride = null;
       });
     });
 
