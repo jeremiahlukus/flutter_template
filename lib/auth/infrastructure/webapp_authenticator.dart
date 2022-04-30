@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:oauth2/oauth2.dart';
+import 'package:platform/platform.dart';
 
 // Project imports:
 import 'package:flutter_template/auth/domain/auth_failure.dart';
@@ -17,13 +15,30 @@ import 'package:flutter_template/core/infrastructure/dio_extensions.dart';
 import 'package:flutter_template/core/presentation/bootstrap.dart';
 
 class WebAppAuthenticator {
-  WebAppAuthenticator(this._credentialsStorage, this._dio);
+  WebAppAuthenticator(
+    this._credentialsStorage,
+    this._dio,
+  );
+
+  ///Swap it during tests with [FakePlatform]
+  @visibleForTesting
+  static Platform getPlatform() => _platform ?? const LocalPlatform();
+
+  static Platform? _platform;
+
+  // ignore: avoid_setters_without_getters
+  static set platform(Platform? platformArgument) => _platform = platformArgument;
 
   final CredentialsStorage _credentialsStorage;
   final Dio _dio;
-  static final localAuthorizationEndpoint = Platform.isAndroid
-      ? Uri.parse('http://10.0.2.2:3000/users/sign_in')
-      : Uri.parse('http://127.0.0.1:3000/users/sign_in');
+
+  static Uri localAuthorizationEndpoint() {
+    final isAndroid = getPlatform().isAndroid;
+    return isAndroid
+        ? Uri.parse('http://10.0.2.2:3000/users/sign_in')
+        : Uri.parse('http://127.0.0.1:3000/users/sign_in');
+  }
+
   static final authorizationEndpoint = Uri.parse('http://someUrl/users/sign_in');
   static final revocationEndpoint = Uri.parse('http://127.0.0.1:3000/api/v1/auth');
   static final redirectUrl = Uri.parse('http://127.0.0.1:3000/callback');
@@ -68,7 +83,7 @@ class WebAppAuthenticator {
   }
 
   Uri getAuthorizationUrl() {
-    final url = kDebugMode ? localAuthorizationEndpoint : authorizationEndpoint;
+    final url = kDebugMode ? localAuthorizationEndpoint() : authorizationEndpoint;
     return url;
   }
 
