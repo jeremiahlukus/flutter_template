@@ -24,7 +24,7 @@ class WebAppAuthenticator {
   static final localAuthorizationEndpoint = Platform.isAndroid
       ? Uri.parse('http://10.0.2.2:3000/users/sign_in')
       : Uri.parse('http://127.0.0.1:3000/users/sign_in');
-  static final authorizationEndpoint = Uri.parse('http://127.0.0.1:3000/users/sign_in');
+  static final authorizationEndpoint = Uri.parse('http://someUrl/users/sign_in');
   static final revocationEndpoint = Uri.parse('http://127.0.0.1:3000/api/v1/auth');
   static final redirectUrl = Uri.parse('http://127.0.0.1:3000/callback');
 
