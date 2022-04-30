@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_template/auth/presentation/authorization_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -99,7 +100,9 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      final authorizationPageFinder = find.byType(SignInPage);
+      /// Verify that a push event happened
+      verify(() => mockObserver.didPush(any(), any())).called(1);
+      final authorizationPageFinder = find.byType(AuthorizationPage);
 
       expect(authorizationPageFinder, findsOneWidget);
     });
