@@ -25,14 +25,6 @@ class AuthorizationPage extends StatefulWidget {
 
 class _AuthorizationPageState extends State<AuthorizationPage> {
   @override
-  void didChangeDependencies() {
-    if (Theme.of(context).platform == TargetPlatform.iOS) {
-      WebView.platform = SurfaceAndroidWebView();
-    }
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
