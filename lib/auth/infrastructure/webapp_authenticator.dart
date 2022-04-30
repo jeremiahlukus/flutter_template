@@ -1,10 +1,12 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:oauth2/oauth2.dart';
+import 'package:platform/platform.dart';
 
 // Project imports:
 import 'package:flutter_template/auth/domain/auth_failure.dart';
@@ -13,11 +15,43 @@ import 'package:flutter_template/core/infrastructure/dio_extensions.dart';
 import 'package:flutter_template/core/presentation/bootstrap.dart';
 
 class WebAppAuthenticator {
-  WebAppAuthenticator(this._credentialsStorage, this._dio);
+  WebAppAuthenticator(
+    this._credentialsStorage,
+    this._dio,
+  );
+
+  /// Returns [LocalPlatform] by default
+  /// Swap it during tests with [FakePlatform] and ensure to set it to null in
+  /// the tear down
+  @visibleForTesting
+  static Platform getPlatform() => _platform ?? const LocalPlatform();
+
+  static Platform? _platform;
+
+  // ignore: avoid_setters_without_getters
+  static set platform(Platform? platformArgument) => _platform = platformArgument;
+
+  /// Returns [kDebugMode]] by default
+  /// Swap it during tests with a [bool] or and ensure to set it to null in
+  /// the tear down
+  static bool getIsDebugMode() => _isDebugMode ?? kDebugMode;
+
+  static bool? _isDebugMode;
+
+  // ignore: avoid_setters_without_getters
+  static set isDebugMode(bool? isDebugModeArgument) => _isDebugMode = isDebugModeArgument;
 
   final CredentialsStorage _credentialsStorage;
   final Dio _dio;
-  static final authorizationEndpoint = Uri.parse('http://127.0.0.1:3000/users/sign_in');
+
+  static Uri localAuthorizationEndpoint() {
+    final isAndroid = getPlatform().isAndroid;
+    return isAndroid
+        ? Uri.parse('http://10.0.2.2:3000/users/sign_in')
+        : Uri.parse('http://127.0.0.1:3000/users/sign_in');
+  }
+
+  static final authorizationEndpoint = Uri.parse('http://someUrl/users/sign_in');
   static final revocationEndpoint = Uri.parse('http://127.0.0.1:3000/api/v1/auth');
   static final redirectUrl = Uri.parse('http://127.0.0.1:3000/callback');
 
@@ -61,7 +95,8 @@ class WebAppAuthenticator {
   }
 
   Uri getAuthorizationUrl() {
-    return authorizationEndpoint;
+    final url = getIsDebugMode() ? localAuthorizationEndpoint() : authorizationEndpoint;
+    return url;
   }
 
   Future<Either<AuthFailure, Unit>> signOut() async {

@@ -1,11 +1,18 @@
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logger/logger.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
-import 'package:flutter_template/core/presentation/bootstrap.dart';
+import 'package:flutter_template/core/presentation/bootstrap.dart' as bootstrap;
 
 class ProviderLogger extends ProviderObserver {
+  ProviderLogger({this.loggerInstance}) {
+    loggerInstance ??= bootstrap.logger;
+  }
+
+  Logger? loggerInstance;
+
   @override
   void providerDidFail(
     ProviderBase provider,
@@ -21,7 +28,7 @@ class ProviderLogger extends ProviderObserver {
       error.toString(),
       stackTrace: stackTrace.toString(),
     );
-    logger.e(errorMap);
+    loggerInstance?.e(errorMap);
   }
 
   @override
@@ -38,6 +45,6 @@ class ProviderLogger extends ProviderObserver {
         'old_value': previousValue.toString()
       }
     };
-    logger.i(loggerMessage);
+    loggerInstance?.i(loggerMessage);
   }
 }
