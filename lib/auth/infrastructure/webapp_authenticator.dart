@@ -44,16 +44,34 @@ class WebAppAuthenticator {
   final CredentialsStorage _credentialsStorage;
   final Dio _dio;
 
-  static Uri localAuthorizationEndpoint() {
-    final isAndroid = getPlatform().isAndroid;
-    return isAndroid
-        ? Uri.parse('http://10.0.2.2:3000/users/sign_in')
-        : Uri.parse('http://127.0.0.1:3000/users/sign_in');
+  static Uri authorizationEndpoint() {
+    if (getIsDebugMode()) {
+      final isAndroid = getPlatform().isAndroid;
+      return isAndroid
+          ? Uri.parse('http://10.0.2.2:3000/users/sign_in')
+          : Uri.parse('http://127.0.0.1:3000/users/sign_in');
+    } else {
+      return Uri.parse('http://someUrl/users/sign_in');
+    }
   }
 
-  static final authorizationEndpoint = Uri.parse('http://someUrl/users/sign_in');
-  static final revocationEndpoint = Uri.parse('http://127.0.0.1:3000/api/v1/auth');
-  static final redirectUrl = Uri.parse('http://127.0.0.1:3000/callback');
+  static Uri revocationEndpoint() {
+    if (getIsDebugMode()) {
+      final isAndroid = getPlatform().isAndroid;
+      return isAndroid ? Uri.parse('http://10.0.2.2:3000/api/v1/auth') : Uri.parse('http://127.0.0.1:3000/api/v1/auth');
+    } else {
+      return Uri.parse('http://someUrl/api/v1/auth');
+    }
+  }
+
+  static Uri redirectUrl() {
+    if (getIsDebugMode()) {
+      final isAndroid = getPlatform().isAndroid;
+      return isAndroid ? Uri.parse('http://10.0.2.2:3000/callback') : Uri.parse('http://127.0.0.1:3000/callback');
+    } else {
+      return Uri.parse('http://someUrl/callback');
+    }
+  }
 
   Future<Credentials?> getSignedInCredentials() async {
     try {
@@ -95,8 +113,7 @@ class WebAppAuthenticator {
   }
 
   Uri getAuthorizationUrl() {
-    final url = getIsDebugMode() ? localAuthorizationEndpoint() : authorizationEndpoint;
-    return url;
+    return authorizationEndpoint();
   }
 
   Future<Either<AuthFailure, Unit>> signOut() async {
@@ -106,7 +123,7 @@ class WebAppAuthenticator {
 
       try {
         await _dio.deleteUri<dynamic>(
-          revocationEndpoint,
+          revocationEndpoint(),
           options: Options(
             headers: <String, String>{
               'Content-Type': 'application/json',

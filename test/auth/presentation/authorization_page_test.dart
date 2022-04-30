@@ -137,7 +137,7 @@ void main() {
 
       final NavigationRequest mockNavigationRequest = MockNavigationRequest();
 
-      when(() => mockNavigationRequest.url).thenReturn('${WebAppAuthenticator.redirectUrl}');
+      when(() => mockNavigationRequest.url).thenReturn('${WebAppAuthenticator.redirectUrl()}');
 
       webView.navigationDelegate?.call(mockNavigationRequest);
 

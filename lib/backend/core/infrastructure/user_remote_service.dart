@@ -17,7 +17,7 @@ class UserRemoteService {
 
   Future<RemoteResponse<UserDTO>> getUserDetails() async {
     final requestUri = Uri.http(
-      backendBaseUrl,
+      backendBaseUrl(),
       'api/v1/me',
     );
 

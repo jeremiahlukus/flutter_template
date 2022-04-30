@@ -46,7 +46,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                 CookieManager().clearCookies();
               },
               navigationDelegate: (navReq) async {
-                if (navReq.url.startsWith(WebAppAuthenticator.redirectUrl.toString())) {
+                if (navReq.url.startsWith(WebAppAuthenticator.redirectUrl().toString())) {
                   widget.onAuthorizationCodeRedirectAttempt(
                     Uri.parse(navReq.url),
                   );

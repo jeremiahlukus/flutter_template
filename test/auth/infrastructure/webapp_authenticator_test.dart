@@ -251,7 +251,7 @@ void main() {
         final webAppAuthenticator = WebAppAuthenticator(mockCredentialsStorage, mockDio);
 
         final actualAuthorizationUrl = webAppAuthenticator.getAuthorizationUrl();
-        final expectedAuthorizationUrl = WebAppAuthenticator.authorizationEndpoint;
+        final expectedAuthorizationUrl = WebAppAuthenticator.authorizationEndpoint();
 
         expect(actualAuthorizationUrl, expectedAuthorizationUrl);
 
@@ -272,7 +272,7 @@ void main() {
 
         when(
           () => mockDio.deleteUri<dynamic>(
-            WebAppAuthenticator.revocationEndpoint,
+            WebAppAuthenticator.revocationEndpoint(),
             options: any(named: 'options'),
           ),
         ).thenAnswer((_) => Future.value(mockResponse));
@@ -296,7 +296,7 @@ void main() {
 
         when(
           () => mockDio.deleteUri<dynamic>(
-            WebAppAuthenticator.revocationEndpoint,
+            WebAppAuthenticator.revocationEndpoint(),
             options: any(named: 'options'),
           ),
         ).thenThrow(
@@ -337,7 +337,7 @@ void main() {
 
         when(
           () => mockDio.deleteUri<dynamic>(
-            WebAppAuthenticator.revocationEndpoint,
+            WebAppAuthenticator.revocationEndpoint(),
             options: any(named: 'options'),
           ),
         ).thenThrow(
