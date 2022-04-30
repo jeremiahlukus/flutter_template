@@ -20,7 +20,9 @@ class WebAppAuthenticator {
     this._dio,
   );
 
-  ///Swap it during tests with [FakePlatform]
+  /// Returns [LocalPlatform] by default
+  /// Swap it during tests with [FakePlatform] and ensure to set it to null in
+  /// the tear down
   @visibleForTesting
   static Platform getPlatform() => _platform ?? const LocalPlatform();
 
@@ -28,6 +30,16 @@ class WebAppAuthenticator {
 
   // ignore: avoid_setters_without_getters
   static set platform(Platform? platformArgument) => _platform = platformArgument;
+
+  /// Returns [kDebugMode]] by default
+  /// Swap it during tests with a [bool] or and ensure to set it to null in
+  /// the tear down
+  static bool getIsDebugMode() => _isDebugMode ?? kDebugMode;
+
+  static bool? _isDebugMode;
+
+  // ignore: avoid_setters_without_getters
+  static set isDebugMode(bool? isDebugModeArgument) => _isDebugMode = isDebugModeArgument;
 
   final CredentialsStorage _credentialsStorage;
   final Dio _dio;
@@ -83,7 +95,7 @@ class WebAppAuthenticator {
   }
 
   Uri getAuthorizationUrl() {
-    final url = kDebugMode ? localAuthorizationEndpoint() : authorizationEndpoint;
+    final url = getIsDebugMode() ? localAuthorizationEndpoint() : authorizationEndpoint;
     return url;
   }
 

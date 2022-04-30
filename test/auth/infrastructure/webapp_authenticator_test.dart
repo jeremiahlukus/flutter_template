@@ -243,6 +243,8 @@ void main() {
       });
 
       test('returns the value of WebAppAuthenticator.authorizationEndpoint when in release mode', () async {
+        WebAppAuthenticator.isDebugMode = false;
+
         final CredentialsStorage mockCredentialsStorage = MockCredentialStorage();
         final Dio mockDio = MockDio();
 
@@ -252,6 +254,8 @@ void main() {
         final expectedAuthorizationUrl = WebAppAuthenticator.authorizationEndpoint;
 
         expect(actualAuthorizationUrl, expectedAuthorizationUrl);
+
+        WebAppAuthenticator.isDebugMode = null;
       });
     });
 
