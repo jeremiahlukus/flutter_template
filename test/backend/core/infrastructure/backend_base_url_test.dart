@@ -17,6 +17,7 @@ void main() {
       });
 
       test('returns the value of BackendConstants().backendBaseUrl when IOS', () async {
+        BackendConstants.isDebugMode = true;
         BackendConstants.platform = FakePlatform(operatingSystem: Platform.iOS);
 
         final actualAuthorizationUrl = BackendConstants().backendBaseUrl();
@@ -25,6 +26,7 @@ void main() {
         expect(actualAuthorizationUrl, expectedAuthorizationUrl);
       });
       test('returns the value of BackendConstants().backendBaseUrl when Android', () async {
+        BackendConstants.isDebugMode = true;
         BackendConstants.platform = FakePlatform(operatingSystem: Platform.android);
 
         final actualAuthorizationUrl = BackendConstants().backendBaseUrl();

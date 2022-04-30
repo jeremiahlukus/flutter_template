@@ -209,6 +209,77 @@ void main() {
       });
     });
 
+    group('.revocationEndpoint', () {
+      group('When in debug mode', () {
+        tearDown(() {
+          WebAppAuthenticator.platform = null;
+        });
+
+        test('returns the value of WebAppAuthenticator.revocationEndpoint when IOS', () async {
+          WebAppAuthenticator.platform = FakePlatform(operatingSystem: Platform.iOS);
+
+          final actualAuthorizationUrl = WebAppAuthenticator.revocationEndpoint();
+          final expectedAuthorizationUrl = Uri.parse('http://127.0.0.1:3000/api/v1/auth');
+
+          expect(actualAuthorizationUrl, expectedAuthorizationUrl);
+        });
+        test('returns the value of WebAppAuthenticator.revocationEndpoint when Android', () async {
+          WebAppAuthenticator.platform = FakePlatform(operatingSystem: Platform.android);
+
+          final actualAuthorizationUrl = WebAppAuthenticator.revocationEndpoint();
+          final expectedAuthorizationUrl = Uri.parse('http://10.0.2.2:3000/api/v1/auth');
+
+          expect(actualAuthorizationUrl, expectedAuthorizationUrl);
+        });
+      });
+
+      test('returns the value of WebAppAuthenticator.revocationEndpoint when in release mode', () async {
+        WebAppAuthenticator.isDebugMode = false;
+
+        final actualAuthorizationUrl = WebAppAuthenticator.revocationEndpoint();
+        final expectedAuthorizationUrl = Uri.parse('http://someUrl/api/v1/auth');
+
+        expect(actualAuthorizationUrl, expectedAuthorizationUrl);
+
+        WebAppAuthenticator.isDebugMode = null;
+      });
+    });
+
+    group('.redirectUrl', () {
+      group('When in debug mode', () {
+        tearDown(() {
+          WebAppAuthenticator.platform = null;
+        });
+
+        test('returns the value of WebAppAuthenticator.redirectUrl when IOS', () async {
+          WebAppAuthenticator.platform = FakePlatform(operatingSystem: Platform.iOS);
+
+          final actualAuthorizationUrl = WebAppAuthenticator.redirectUrl();
+          final expectedAuthorizationUrl = Uri.parse('http://127.0.0.1:3000/callback');
+
+          expect(actualAuthorizationUrl, expectedAuthorizationUrl);
+        });
+        test('returns the value of WebAppAuthenticator.revocationEndpoint when Android', () async {
+          WebAppAuthenticator.platform = FakePlatform(operatingSystem: Platform.android);
+
+          final actualAuthorizationUrl = WebAppAuthenticator.redirectUrl();
+          final expectedAuthorizationUrl = Uri.parse('http://10.0.2.2:3000/callback');
+
+          expect(actualAuthorizationUrl, expectedAuthorizationUrl);
+        });
+      });
+      test('returns the value of WebAppAuthenticator.revocationEndpoint when in release mode', () async {
+        WebAppAuthenticator.isDebugMode = false;
+
+        final actualAuthorizationUrl = WebAppAuthenticator.redirectUrl();
+        final expectedAuthorizationUrl = Uri.parse('http://someUrl/callback');
+
+        expect(actualAuthorizationUrl, expectedAuthorizationUrl);
+
+        WebAppAuthenticator.isDebugMode = null;
+      });
+    });
+
     group('.getAuthorizationUrl', () {
       group('When in debug mode', () {
         tearDown(() {
