@@ -28,44 +28,45 @@ jobs:
 
       - uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
         with:
+          min_coverage: 95
           path: './coverage/lcov.info'
-          exclude: '**/*freezed.dart **/*g.dart **/*gr.dart **/providers.dart lib/core/presentation/bootstrap.dart lib/core/infrastructure/remote_response.dart lib/core/infrastructure/network_exceptions.dart lib/backend/core/infrastructure/user_dto.dart lib/core/infrastructure/sembast_database.dart lib/backend/core/infrastructure/backend_headers.dart'
+          exclude: '**/*freezed.dart **/*g.dart **/*gr.dart **/providers.dart lib/core/presentation/bootstrap.dart lib/core/infrastructure/remote_response.dart lib/core/infrastructure/network_exceptions.dart lib/backend/core/infrastructure/user_dto.dart lib/core/infrastructure/sembast_database.dart'
 
   # id of job, a string that is unique to the "jobs" node above.
-  drive:
-    # Creates a build matrix for your jobs. You can define different
-    # variations of an environment to run each job in.
-    strategy:
-      # A set of different configurations of the virtual
-      # environment.
-      matrix:
-        device:
-        - "iPhone 8"
-        - "iPhone 11 Pro Max"
-      # When set to true, GitHub cancels all in-progress jobs if any
-      # matrix job fails.
-      fail-fast: false
-    # The type of machine to run the job on.
-    runs-on: macOS-latest
-    # Contains a sequence of tasks.
-    steps:
-    # A name for your step to display on GitHub.
-    - name: "List all simulators"
-      run: "xcrun simctl list"
-    - name: "Start Simulator"
-      run: |
-        UDID=$(
-          xcrun simctl list | grep -i "${{ matrix.device }}" | grep -i "shutdown" | head -n 1 | awk -F"[()]" '{print $2}'
-        )
-        xcrun simctl boot "${UDID:?No Simulator with this name found}"
-    # The branch or tag ref that triggered the workflow will be
-    # checked out.
-    # https://github.com/actions/checkout
-    - uses: actions/checkout@v2
-    # Sets up a flutter environment.
-    # https://github.com/marketplace/actions/flutter-action
-    - uses: subosito/flutter-action@v2
-      with:
-        channel: 'master' # or: 'stable', 'dev' or 'beta'
-    - name: "Run Flutter Driver tests"
-      run: "flutter test --flavor development -d iPhone integration_test"
+  # drive:
+  #   # Creates a build matrix for your jobs. You can define different
+  #   # variations of an environment to run each job in.
+  #   strategy:
+  #     # A set of different configurations of the virtual
+  #     # environment.
+  #     matrix:
+  #       device:
+  #       - "iPhone 8"
+  #       - "iPhone 11 Pro Max"
+  #     # When set to true, GitHub cancels all in-progress jobs if any
+  #     # matrix job fails.
+  #     fail-fast: false
+  #   # The type of machine to run the job on.
+  #   runs-on: macOS-latest
+  #   # Contains a sequence of tasks.
+  #   steps:
+  #   # A name for your step to display on GitHub.
+  #   - name: "List all simulators"
+  #     run: "xcrun simctl list"
+  #   - name: "Start Simulator"
+  #     run: |
+  #       UDID=$(
+  #         xcrun simctl list | grep -i "${{ matrix.device }}" | grep -i "shutdown" | head -n 1 | awk -F"[()]" '{print $2}'
+  #       )
+  #       xcrun simctl boot "${UDID:?No Simulator with this name found}"
+  #   # The branch or tag ref that triggered the workflow will be
+  #   # checked out.
+  #   # https://github.com/actions/checkout
+  #   - uses: actions/checkout@v2
+  #   # Sets up a flutter environment.
+  #   # https://github.com/marketplace/actions/flutter-action
+  #   - uses: subosito/flutter-action@v2
+  #     with:
+  #       channel: 'master' # or: 'stable', 'dev' or 'beta'
+  #   - name: "Run Flutter Driver tests"
+  #     run: "flutter test --flavor development -d iPhone integration_test"

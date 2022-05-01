@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -28,14 +25,6 @@ class AuthorizationPage extends StatefulWidget {
 
 class _AuthorizationPageState extends State<AuthorizationPage> {
   @override
-  void initState() {
-    super.initState();
-    if (Platform.isAndroid) {
-      WebView.platform = SurfaceAndroidWebView();
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -49,7 +38,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                 CookieManager().clearCookies();
               },
               navigationDelegate: (navReq) async {
-                if (navReq.url.startsWith(WebAppAuthenticator.redirectUrl.toString())) {
+                if (navReq.url.startsWith(WebAppAuthenticator.redirectUrl().toString())) {
                   widget.onAuthorizationCodeRedirectAttempt(
                     Uri.parse(navReq.url),
                   );

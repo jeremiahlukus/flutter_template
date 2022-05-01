@@ -1,14 +1,18 @@
+// Dart imports:
 import 'dart:io';
 
+// Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:oauth2/oauth2.dart';
+import 'package:test/test.dart';
+
+// Project imports:
 import 'package:flutter_template/auth/domain/auth_failure.dart';
 import 'package:flutter_template/auth/infrastructure/oauth2_interceptor.dart';
 import 'package:flutter_template/auth/infrastructure/webapp_authenticator.dart';
 import 'package:flutter_template/auth/notifiers/auth_notifier.dart';
-import 'package:mocktail/mocktail.dart';
-import 'package:oauth2/oauth2.dart';
-import 'package:test/test.dart';
 
 class MockWebAppAuthenticator extends Mock implements WebAppAuthenticator {}
 
@@ -195,8 +199,14 @@ void main() {
         when(mockWebAppAuthenticator.clearCredentialsStorage)
             .thenAnswer((invocation) => Future.value(left(const AuthFailure.storage())));
         when(mockAuthNotifier.checkAndUpdateAuthStatus).thenAnswer((invocation) => Future.value());
-        when(() => mockDio.fetch<Response<dynamic>>(any())).thenAnswer((_) => Future.value(Response(
-            requestOptions: requestOptions, data: Response<dynamic>(requestOptions: requestOptions, statusCode: 401))));
+        when(() => mockDio.fetch<Response<dynamic>>(any())).thenAnswer(
+          (_) => Future.value(
+            Response(
+              requestOptions: requestOptions,
+              data: Response<dynamic>(requestOptions: requestOptions, statusCode: 401),
+            ),
+          ),
+        );
 
         final oAuth2Interceptor = OAuth2Interceptor(mockWebAppAuthenticator, mockAuthNotifier, mockDio);
 
