@@ -36,6 +36,6 @@ Future<void> pumpRouterApp(
           routeInformationParser: router.defaultRouteParser(),
           routerDelegate: router.delegate(),
         ),
-      ))
+      ),)
       .then((_) => tester.pumpAndSettle());
 }

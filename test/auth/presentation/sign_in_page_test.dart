@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_template/backend/dashboard/presentation/dashboard_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 // Project imports:
 import 'package:flutter_template/auth/infrastructure/webapp_authenticator.dart';
 import 'package:flutter_template/auth/notifiers/auth_notifier.dart';
-import 'package:flutter_template/auth/presentation/authorization_page.dart';
 import 'package:flutter_template/auth/presentation/sign_in_page.dart';
 import 'package:flutter_template/auth/shared/providers.dart';
 import 'package:flutter_template/core/presentation/routes/app_router.gr.dart';
@@ -115,7 +115,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      final authorizationPageFinder = find.byType(AuthorizationPage);
+      final authorizationPageFinder = find.byType(DashboardPage);
 
       expect(authorizationPageFinder, findsOneWidget);
     });
