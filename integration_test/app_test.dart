@@ -27,6 +27,14 @@ void main() {
           home: AuthorizationPage(
             authorizationUrl: Uri.parse('https://mdbootstrap.com/docs/standard/extended/login/#section-basic-example'),
             onAuthorizationCodeRedirectAttempt: mockOnAuthorizationCodeRedirectAttemptCallback(),
+            onWebViewCreatedJsString: 
+          """
+          document.getElementById('form2Example1').value='example.com'
+          document.getElementsByClassName("form-label")[0].innerHTML = "";
+          document.getElementById('form2Example2').value='password'
+          document.getElementsByClassName("form-label")[1].innerHTML = "";
+          document.getElementsByClassName("btn btn-primary btn-block mb-4")[0].click();
+          """,
           ),
           navigatorObservers: [mockObserver],
         ),
