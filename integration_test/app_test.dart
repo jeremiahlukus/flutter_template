@@ -25,7 +25,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: AuthorizationPage(
-            authorizationUrl: Uri(scheme: ''),
+            authorizationUrl: Uri.parse('https://mdbootstrap.com/docs/standard/extended/login/#section-basic-example'),
             onAuthorizationCodeRedirectAttempt: mockOnAuthorizationCodeRedirectAttemptCallback(),
           ),
           navigatorObservers: [mockObserver],
