@@ -2,19 +2,24 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_template/auth/presentation/authorization_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 // Project imports:
+import 'package:flutter_template/auth/infrastructure/webapp_authenticator.dart';
 import 'package:flutter_template/auth/notifiers/auth_notifier.dart';
+import 'package:flutter_template/auth/presentation/authorization_page.dart';
 import 'package:flutter_template/auth/presentation/sign_in_page.dart';
 import 'package:flutter_template/auth/shared/providers.dart';
+import 'package:flutter_template/core/presentation/routes/app_router.gr.dart';
 
 class MockAuthNotifier extends Mock implements AuthNotifier {}
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
+
+class MockWebAppAuthenticator extends Mock implements WebAppAuthenticator {}
 
 void main() {
   setUpAll(() {
@@ -72,11 +77,18 @@ void main() {
       verify(() => mockAuthNotifier.signIn(any())).called(1);
     });
     testWidgets('clicking on Sign In button navigates to AuthorizationPage', (tester) async {
-      final AuthNotifier mockAuthNotifier = MockAuthNotifier();
+      final mockWebAppAuthenticator = MockWebAppAuthenticator();
 
-      when(() => mockAuthNotifier.signIn(any())).thenAnswer((_) => Future.value());
+      when(mockWebAppAuthenticator.getAuthorizationUrl).thenAnswer((invocation) => Uri(path: '/test'));
+
+      final mockAuthNotifier = AuthNotifier(mockWebAppAuthenticator);
 
       final mockObserver = MockNavigatorObserver();
+
+      final router = AppRouter();
+
+      // ignore: unawaited_futures, cascade_invocations
+      router.push(const SignInRoute());
 
       await tester.pumpWidget(
         ProviderScope(
@@ -85,9 +97,12 @@ void main() {
               mockAuthNotifier,
             ),
           ],
-          child: MaterialApp(
-            home: const SignInPage(),
-            navigatorObservers: [mockObserver],
+          child: MaterialApp.router(
+            routerDelegate: AutoRouterDelegate(
+              router,
+              navigatorObservers: () => [mockObserver],
+            ),
+            routeInformationParser: AppRouter().defaultRouteParser(),
           ),
         ),
       );
@@ -100,8 +115,6 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      /// Verify that a push event happened
-      verify(() => mockObserver.didPush(any(), any())).called(1);
       final authorizationPageFinder = find.byType(AuthorizationPage);
 
       expect(authorizationPageFinder, findsOneWidget);
