@@ -4,6 +4,15 @@
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 
 
+# To use as template
+
+### To Replace the app name with your app name
+1) open and add your add name to replace_app_name.sh
+2) run the script
+
+### To replace the signin screen url
+https://github.com/jeremiahlukus/flutter_template/blob/master/lib/auth/infrastructure/webapp_authenticator.dart#L47-L56
+
 # What to accomplish
 1) has tests
 2) basic auth flow
@@ -17,8 +26,7 @@
 
 
 # Top TODOs
-1) make api call using dio and cache response using dio cacher
-2) run web integration tests in github actions
+1) run web integration tests in github actions
 
 
 # DONE
@@ -27,7 +35,7 @@
 3) riverpod
 4) Flavors configured
 5) built in responsiveness
-6) full CI lint/unit/integration 
+6) full CI lint/unit/integration
 7) Pre-Push githook to force lint before pushing
 8) setup login flow
 
@@ -37,12 +45,12 @@
 
 ### First step
 Setup your backend to login a user.
-On login the path needs to be be `/callback?state=6meYRKLtQMSGctx2UXsxCd4L` 
-the state is your api token. 
-I logout using the api part of my backend `/api/v1/auth` in this call i delete the users token. 
-Soon ill add a refresh token endpoint. 
+On login the path needs to be be `/callback?state=6meYRKLtQMSGctx2UXsxCd4L`
+the state is your api token.
+I logout using the api part of my backend `/api/v1/auth` in this call i delete the users token.
+Soon ill add a refresh token endpoint.
 
-I separated the WebAppAuthenticator so you can easily replace with your solution. 
+I separated the WebAppAuthenticator so you can easily replace with your solution.
 
 ### Second step
 Run `dart pub global activate derry`
@@ -76,20 +84,20 @@ _\*Flutter Template works on iOS, Android, and Web._
 
 ---
 
-## Running in Docker 
+## Running in Docker
 
-### Start local emulator 
-1) install android studio and set up a emulator 
-2) `ln -s ~/Library/Android/sdk/tools/emulator /usr/local/bin/emulator` 
-3) `emulator -list-avds` should list out your installed devices 
-4) export the paths 
+### Start local emulator
+1) install android studio and set up a emulator
+2) `ln -s ~/Library/Android/sdk/tools/emulator /usr/local/bin/emulator`
+3) `emulator -list-avds` should list out your installed devices
+4) export the paths
 ```
 export ANDROID_SDK=$HOME/Library/Android/sdk
 export PATH=$ANDROID_SDK/emulator:$ANDROID_SDK/tools:$PATH
 
 ```
-5) run `emulator -avd $(emulator -list-avds)` to open the emulator. 
-6) `adb tcpip 5555` 
+5) run `emulator -avd $(emulator -list-avds)` to open the emulator.
+6) `adb tcpip 5555`
 After doing all the setup above you only need to run this command from here on out.
 
 
@@ -102,24 +110,24 @@ After doing all the setup above you only need to run this command from here on o
 
 Once you have installed all of these, open Visual Studio and open this project. Visual Studio will auto detect the Dockerfile and build it for you as well as copy the project files in the docker container using settings from the devcontainer.json file. If you have a andriod emulator open and have typed `adb tcpip 5555` into your terminal the device should show up in the docker container type `adb devices` to make sure if not follow the steps below
 
-### For Web 
-In Docker 
+### For Web
+In Docker
 1) Run `sh flutter-web.sh `
 
 
 ### For Android:
 1) Open up an android emulator / or plugin your device
 2) type `adb devices` and make sure the device shows if it doesnt kill and restart your server `adb kill-server` & `adb start-server`
-3) in your terminal type `adb tcpip 5555` 
+3) in your terminal type `adb tcpip 5555`
 
 In the docker continer:
 1) Run `adb connect host.docker.internal:5555`
-2) clilck allow permission on the andriod 
-3) `sh flutter-android-emulator.sh` 
+2) clilck allow permission on the andriod
+3) `sh flutter-android-emulator.sh`
 
 
-Errors: 
-If you get `The message received from the daemon indicates that the daemon has disappeared.` When trying to launch on android increase your docker memory to 4 gigs. Do this by going to the docker app -> preferences -> resourses 
+Errors:
+If you get `The message received from the daemon indicates that the daemon has disappeared.` When trying to launch on android increase your docker memory to 4 gigs. Do this by going to the docker app -> preferences -> resourses
 
 
 ## Running Tests 🧪
