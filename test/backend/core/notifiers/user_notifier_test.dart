@@ -17,8 +17,9 @@ void main() {
       test('sets state to UserState.loadFailure if UserRepository.getUserPage returns a BackendFailure', () async {
         final UserRepository mockUserRepository = MockUserRepository();
 
-        when(mockUserRepository.getUserPage)
-            .thenAnswer((invocation) => Future.value(left(const BackendFailure.api(400, 'message'))));
+        when(mockUserRepository.getUserPage).thenAnswer(
+          (invocation) => Future.value(left(const BackendFailure.api(400, 'message'))),
+        );
         final userNotifier = UserNotifier(mockUserRepository);
         const defaultUser = User(name: 'name', avatarUrl: 'avatarUrl');
         // ignore: invalid_use_of_protected_member
@@ -29,16 +30,23 @@ void main() {
         // ignore: invalid_use_of_protected_member
         final actualStateResult = userNotifier.state;
 
-        final expectedStateResultMatcher =
-            equals(const UserState.loadFailure(defaultUser, BackendFailure.api(400, 'message')));
+        final expectedStateResultMatcher = equals(
+          const UserState.loadFailure(
+            defaultUser,
+            BackendFailure.api(400, 'message'),
+          ),
+        );
 
         expect(actualStateResult, expectedStateResultMatcher);
       });
 
       test('sets state to UserState.loadSuccess if UserRepository.getUserPage returns a User', () async {
         final UserRepository mockUserRepository = MockUserRepository();
-        when(mockUserRepository.getUserPage)
-            .thenAnswer((invocation) => Future.value(right(const User(name: 'name', avatarUrl: 'avatarUrl'))));
+        when(mockUserRepository.getUserPage).thenAnswer(
+          (invocation) => Future.value(
+            right(const User(name: 'name', avatarUrl: 'avatarUrl')),
+          ),
+        );
 
         final userNotifier = UserNotifier(mockUserRepository);
 
@@ -47,8 +55,11 @@ void main() {
         // ignore: invalid_use_of_protected_member
         final actualStateResult = userNotifier.state;
 
-        final expectedStateResultMatcher =
-            equals(const UserState.loadSuccess(User(name: 'name', avatarUrl: 'avatarUrl')));
+        final expectedStateResultMatcher = equals(
+          const UserState.loadSuccess(
+            User(name: 'name', avatarUrl: 'avatarUrl'),
+          ),
+        );
 
         expect(actualStateResult, expectedStateResultMatcher);
       });

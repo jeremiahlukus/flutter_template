@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_redundant_argument_values
+
 // Dart imports:
 import 'dart:io';
 
@@ -53,15 +55,21 @@ void main() {
         final WebAppAuthenticator mockWebAppAuthenticator = MockWebAppAuthenticator();
         final AuthNotifier mockAuthNotifier = MockAuthNotifier();
         final Dio mockDio = MockDio();
-
         when(mockWebAppAuthenticator.getSignedInCredentials).thenAnswer((invocation) => Future.value(null));
 
-        final oAuth2Interceptor = OAuth2Interceptor(mockWebAppAuthenticator, mockAuthNotifier, mockDio);
+        final oAuth2Interceptor = OAuth2Interceptor(
+          mockWebAppAuthenticator,
+          mockAuthNotifier,
+          mockDio,
+        );
 
         final requestOptions = RequestOptions(path: '');
         final RequestInterceptorHandler mockRequestInterceptorHandler = MockRequestInterceptorHandler();
 
-        await oAuth2Interceptor.onRequest(requestOptions, mockRequestInterceptorHandler);
+        await oAuth2Interceptor.onRequest(
+          requestOptions,
+          mockRequestInterceptorHandler,
+        );
 
         verify<void>(() => mockRequestInterceptorHandler.next(requestOptions)).called(1);
       });
@@ -77,17 +85,26 @@ void main() {
 
         when(mockWebAppAuthenticator.getSignedInCredentials).thenAnswer((invocation) => Future.value(mockCredentials));
 
-        final oAuth2Interceptor = OAuth2Interceptor(mockWebAppAuthenticator, mockAuthNotifier, mockDio);
+        final oAuth2Interceptor = OAuth2Interceptor(
+          mockWebAppAuthenticator,
+          mockAuthNotifier,
+          mockDio,
+        );
 
         final requestOptions = RequestOptions(path: '');
         final RequestInterceptorHandler mockRequestInterceptorHandler = MockRequestInterceptorHandler();
 
-        await oAuth2Interceptor.onRequest(requestOptions, mockRequestInterceptorHandler);
+        await oAuth2Interceptor.onRequest(
+          requestOptions,
+          mockRequestInterceptorHandler,
+        );
 
         final expectedRequestOptions = requestOptions
           ..headers.addAll(<String, String>{'Authorization': 'bearer ${mockCredentials.accessToken}'});
 
-        verify<void>(() => mockRequestInterceptorHandler.next(expectedRequestOptions)).called(1);
+        verify<void>(
+          () => mockRequestInterceptorHandler.next(expectedRequestOptions),
+        ).called(1);
       });
     });
 
@@ -97,14 +114,21 @@ void main() {
         final AuthNotifier mockAuthNotifier = MockAuthNotifier();
         final Dio mockDio = MockDio();
 
-        final oAuth2Interceptor = OAuth2Interceptor(mockWebAppAuthenticator, mockAuthNotifier, mockDio);
+        final oAuth2Interceptor = OAuth2Interceptor(
+          mockWebAppAuthenticator,
+          mockAuthNotifier,
+          mockDio,
+        );
 
         final DioError mockDioError = MockDioError();
         final ErrorInterceptorHandler mockErrorInterceptorHandler = MockErrorInterceptorHandler();
 
         when(() => mockDioError.response).thenReturn(null);
 
-        await oAuth2Interceptor.onError(mockDioError, mockErrorInterceptorHandler);
+        await oAuth2Interceptor.onError(
+          mockDioError,
+          mockErrorInterceptorHandler,
+        );
 
         verify<void>(() => mockErrorInterceptorHandler.next(mockDioError)).called(1);
       });
@@ -116,7 +140,11 @@ void main() {
         final AuthNotifier mockAuthNotifier = MockAuthNotifier();
         final Dio mockDio = MockDio();
 
-        final oAuth2Interceptor = OAuth2Interceptor(mockWebAppAuthenticator, mockAuthNotifier, mockDio);
+        final oAuth2Interceptor = OAuth2Interceptor(
+          mockWebAppAuthenticator,
+          mockAuthNotifier,
+          mockDio,
+        );
 
         final DioError mockDioError = MockDioError();
         final ErrorInterceptorHandler mockErrorInterceptorHandler = MockErrorInterceptorHandler();
@@ -175,10 +203,17 @@ void main() {
         ];
 
         for (final non401ErrorCode in httpErrorCodesThatAreNot401) {
-          when(() => mockDioError.response)
-              .thenReturn(Response<dynamic>(requestOptions: requestOptions, statusCode: non401ErrorCode));
+          when(() => mockDioError.response).thenReturn(
+            Response<dynamic>(
+              requestOptions: requestOptions,
+              statusCode: non401ErrorCode,
+            ),
+          );
 
-          await oAuth2Interceptor.onError(mockDioError, mockErrorInterceptorHandler);
+          await oAuth2Interceptor.onError(
+            mockDioError,
+            mockErrorInterceptorHandler,
+          );
 
           verify<void>(() => mockErrorInterceptorHandler.next(mockDioError)).called(1);
         }
@@ -196,27 +231,39 @@ void main() {
         final requestOptions = RequestOptions(path: '');
 
         when(mockWebAppAuthenticator.getSignedInCredentials).thenAnswer((invocation) => Future.value(mockCredentials));
-        when(mockWebAppAuthenticator.clearCredentialsStorage)
-            .thenAnswer((invocation) => Future.value(left(const AuthFailure.storage())));
+        when(mockWebAppAuthenticator.clearCredentialsStorage).thenAnswer(
+          (invocation) => Future.value(left(const AuthFailure.storage())),
+        );
         when(mockAuthNotifier.checkAndUpdateAuthStatus).thenAnswer((invocation) => Future.value());
         when(() => mockDio.fetch<Response<dynamic>>(any())).thenAnswer(
           (_) => Future.value(
             Response(
               requestOptions: requestOptions,
-              data: Response<dynamic>(requestOptions: requestOptions, statusCode: 401),
+              data: Response<dynamic>(
+                requestOptions: requestOptions,
+                statusCode: 401,
+              ),
             ),
           ),
         );
 
-        final oAuth2Interceptor = OAuth2Interceptor(mockWebAppAuthenticator, mockAuthNotifier, mockDio);
+        final oAuth2Interceptor = OAuth2Interceptor(
+          mockWebAppAuthenticator,
+          mockAuthNotifier,
+          mockDio,
+        );
 
         final DioError mockDioError = MockDioError();
         final ErrorInterceptorHandler mockErrorInterceptorHandler = MockErrorInterceptorHandler();
 
-        when(() => mockDioError.response)
-            .thenReturn(Response<dynamic>(requestOptions: requestOptions, statusCode: 401));
+        when(() => mockDioError.response).thenReturn(
+          Response<dynamic>(requestOptions: requestOptions, statusCode: 401),
+        );
 
-        await oAuth2Interceptor.onError(mockDioError, mockErrorInterceptorHandler);
+        await oAuth2Interceptor.onError(
+          mockDioError,
+          mockErrorInterceptorHandler,
+        );
 
         verify<void>(() => mockErrorInterceptorHandler.resolve(any())).called(1);
       });
