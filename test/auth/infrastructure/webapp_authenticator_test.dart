@@ -444,7 +444,10 @@ void main() {
         final actualClearCredentialStorageReturnValue = await webAppAuthenticator.clearCredentialsStorage();
         final expectedClearCredentialStorageReturnValue = isA<Right<AuthFailure, Unit>>();
 
-        expect(actualClearCredentialStorageReturnValue, expectedClearCredentialStorageReturnValue);
+        expect(
+          actualClearCredentialStorageReturnValue,
+          expectedClearCredentialStorageReturnValue,
+        );
       });
 
       test('returns Left<AuthFailure, Unit> on PlatformException', () async {
@@ -458,7 +461,10 @@ void main() {
         final actualClearCredentialStorageReturnValue = await webAppAuthenticator.clearCredentialsStorage();
         final expectedClearCredentialStorageReturnValue = isA<Left<AuthFailure, Unit>>();
 
-        expect(actualClearCredentialStorageReturnValue, expectedClearCredentialStorageReturnValue);
+        expect(
+          actualClearCredentialStorageReturnValue,
+          expectedClearCredentialStorageReturnValue,
+        );
       });
     });
   });

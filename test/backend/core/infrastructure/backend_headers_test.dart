@@ -11,7 +11,10 @@ void main() {
       test(
           'returns a BackendHeaders object with null link if the response headers map contains no Link property and response request options contain no url',
           () {
-        final response = Response<dynamic>(requestOptions: RequestOptions(path: ''), headers: Headers.fromMap({}));
+        final response = Response<dynamic>(
+          requestOptions: RequestOptions(path: ''),
+          headers: Headers.fromMap({}),
+        );
         final backendHeaders = BackendHeaders.parse(response);
         final actualData = backendHeaders.link;
         // ignore: prefer_void_to_null
@@ -41,7 +44,10 @@ void main() {
           'returns a BackendHeaders object with a non-null link if the response headers map contains a Link property that does not contains rel="last"  and response request options contain a url',
           () {
         final response = Response<dynamic>(
-          requestOptions: RequestOptions(path: '?page=10&rel="last', baseUrl: 'https://www.example.com'),
+          requestOptions: RequestOptions(
+            path: '?page=10&rel="last',
+            baseUrl: 'https://www.example.com',
+          ),
           headers: Headers.fromMap({
             'link': ['https://www.example.com']
           }),

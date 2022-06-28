@@ -30,8 +30,15 @@ void main() {
         final Dio mockDio = MockDio();
         final BackendHeadersCache mockBackendHeadersCache = MockBackendHeadersCache();
 
-        when(() => mockDio.getUri<dynamic>(any(), options: any(named: 'options'))).thenAnswer(
-          (invocation) => Future.value(Response<dynamic>(requestOptions: RequestOptions(path: ''), statusCode: 304)),
+        when(
+          () => mockDio.getUri<dynamic>(any(), options: any(named: 'options')),
+        ).thenAnswer(
+          (invocation) => Future.value(
+            Response<dynamic>(
+              requestOptions: RequestOptions(path: ''),
+              statusCode: 304,
+            ),
+          ),
         );
 
         when(() => mockBackendHeadersCache.getHeaders(any())).thenAnswer(
@@ -54,9 +61,15 @@ void main() {
 
         final convertedData = UserDTO.fromJson(mockData);
 
-        when(() => mockDio.getUri<dynamic>(any(), options: any(named: 'options'))).thenAnswer(
+        when(
+          () => mockDio.getUri<dynamic>(any(), options: any(named: 'options')),
+        ).thenAnswer(
           (invocation) => Future.value(
-            Response<dynamic>(requestOptions: RequestOptions(path: ''), statusCode: 200, data: mockData),
+            Response<dynamic>(
+              requestOptions: RequestOptions(path: ''),
+              statusCode: 200,
+              data: mockData,
+            ),
           ),
         );
 
@@ -80,8 +93,15 @@ void main() {
         final Dio mockDio = MockDio();
         final BackendHeadersCache mockBackendHeadersCache = MockBackendHeadersCache();
 
-        when(() => mockDio.getUri<dynamic>(any(), options: any(named: 'options'))).thenAnswer(
-          (invocation) => Future.value(Response<dynamic>(requestOptions: RequestOptions(path: ''), statusCode: 400)),
+        when(
+          () => mockDio.getUri<dynamic>(any(), options: any(named: 'options')),
+        ).thenAnswer(
+          (invocation) => Future.value(
+            Response<dynamic>(
+              requestOptions: RequestOptions(path: ''),
+              statusCode: 400,
+            ),
+          ),
         );
 
         when(() => mockBackendHeadersCache.getHeaders(any())).thenAnswer(
@@ -100,8 +120,14 @@ void main() {
         final Dio mockDio = MockDio();
         final BackendHeadersCache mockBackendHeadersCache = MockBackendHeadersCache();
 
-        when(() => mockDio.getUri<dynamic>(any(), options: any(named: 'options')))
-            .thenThrow(DioError(requestOptions: RequestOptions(path: ''), error: const SocketException('')));
+        when(
+          () => mockDio.getUri<dynamic>(any(), options: any(named: 'options')),
+        ).thenThrow(
+          DioError(
+            requestOptions: RequestOptions(path: ''),
+            error: const SocketException(''),
+          ),
+        );
 
         when(() => mockBackendHeadersCache.getHeaders(any())).thenAnswer(
           (invocation) => Future.value(),
@@ -119,7 +145,9 @@ void main() {
         final Dio mockDio = MockDio();
         final BackendHeadersCache mockBackendHeadersCache = MockBackendHeadersCache();
 
-        when(() => mockDio.getUri<dynamic>(any(), options: any(named: 'options'))).thenThrow(
+        when(
+          () => mockDio.getUri<dynamic>(any(), options: any(named: 'options')),
+        ).thenThrow(
           DioError(
             requestOptions: RequestOptions(path: ''),
             response: Response<dynamic>(requestOptions: RequestOptions(path: '')),

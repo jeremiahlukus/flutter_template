@@ -81,7 +81,9 @@ void main() {
         const userDTO = UserDTO(avatarUrl: 'www.example.com/avatarUrl', name: 'Name');
 
         when(mockUserRemoteService.getUserDetails).thenAnswer((_) {
-          return Future.value(const RemoteResponse<UserDTO>.withNewData(userDTO));
+          return Future.value(
+            const RemoteResponse<UserDTO>.withNewData(userDTO),
+          );
         });
 
         when(() => mockUserLocalService.saveUser(userDTO)).thenAnswer((_) => Future.value());
