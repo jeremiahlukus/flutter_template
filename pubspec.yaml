@@ -45,7 +45,7 @@ dev_dependencies:
   derry: ^1.4.3
   flutter_test:
     sdk: flutter
-  freezed: ^2.0.3+1
+  freezed: ^2.1.0+1
   integration_test:
     sdk: flutter
   json_serializable: ^6.1.5
