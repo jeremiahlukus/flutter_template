@@ -20,7 +20,6 @@ dependencies:
   font_awesome_flutter: ^10.1.0
   freezed_annotation: ^2.0.3
   hooks_riverpod: ^1.0.1
-  import_sorter: ^4.6.0
   intl: ^0.17.0
   oauth2: ^2.0.0
   json_annotation: ^4.4.0
@@ -29,7 +28,6 @@ dependencies:
   riverpod: ^1.0.3
   sentry_flutter: ^6.6.1
   webview_flutter: ^3.0.2
-  mocktail: ^0.3.0
   sembast: ^3.2.0
   path_provider: ^2.0.9
   flash: ^2.0.3+2
@@ -39,6 +37,9 @@ dependencies:
 
 
 dev_dependencies:
+  alchemist: ^0.3.3
+  mocktail: ^0.3.0
+  import_sorter: ^4.6.0
   auto_route_generator: ^4.0.0
   build_runner: ^2.1.8
   derry: ^1.4.3

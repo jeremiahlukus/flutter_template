@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -30,6 +31,8 @@ class FakeUserNotifier extends UserNotifier {
 }
 
 class MockAuthNotifier extends Mock implements AuthNotifier {}
+
+class MockDio extends Mock implements Dio {}
 
 void main() {
   group('DashboardPage', () {

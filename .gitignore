@@ -10,6 +10,11 @@
 .history
 .svn/
 
+# Golden test files
+test/**/goldens/**/*.*
+test/**/failures/**/*.*
+!test/**/goldens/ci/*.*
+
 # IntelliJ related
 *.iml
 *.ipr

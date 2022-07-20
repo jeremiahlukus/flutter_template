@@ -24,13 +24,11 @@ jobs:
         run: flutter analyze lib test
 
       - name: Run unit tests
-        run: flutter test --no-pub --coverage --test-randomize-ordering-seed random
+        run: flutter test --dart-define=CI=true --no-pub --coverage --test-randomize-ordering-seed random
 
-      - uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
+      - uses: codecov/codecov-action@v2
         with:
-          min_coverage: 95
-          path: './coverage/lcov.info'
-          exclude: '**/*freezed.dart **/*g.dart **/*gr.dart **/providers.dart lib/core/presentation/bootstrap.dart lib/core/infrastructure/remote_response.dart lib/core/infrastructure/network_exceptions.dart lib/backend/core/infrastructure/user_dto.dart lib/core/infrastructure/sembast_database.dart'
+          files: coverage/lcov.info
 
   # id of job, a string that is unique to the "jobs" node above.
   # drive:
