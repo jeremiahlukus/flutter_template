@@ -11,7 +11,7 @@ dependencies:
   auto_size_text: ^3.0.0
   dartz: ^0.10.1
   dio: ^4.0.6
-  flex_color_scheme: ^5.0.1
+  flex_color_scheme: ^5.1.0
   flutter:
     sdk: flutter
   flutter_hooks: ^0.18.0
