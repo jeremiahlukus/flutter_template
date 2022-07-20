@@ -1,8 +1,8 @@
 // Flutter imports:
-import 'package:alchemist/alchemist.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:alchemist/alchemist.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,7 +15,6 @@ import 'package:flutter_template/auth/presentation/authorization_page.dart';
 import 'package:flutter_template/auth/presentation/sign_in_page.dart';
 import 'package:flutter_template/auth/shared/providers.dart';
 import 'package:flutter_template/core/presentation/routes/app_router.gr.dart';
-
 import '../../utils/device.dart';
 import '../../utils/golden_test_device_scenario.dart';
 
