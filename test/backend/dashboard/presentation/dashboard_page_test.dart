@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:alchemist/alchemist.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,8 +15,6 @@ import 'package:flutter_template/backend/core/infrastructure/user_repository.dar
 import 'package:flutter_template/backend/core/notifiers/user_notifier.dart';
 import 'package:flutter_template/backend/core/shared/providers.dart';
 import 'package:flutter_template/backend/dashboard/presentation/dashboard_page.dart';
-import '../../../utils/device.dart';
-import '../../../utils/golden_test_device_scenario.dart';
 
 class MockUserRepository extends Mock implements UserRepository {}
 
