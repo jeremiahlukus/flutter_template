@@ -125,7 +125,7 @@ void main() {
     });
   });
 
-    Widget buildWidgetUnderTest() => const MaterialApp(
+  Widget buildWidgetUnderTest() => const MaterialApp(
         home: Scaffold(
           body: SignInPage(),
         ),

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:alchemist/alchemist.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -34,6 +35,8 @@ class FakeUserNotifier extends UserNotifier {
 }
 
 class MockAuthNotifier extends Mock implements AuthNotifier {}
+
+class MockDio extends Mock implements Dio {}
 
 void main() {
   group('DashboardPage', () {
@@ -91,51 +94,5 @@ void main() {
 
       verify(mockAuthNotifier.signOut).called(1);
     });
-  });
-
-  final UserNotifier fakeUserNotifier = FakeUserNotifier(MockUserRepository());
-  final AuthNotifier mockAuthNotifier = MockAuthNotifier();
-  Widget buildWidgetUnderTest() => ProviderScope(
-        overrides: [
-          userNotifierProvider.overrideWithValue(
-            fakeUserNotifier,
-          ),
-          authNotifierProvider.overrideWithValue(
-            mockAuthNotifier,
-          ),
-        ],
-        child: const MaterialApp(
-          home: DashboardPage(),
-        ),
-      );
-
-  group('Dashboard Golden Test', () {
-    goldenTest(
-      'renders correctly on mobile',
-      fileName: 'Dashboard',
-      builder: () => GoldenTestGroup(
-        children: [
-          GoldenTestDeviceScenario(
-            device: Device.smallPhone,
-            name: 'golden test Dashboard on small phone',
-            builder: buildWidgetUnderTest,
-          ),
-          GoldenTestDeviceScenario(
-            device: Device.tabletLandscape,
-            name: 'golden test Dashboard on tablet landscape',
-            builder: buildWidgetUnderTest,
-          ),
-          GoldenTestDeviceScenario(
-            device: Device.tabletPortrait,
-            name: 'golden test Dashboard on tablet Portrait',
-            builder: buildWidgetUnderTest,
-          ),
-          GoldenTestDeviceScenario(
-            name: 'golden test Dashboard on iphone11',
-            builder: buildWidgetUnderTest,
-          ),
-        ],
-      ),
-    );
   });
 }
