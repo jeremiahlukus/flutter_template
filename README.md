@@ -1,6 +1,7 @@
 # Flutter Template
 
-![coverage][coverage_badge]
+[![codecov](https://codecov.io/gh/jeremiahlukus/flutter_template/branch/master/graph/badge.svg?token=TPPQD8NARQ)](https://codecov.io/gh/jeremiahlukus/flutter_template)
+[![flutter_template](https://github.com/jeremiahlukus/flutter_template/actions/workflows/main.yaml/badge.svg)](https://github.com/jeremiahlukus/flutter_template/actions/workflows/main.yaml)
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 
 
