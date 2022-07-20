@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:alchemist/alchemist.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -14,6 +15,9 @@ import 'package:flutter_template/backend/core/infrastructure/user_repository.dar
 import 'package:flutter_template/backend/core/notifiers/user_notifier.dart';
 import 'package:flutter_template/backend/core/shared/providers.dart';
 import 'package:flutter_template/backend/dashboard/presentation/dashboard_page.dart';
+
+import '../../../utils/device.dart';
+import '../../../utils/golden_test_device_scenario.dart';
 
 class MockUserRepository extends Mock implements UserRepository {}
 
@@ -87,5 +91,51 @@ void main() {
 
       verify(mockAuthNotifier.signOut).called(1);
     });
+  });
+
+  final UserNotifier fakeUserNotifier = FakeUserNotifier(MockUserRepository());
+  final AuthNotifier mockAuthNotifier = MockAuthNotifier();
+  Widget buildWidgetUnderTest() => ProviderScope(
+        overrides: [
+          userNotifierProvider.overrideWithValue(
+            fakeUserNotifier,
+          ),
+          authNotifierProvider.overrideWithValue(
+            mockAuthNotifier,
+          ),
+        ],
+        child: const MaterialApp(
+          home: DashboardPage(),
+        ),
+      );
+
+  group('Dashboard Golden Test', () {
+    goldenTest(
+      'renders correctly on mobile',
+      fileName: 'Dashboard',
+      builder: () => GoldenTestGroup(
+        children: [
+          GoldenTestDeviceScenario(
+            device: Device.smallPhone,
+            name: 'golden test Dashboard on small phone',
+            builder: buildWidgetUnderTest,
+          ),
+          GoldenTestDeviceScenario(
+            device: Device.tabletLandscape,
+            name: 'golden test Dashboard on tablet landscape',
+            builder: buildWidgetUnderTest,
+          ),
+          GoldenTestDeviceScenario(
+            device: Device.tabletPortrait,
+            name: 'golden test Dashboard on tablet Portrait',
+            builder: buildWidgetUnderTest,
+          ),
+          GoldenTestDeviceScenario(
+            name: 'golden test Dashboard on iphone11',
+            builder: buildWidgetUnderTest,
+          ),
+        ],
+      ),
+    );
   });
 }
