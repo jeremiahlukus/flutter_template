@@ -12,14 +12,12 @@ class AuthorizationPage extends StatefulWidget {
     Key? key,
     required this.authorizationUrl,
     required this.onAuthorizationCodeRedirectAttempt,
-    this.onWebViewCreatedJsString,
   }) : super(key: key);
 
   static const backButtonKey = ValueKey('backButton');
 
   final Uri authorizationUrl;
   final void Function(Uri redirectUri) onAuthorizationCodeRedirectAttempt;
-  final String? onWebViewCreatedJsString;
 
   @override
   State<AuthorizationPage> createState() => _AuthorizationPageState();
@@ -38,9 +36,6 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
               onWebViewCreated: (controller) {
                 controller.clearCache();
                 CookieManager().clearCookies();
-                if (widget.onWebViewCreatedJsString != null) {
-                  controller.runJavascript(widget.onWebViewCreatedJsString!);
-                }
               },
               navigationDelegate: (navReq) async {
                 if (navReq.url.startsWith(WebAppAuthenticator.redirectUrl().toString())) {
