@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:alchemist/alchemist.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,6 +16,8 @@ import 'package:flutter_template/backend/core/infrastructure/user_repository.dar
 import 'package:flutter_template/backend/core/notifiers/user_notifier.dart';
 import 'package:flutter_template/backend/core/shared/providers.dart';
 import 'package:flutter_template/backend/dashboard/presentation/dashboard_page.dart';
+import '../../../utils/device.dart';
+import '../../../utils/golden_test_device_scenario.dart';
 
 class MockUserRepository extends Mock implements UserRepository {}
 
@@ -90,5 +93,47 @@ void main() {
 
       verify(mockAuthNotifier.signOut).called(1);
     });
+  });
+
+  group('DashboardPage Golden Test', () {
+    final UserNotifier fakeUserNotifier = FakeUserNotifier(MockUserRepository());
+
+    Widget buildWidgetUnderTest() => ProviderScope(
+          overrides: [
+            userNotifierProvider.overrideWithValue(
+              fakeUserNotifier,
+            ),
+          ],
+          child: const MaterialApp(
+            home: DashboardPage(),
+          ),
+        );
+    goldenTest(
+      'renders correctly on mobile',
+      fileName: 'DashboardPage',
+      builder: () => GoldenTestGroup(
+        children: [
+          GoldenTestDeviceScenario(
+            device: Device.smallPhone,
+            name: 'golden test SignInPage on small phone',
+            builder: buildWidgetUnderTest,
+          ),
+          GoldenTestDeviceScenario(
+            device: Device.tabletLandscape,
+            name: 'golden test SignInPage on tablet landscape',
+            builder: buildWidgetUnderTest,
+          ),
+          GoldenTestDeviceScenario(
+            device: Device.tabletPortrait,
+            name: 'golden test SignInPage on tablet Portrait',
+            builder: buildWidgetUnderTest,
+          ),
+          GoldenTestDeviceScenario(
+            name: 'golden test SignInPage on iphone11',
+            builder: buildWidgetUnderTest,
+          ),
+        ],
+      ),
+    );
   });
 }

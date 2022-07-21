@@ -124,13 +124,12 @@ void main() {
     });
   });
 
-  Widget buildWidgetUnderTest() => const MaterialApp(
-        home: Scaffold(
-          body: SignInPage(),
-        ),
-      );
-
   group('SignInPage Golden Test', () {
+    Widget buildWidgetUnderTest() => const MaterialApp(
+          home: Scaffold(
+            body: SignInPage(),
+          ),
+        );
     goldenTest(
       'renders correctly on mobile',
       fileName: 'SignInPage',
