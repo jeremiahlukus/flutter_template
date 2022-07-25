@@ -37,7 +37,7 @@ dependencies:
 
 
 dev_dependencies:
-  alchemist: ^0.3.3
+  alchemist: ^0.4.1
   mocktail: ^0.3.0
   import_sorter: ^4.6.0
   auto_route_generator: ^4.2.0
