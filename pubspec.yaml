@@ -22,7 +22,7 @@ dependencies:
   hooks_riverpod: ^1.0.1
   intl: ^0.17.0
   oauth2: ^2.0.0
-  json_annotation: ^4.4.0
+  json_annotation: ^4.6.0
   logger: ^1.1.0
   responsive_framework: ^0.2.0
   riverpod: ^1.0.3
