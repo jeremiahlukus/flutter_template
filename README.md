@@ -14,6 +14,8 @@
 ### To replace the signin screen url
 https://github.com/jeremiahlukus/flutter_template/blob/master/lib/auth/infrastructure/webapp_authenticator.dart#L47-L56
 
+### A Real App that i am developing with this template is https://github.com/jeremiahlukus/guitar_tabs
+
 # What to accomplish
 1) has tests
 2) basic auth flow
