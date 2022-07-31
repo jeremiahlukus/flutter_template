@@ -4,6 +4,7 @@
 [![flutter_template](https://github.com/jeremiahlukus/flutter_template/actions/workflows/main.yaml/badge.svg)](https://github.com/jeremiahlukus/flutter_template/actions/workflows/main.yaml)
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 
+### important web isn't supported yet, since the web view plug-in used for auth doesnt support web I should get to this early August 
 
 # To use as template
 
