@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:easy_web_view/easy_web_view.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -30,38 +31,39 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
       body: SafeArea(
         child: Stack(
           children: [
-            WebView(
-              javascriptMode: JavascriptMode.unrestricted,
-              initialUrl: widget.authorizationUrl.toString(),
-              onWebViewCreated: (controller) {
-                controller.clearCache();
+            EasyWebView(
+              //javascriptMode: JavascriptMode.unrestricted,
+              src: widget.authorizationUrl.toString(),
+              onLoaded: (controller) {
                 CookieManager().clearCookies();
               },
-              navigationDelegate: (navReq) async {
-                if (navReq.url.startsWith(WebAppAuthenticator.redirectUrl().toString())) {
-                  widget.onAuthorizationCodeRedirectAttempt(
-                    Uri.parse(navReq.url),
-                  );
-                  return NavigationDecision.prevent;
-                }
-                return NavigationDecision.navigate;
-              },
-            ),
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: AppBar(
-                title: const Text(''), // You can add title here
-                leading: IconButton(
-                  key: AuthorizationPage.backButtonKey,
-                  icon: const Icon(Icons.arrow_back_ios, color: Colors.grey),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-                backgroundColor: Colors.white.withOpacity(0.1), //You can make this transparent
-                elevation: 0, //No shadow
+              options: WebViewOptions(
+                navigationDelegate: (navReq) async {
+                  if (navReq.url.startsWith(WebAppAuthenticator.redirectUrl().toString())) {
+                    widget.onAuthorizationCodeRedirectAttempt(
+                      Uri.parse(navReq.url),
+                    );
+                    return WebNavigationDecision.prevent;
+                  }
+                  return WebNavigationDecision.navigate;
+                },
               ),
             ),
+            // Positioned(
+            //   top: 0,
+            //   left: 0,
+            //   right: 0,
+            //   child: AppBar(
+            //     title: const Text(''), // You can add title here
+            //     leading: IconButton(
+            //       key: AuthorizationPage.backButtonKey,
+            //       icon: const Icon(Icons.arrow_back_ios, color: Colors.grey),
+            //       onPressed: () => Navigator.of(context).pop(),
+            //     ),
+            //     backgroundColor: Colors.white.withOpacity(0.1), //You can make this transparent
+            //     elevation: 0, //No shadow
+            //   ),
+            // ),
           ],
         ),
       ),

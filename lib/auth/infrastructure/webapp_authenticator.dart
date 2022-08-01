@@ -13,6 +13,7 @@ import 'package:flutter_template/auth/domain/auth_failure.dart';
 import 'package:flutter_template/auth/infrastructure/credentials_storage/credentials_storage.dart';
 import 'package:flutter_template/core/infrastructure/dio_extensions.dart';
 import 'package:flutter_template/core/presentation/bootstrap.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class WebAppAuthenticator {
   WebAppAuthenticator(
@@ -46,10 +47,14 @@ class WebAppAuthenticator {
 
   static Uri authorizationEndpoint() {
     if (getIsDebugMode()) {
-      final isAndroid = getPlatform().isAndroid;
-      return isAndroid
-          ? Uri.parse('http://10.0.2.2:3000/users/sign_in')
-          : Uri.parse('http://127.0.0.1:3000/users/sign_in');
+      if (UniversalPlatform.isWeb) {
+        return Uri.parse('http://localhost:3000/users/sign_in');
+      } else {
+        final isAndroid = getPlatform().isAndroid;
+        return isAndroid
+            ? Uri.parse('http://10.0.2.2:3000/users/sign_in')
+            : Uri.parse('http://127.0.0.1:3000/users/sign_in');
+      }
     } else {
       return Uri.parse('http://someUrl/users/sign_in');
     }
@@ -57,8 +62,14 @@ class WebAppAuthenticator {
 
   static Uri revocationEndpoint() {
     if (getIsDebugMode()) {
-      final isAndroid = getPlatform().isAndroid;
-      return isAndroid ? Uri.parse('http://10.0.2.2:3000/api/v1/auth') : Uri.parse('http://127.0.0.1:3000/api/v1/auth');
+      if (UniversalPlatform.isWeb) {
+        return Uri.parse('http://localhost:3000/api/v1/auth');
+      } else {
+        final isAndroid = getPlatform().isAndroid;
+        return isAndroid
+            ? Uri.parse('http://10.0.2.2:3000/api/v1/auth')
+            : Uri.parse('http://127.0.0.1:3000/api/v1/auth');
+      }
     } else {
       return Uri.parse('http://someUrl/api/v1/auth');
     }
@@ -66,8 +77,12 @@ class WebAppAuthenticator {
 
   static Uri redirectUrl() {
     if (getIsDebugMode()) {
-      final isAndroid = getPlatform().isAndroid;
-      return isAndroid ? Uri.parse('http://10.0.2.2:3000/callback') : Uri.parse('http://127.0.0.1:3000/callback');
+      if (UniversalPlatform.isWeb) {
+        return Uri.parse('http://localhost:3000/callback');
+      } else {
+        final isAndroid = getPlatform().isAndroid;
+        return isAndroid ? Uri.parse('http://10.0.2.2:3000/callback') : Uri.parse('http://127.0.0.1:3000/callback');
+      }
     } else {
       return Uri.parse('http://someUrl/callback');
     }

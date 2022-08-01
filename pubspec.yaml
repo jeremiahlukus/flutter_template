@@ -34,6 +34,8 @@ dependencies:
   cached_network_image: ^3.2.0
   sembast_web: ^2.0.1+1
   platform: ^3.1.0
+  easy_web_view: ^1.6.0
+  universal_platform: ^1.0.0+1
 
 
 dev_dependencies:
