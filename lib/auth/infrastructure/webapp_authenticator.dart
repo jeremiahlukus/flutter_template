@@ -7,13 +7,13 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:oauth2/oauth2.dart';
 import 'package:platform/platform.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 // Project imports:
 import 'package:flutter_template/auth/domain/auth_failure.dart';
 import 'package:flutter_template/auth/infrastructure/credentials_storage/credentials_storage.dart';
 import 'package:flutter_template/core/infrastructure/dio_extensions.dart';
 import 'package:flutter_template/core/presentation/bootstrap.dart';
-import 'package:universal_platform/universal_platform.dart';
 
 class WebAppAuthenticator {
   WebAppAuthenticator(
