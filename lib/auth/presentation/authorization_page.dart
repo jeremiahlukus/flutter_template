@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:easy_web_view/easy_web_view.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -31,23 +30,22 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
       body: SafeArea(
         child: Stack(
           children: [
-            EasyWebView(
-              //javascriptMode: JavascriptMode.unrestricted,
-              src: widget.authorizationUrl.toString(),
-              onLoaded: (controller) {
+            WebView(
+              javascriptMode: JavascriptMode.unrestricted,
+              initialUrl: widget.authorizationUrl.toString(),
+              onWebViewCreated: (controller) {
+                controller.clearCache();
                 CookieManager().clearCookies();
               },
-              options: WebViewOptions(
-                navigationDelegate: (navReq) async {
-                  if (navReq.url.startsWith(WebAppAuthenticator.redirectUrl().toString())) {
-                    widget.onAuthorizationCodeRedirectAttempt(
-                      Uri.parse(navReq.url),
-                    );
-                    return WebNavigationDecision.prevent;
-                  }
-                  return WebNavigationDecision.navigate;
-                },
-              ),
+              navigationDelegate: (navReq) async {
+                if (navReq.url.startsWith(WebAppAuthenticator.redirectUrl().toString())) {
+                  widget.onAuthorizationCodeRedirectAttempt(
+                    Uri.parse(navReq.url),
+                  );
+                  return NavigationDecision.prevent;
+                }
+                return NavigationDecision.navigate;
+              },
             ),
             // Positioned(
             //   top: 0,

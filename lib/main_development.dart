@@ -2,7 +2,11 @@
 import 'package:flutter_template/core/presentation/app_widget.dart';
 import 'package:flutter_template/core/presentation/bootstrap.dart';
 
+import 'package:flutter_template/utils/register_web_webview_stub.dart'
+    if (dart.library.html) 'package:flutter_template/utils/register_web_webview.dart';
+
 void main() {
+  registerWebViewWebImplementation();
   bootstrap(
     AppWidget.new,
     sentryUrl: 'https://8a60663eda2040fea03dcb1516c256be@o240021.ingest'
