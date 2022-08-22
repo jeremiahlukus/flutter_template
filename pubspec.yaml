@@ -26,7 +26,7 @@ dependencies:
   logger: ^1.1.0
   responsive_framework: ^0.2.0
   riverpod: ^1.0.3
-  sentry_flutter: ^6.6.3
+  sentry_flutter: ^6.9.1
   webview_flutter: ^3.0.2
   sembast: ^3.2.0
   path_provider: ^2.0.9
