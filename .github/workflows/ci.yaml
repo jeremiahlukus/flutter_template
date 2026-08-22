@@ -120,7 +120,7 @@ jobs:
           cache-dependency-path: test_rules/package-lock.json
 
       # The Firestore and Storage emulators are JVM processes.
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: zulu
           java-version: "21"
@@ -188,7 +188,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         if: matrix.target == 'android'
         with:
           distribution: zulu
