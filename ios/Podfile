@@ -1,5 +1,6 @@
-# Uncomment this line to define a global platform for your project
-platform :ios, '12.0'
+# Raised from Flutter's default 13.0: cloud_firestore and firebase_core both
+# require iOS 15.0. Without this the app cannot `pod install` at all.
+platform :ios, '15.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -29,9 +30,11 @@ flutter_ios_podfile_setup
 
 target 'Runner' do
   use_frameworks!
-  use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  target 'RunnerTests' do
+    inherit! :search_paths
+  end
 end
 
 post_install do |installer|

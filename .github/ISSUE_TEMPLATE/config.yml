@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Getting started
+    url: https://github.com/jeremiahlukus/flutter_template/blob/master/task.md
+    about: Milestone 0 covers first-run setup. Most "it does not build" reports are answered there.
+  - name: How this project is developed
+    url: https://github.com/jeremiahlukus/flutter_template/blob/master/specs/README.md
+    about: Spec-first workflow, requirement ids, and what a good change looks like.

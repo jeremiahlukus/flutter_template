@@ -1,2 +1,3 @@
 tags:
   golden:
+    description: Golden-file tests. Run with --update-goldens to regenerate.

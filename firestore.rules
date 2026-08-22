@@ -1,0 +1,75 @@
+rules_version = '2';
+
+// Security rules for the notes collection.
+//
+// The client in this template writes to `users/{uid}/notes/{noteId}`. These
+// rules make that layout the *enforced* boundary rather than a convention: a
+// signed-in user can only ever touch their own subtree.
+//
+// Deploy with: firebase deploy --only firestore:rules
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    // Keep a device document to the shape `PushRegistrar` writes, so a
+    // compromised client cannot use it as arbitrary storage.
+    function isValidDevice() {
+      let data = request.resource.data;
+      return data.keys().hasOnly(['token', 'updatedAt', 'platform'])
+        && data.token is string
+        && data.token.size() > 0
+        && data.token.size() <= 4096
+        && data.updatedAt is timestamp
+        && data.platform is string
+        && data.platform.size() <= 32;
+    }
+
+    // Reject a note whose shape the app would not understand, so a compromised
+    // client cannot poison other devices' caches.
+    function isValidNote() {
+      let data = request.resource.data;
+      return data.keys().hasOnly(['title', 'body', 'updatedAt'])
+        && data.title is string
+        && data.title.size() <= 200
+        && data.body is string
+        && data.body.size() <= 100000
+        && data.updatedAt is timestamp;
+    }
+
+    // Read-only configuration the app fetches at launch — currently the update
+    // policy (`config/app_update`). Any signed-in user may read it; nobody may
+    // write it from a client, because it is a remote kill switch. Edit it from
+    // the console or a trusted backend.
+    match /config/{document} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+
+      match /notes/{noteId} {
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isValidNote();
+        allow delete: if isOwner(userId);
+      }
+
+      // Push tokens, one document per device. Without this the catch-all below
+      // denies registration — and `PushRegistrar` swallows the failure by
+      // design, so delivery would simply never work with nothing in the logs.
+      match /devices/{token} {
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isValidDevice();
+        allow delete: if isOwner(userId);
+      }
+    }
+
+    // Anything not matched above is denied. Add rules deliberately.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

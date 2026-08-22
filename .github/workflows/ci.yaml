@@ -1,0 +1,193 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  # A new push to the same branch supersedes the previous run.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Pin the toolchain so a Flutter release cannot turn a green PR red.
+  FLUTTER_VERSION: "3.44.0"
+  COVERAGE_MINIMUM: "85"
+
+jobs:
+  verify:
+    name: Analyze, test, and gate coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      # Drift tests run on the Dart VM, which links the system sqlite3 rather
+      # than the bundled Android/iOS binaries.
+      - name: Install sqlite3
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsqlite3-dev
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed lib test tool
+
+      - name: Verify generated code is up to date
+        run: |
+          dart run build_runner build
+          flutter gen-l10n
+          if ! git diff --exit-code --stat; then
+            echo "::error::Generated files are stale. Run 'dart run build_runner build && flutter gen-l10n' and commit the result."
+            exit 1
+          fi
+
+      # An untranslated message silently falls back to English at runtime, which
+      # is exactly the kind of thing that ships unnoticed.
+      - name: Verify every message is translated
+        run: |
+          if [ -s lib/src/l10n/untranslated.json ] && \
+             [ "$(tr -d '[:space:]' < lib/src/l10n/untranslated.json)" != "{}" ]; then
+            echo "::error::Untranslated messages found:"
+            cat lib/src/l10n/untranslated.json
+            exit 1
+          fi
+
+      - name: Analyze
+        run: flutter analyze --fatal-infos --fatal-warnings
+
+      - name: Test
+        # Goldens are excluded here and run in their own platform-pinned job:
+        # rounded-corner anti-aliasing can differ between platform Skia builds,
+        # and a gate that flakes by OS is worse than no gate.
+        run: flutter test --coverage --reporter expanded --exclude-tags golden
+
+      - name: Enforce coverage threshold
+        run: dart run tool/check_coverage.dart --min ${{ env.COVERAGE_MINIMUM }}
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/lcov.info
+          if-no-files-found: warn
+
+  rules:
+    name: Security rules
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Untested rules are pure assertion. The Dart fakes cannot evaluate them —
+    # no custom functions, no `request.resource` — so this runs the real
+    # emulator against the real rule files.
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: test_rules/package-lock.json
+
+      # The Firestore and Storage emulators are JVM processes.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: "21"
+
+      - name: Install
+        working-directory: test_rules
+        run: npm ci
+
+      - name: Test firestore.rules and storage.rules
+        working-directory: test_rules
+        run: npm test
+
+  goldens:
+    name: Golden files
+    # Pinned to the platform the committed goldens were generated on. Do not
+    # move this to ubuntu without regenerating them.
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      - name: Compare goldens
+        run: flutter test --tags golden
+
+      # The image diffs are the only useful artefact when a golden fails.
+      - name: Upload failure diffs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-failures
+          path: test/goldens/failures/
+          if-no-files-found: ignore
+
+  build:
+    name: Build ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    # Only worth spending build minutes once the code is known good.
+    needs: verify
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: android
+            os: ubuntu-latest
+            command: flutter build apk --debug --dart-define=APP_ENV=staging
+          - target: web
+            os: ubuntu-latest
+            command: flutter build web --release --dart-define=APP_ENV=prod
+          - target: ios
+            os: macos-latest
+            command: >-
+              flutter build ios --debug --no-codesign
+              --dart-define=APP_ENV=staging
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        if: matrix.target == 'android'
+        with:
+          distribution: zulu
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      # The app cannot compile without a Firebase config, and the real one is
+      # not in version control. A throwaway stub keeps the build honest about
+      # everything *except* credentials.
+      - name: Stub Firebase configuration
+        run: dart run tool/stub_firebase_options.dart
+
+      - name: Build
+        run: ${{ matrix.command }}

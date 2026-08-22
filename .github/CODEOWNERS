@@ -1,0 +1,16 @@
+# Every PR needs a review from the default owners.
+# Replace with your team before opening the repo to contributors.
+*                       @your-org/your-team
+
+# Security-sensitive: rules changes should get a second pair of eyes.
+/firestore.rules        @your-org/your-team
+/storage.rules          @your-org/your-team
+/test_rules/            @your-org/your-team
+
+# Changing a gate changes what "green" means.
+/.github/workflows/     @your-org/your-team
+/tool/check_coverage.dart @your-org/your-team
+/analysis_options.yaml  @your-org/your-team
+
+# Specs are the contract; treat an edit like an API change.
+/specs/                 @your-org/your-team

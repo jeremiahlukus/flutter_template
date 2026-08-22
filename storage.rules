@@ -1,0 +1,42 @@
+rules_version = '2';
+
+// Security rules for Cloud Storage.
+//
+// Mirrors the path scheme in `StorageRepository`: avatars at
+// `users/{uid}/avatar.jpg` and note attachments at
+// `users/{uid}/notes/{noteId}/{file}`. If the client and these rules ever
+// disagree, uploads land somewhere unprotected — the path helpers exist as one
+// source of truth precisely to stop that.
+//
+// Deploy with: firebase deploy --only storage
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    function isImageUnder(sizeInMb) {
+      return request.resource.contentType.matches('image/.*')
+        && request.resource.size < sizeInMb * 1024 * 1024;
+    }
+
+    match /users/{userId}/avatar.jpg {
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId) && isImageUnder(5);
+    }
+
+    match /users/{userId}/notes/{noteId}/{fileName} {
+      allow read: if isOwner(userId);
+      // 8 MB matches FirebaseStorageRepository.maxDownloadBytes; a file larger
+      // than the client will ever download is not worth storing.
+      allow write: if isOwner(userId)
+        && request.resource.size < 8 * 1024 * 1024;
+      allow delete: if isOwner(userId);
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+# Localisation codegen config.
+#
+# `flutter gen-l10n` runs automatically as part of `flutter pub get` and
+# `flutter run`, so the generated `AppLocalizations` is always in step with the
+# ARB files. Output goes to lib/src/l10n/generated and is committed, so CI can
+# diff it to catch a stale build.
+arb-dir: lib/src/l10n/arb
+template-arb-file: app_en.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+nullable-getter: false
+output-dir: lib/src/l10n/generated
+untranslated-messages-file: lib/src/l10n/untranslated.json

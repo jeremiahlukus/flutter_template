@@ -1,0 +1,59 @@
+name: Bug report
+description: Something behaves differently than the spec says it should.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing: `flutter analyze` and `flutter test` both clean on `master`?
+        If not, that is probably the bug.
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Sign in as …
+        2. Tap …
+        3. Observe …
+    validations:
+      required: true
+
+  - type: input
+    id: spec
+    attributes:
+      label: Which spec does this contradict?
+      description: >
+        A requirement id if you know one — e.g. `0002-R5`. If no spec covers it,
+        say so; that is useful information on its own.
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      options: [dev, staging, prod, emulator suite]
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: App version
+      description: From Settings → About.
+      placeholder: 1.2.3 (45)
+
+  - type: textarea
+    id: platform
+    attributes:
+      label: Platform and Flutter version
+      placeholder: |
+        iPhone 17 simulator, iOS 26.5
+        flutter --version output

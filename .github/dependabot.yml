@@ -1,7 +1,28 @@
 version: 2
-enable-beta-ecosystems: true
 updates:
-  - package-ecosystem: "pub"
-    directory: "/"
+  - package-ecosystem: pub
+    directory: /
     schedule:
-      interval: "weekly"
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # Firebase packages move in lockstep; separate PRs just fight each other
+      # over pubspec.lock.
+      firebase:
+        patterns: ["firebase*", "cloud_firestore"]
+      # Same for the Drift toolchain — runtime and generator must match.
+      drift:
+        patterns: ["drift*", "sqlite3*"]
+      dev-dependencies:
+        dependency-type: development
+
+  - package-ecosystem: npm
+    directory: /test_rules
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 2
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

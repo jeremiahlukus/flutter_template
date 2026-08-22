@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "flutter-skill": {
+      "command": "flutter-skill",
+      "args": []
+    }
+  },
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "allow": [
+      "Bash(*)",
+      "Read(*)",
+      "Edit(*)",
+      "Write(*)",
+      "Glob(*)",
+      "Grep(*)"
+    ]
+  }
+}

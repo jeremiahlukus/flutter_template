@@ -1,0 +1,42 @@
+name: Feature request
+description: Propose new behaviour. Spec first.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This project is spec-first. A feature request is really a draft spec, so
+        this form asks for the same things `specs/templates/spec-template.md`
+        does. See `specs/README.md`.
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: >
+        What problem is this solving? What breaks or stays annoying if we do
+        nothing? If there is an obvious approach that does not work, say why.
+    validations:
+      required: true
+
+  - type: textarea
+    id: requirements
+    attributes:
+      label: Requirements
+      description: Numbered and individually testable. If you cannot imagine the test, it is too vague.
+      placeholder: |
+        1. The app MUST …
+        2. The app MUST NOT …
+    validations:
+      required: true
+
+  - type: textarea
+    id: nongoals
+    attributes:
+      label: Non-goals
+      description: What a reader might reasonably expect and will not get.
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
