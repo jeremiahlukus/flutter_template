@@ -5,6 +5,23 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+
+    # The Flutter SDK pins some package versions exactly, and Dependabot does not
+    # model that — it happily opens PRs that can never resolve. Verified against
+    # Flutter 3.44:
+    #
+    #   intl        pinned to 0.20.2 by flutter_localizations
+    #
+    # Bumping it fails with "version solving failed" every time, so the PR is
+    # noise. Revisit when the SDK moves.
+    #
+    # A related trap that is NOT ignored here: build_runner and drift_dev depend
+    # on `analyzer`, whose upper bound is capped by the `meta` version
+    # flutter_test pins. Those bumps genuinely become valid once Flutter updates,
+    # so they stay enabled — but a red PR on one is usually this, not your code.
+    # Check the "Install dependencies" step before investigating anything else.
+    ignore:
+      - dependency-name: intl
     groups:
       # Firebase packages move in lockstep; separate PRs just fight each other
       # over pubspec.lock.

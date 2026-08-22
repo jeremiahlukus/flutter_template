@@ -48,7 +48,13 @@ jobs:
         run: |
           dart run build_runner build
           flutter gen-l10n
-          if ! git diff --exit-code --stat; then
+          # Scoped to the generated paths, not the whole repo. A repo-wide diff
+          # also trips on anything else the toolchain happens to touch — a
+          # refreshed pubspec.lock on a dependency-bump PR, say — and reports it
+          # as "generated files are stale", which sends the reader somewhere
+          # useless.
+          if ! git diff --exit-code --stat -- \
+              '*.g.dart' 'lib/src/l10n/generated'; then
             echo "::error::Generated files are stale. Run 'dart run build_runner build && flutter gen-l10n' and commit the result."
             exit 1
           fi

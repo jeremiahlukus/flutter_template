@@ -75,6 +75,24 @@ and no network.
 | 0007-R9 | The whole suite: `flutter test` with no configuration |
 | 0007-R10 | `.github/workflows/ci.yaml` › `env.FLUTTER_VERSION` |
 
+### Dependabot and SDK-pinned packages
+
+The Flutter SDK pins some transitive versions *exactly*, and Dependabot does not
+model that — so it opens PRs that can never resolve. Three arrived on the first
+day: `intl` (pinned by `flutter_localizations`), and `build_runner` / `drift_dev`
+(both blocked by the `analyzer` ceiling that `flutter_test`'s pinned `meta`
+imposes).
+
+`intl` is ignored in `.github/dependabot.yml`, since that one can only change
+when the SDK does. The analyzer-coupled tooling stays enabled — those bumps do
+become valid once Flutter updates — with a comment pointing the next reader at
+the `Install dependencies` step, because a red PR there is almost never the
+code's fault.
+
+Also worth knowing: the codegen-freshness check diffs **only** the generated
+paths, not the whole repo. A repo-wide diff reports an incidentally-touched file
+as "generated files are stale", which sends the reader somewhere useless.
+
 ## Open questions
 
 - ~~The gate itself has no tests.~~ **Resolved:** the parser and threshold logic

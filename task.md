@@ -187,6 +187,9 @@ Added to cut the gap between "template" and "shippable".
       registry CI cannot reach. Both now have guards: a web-compatibility grep in
       CI, and a committed `test_rules/.npmrc`.
       → [0003-R11](specs/0003-local-persistence.md), [spec 0016](specs/0016-emulator-and-rules.md)
+- [x] **Dependabot tuned for the Flutter SDK's version pins** — `intl` cannot be
+      bumped while `flutter_localizations` pins it, so it is ignored rather than
+      reopened weekly. → [spec 0007](specs/0007-quality-gates.md)
 
 ---
 
