@@ -79,6 +79,17 @@ Node and a JDK.
 | 0016-R8 | `…` › `emulators` › `are off unless explicitly requested` |
 | 0016-R9 | `.github/workflows/ci.yaml` › `rules` job |
 
+### The emulators need JDK 21+
+
+The Firestore and Storage emulators are JVM processes, and **firebase-tools 15
+dropped support for anything below JDK 21**. The `rules` job pins
+`java-version: "21"`, so CI is fine — but a contributor on JDK 17 gets a runtime
+failure with no obvious connection to the version bump. Noted in
+`test_rules/package.json`.
+
+(The `build android` job deliberately stays on JDK 17, which is what the Android
+toolchain wants. Two different Java versions in one workflow is correct here.)
+
 ### The lockfile has to be committed, and pinned to the public registry
 
 `npm ci` requires `package-lock.json`, so it is committed. But the first

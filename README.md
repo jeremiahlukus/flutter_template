@@ -328,6 +328,10 @@ both. `test_rules/` runs them against the real emulator instead:
 cd test_rules && npm ci && npm test
 ```
 
+Needs **JDK 21+** — the emulators are JVM processes and firebase-tools 15 dropped
+older runtimes. CI pins 21 for that job; the Android build job stays on 17, which
+is what its toolchain wants.
+
 `test/helpers/test_helpers.dart` wires all of it into one `TestHarness`, so a
 widget test is three lines:
 

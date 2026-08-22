@@ -2,7 +2,7 @@
   "name": "flutter-template-rules-tests",
   "version": "1.0.0",
   "private": true,
-  "description": "Security-rules tests for firestore.rules and storage.rules, run against the Firebase emulator suite.",
+  "description": "Security-rules tests for firestore.rules and storage.rules, run against the Firebase emulator suite. Requires JDK 21+ (firebase-tools 15).",
   "type": "module",
   "scripts": {
     "test": "firebase emulators:exec --only firestore,storage,auth --project flutter-template-local 'vitest run'",

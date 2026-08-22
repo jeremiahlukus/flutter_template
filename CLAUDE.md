@@ -34,7 +34,7 @@ flutter test --coverage --exclude-tags golden && \
 dart run build_runner build              # after editing lib/src/database/tables.dart
 flutter gen-l10n                         # after editing an ARB file
 flutter test --tags golden               # platform-pinned to macOS
-cd test_rules && npm ci && npm test      # security rules vs the real emulator
+cd test_rules && npm ci && npm test      # security rules; needs JDK 21+
 ```
 
 All four gates must pass: analyze (zero issues, infos included), tests, coverage
