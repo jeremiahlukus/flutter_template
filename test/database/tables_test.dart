@@ -3,6 +3,8 @@ import 'package:flutter_template/src/database/app_database.dart';
 import 'package:flutter_template/src/database/tables.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../helpers/test_database.dart';
+
 /// Schema-shape tests.
 ///
 /// These exist so an accidental change to a column — dropping a default,
@@ -11,7 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   late AppDatabase db;
 
-  setUp(() => db = AppDatabase.memory());
+  setUp(() => db = inMemoryDatabase());
   tearDown(() => db.close());
 
   group('Notes', () {

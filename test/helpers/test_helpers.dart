@@ -28,8 +28,13 @@ import 'package:flutter_template/src/l10n/l10n_providers.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import 'test_database.dart';
+
 // Re-exported so tests can seed a preference without a second import.
 export 'package:flutter_template/src/features/settings/setting_keys.dart';
+// The in-memory database lives in test/ because `drift/native.dart` imports
+// `dart:ffi`, which breaks the web build if referenced from lib/.
+export 'test_database.dart';
 
 /// Everything a test needs to drive the app with no Firebase project.
 ///
@@ -80,7 +85,7 @@ class TestHarness {
     final auth =
         mockAuth ?? MockFirebaseAuth(mockUser: user, signedIn: user != null);
     final store = firestore ?? FakeFirebaseFirestore();
-    final db = database ?? AppDatabase.memory();
+    final db = database ?? inMemoryDatabase();
     final analytics = RecordingAnalyticsService();
     final storage = InMemoryStorageRepository();
     final connectivity = FakeConnectivityService(network);
@@ -251,7 +256,7 @@ MockUser testUser({
 ///
 /// Use this to model an app restart: same stored state, new provider container.
 AppDatabase harnessDatabase() {
-  final db = AppDatabase.memory();
+  final db = inMemoryDatabase();
   addTearDown(db.close);
   return db;
 }

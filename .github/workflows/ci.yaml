@@ -64,6 +64,19 @@ jobs:
             exit 1
           fi
 
+      # A single `dart:ffi` or `dart:io` import reachable from lib/ makes the
+      # whole web build fail to compile, and `flutter analyze` says nothing about
+      # it. This caught a real one: `drift/native.dart` pulled in for a test-only
+      # helper. Cheaper to check here than to wait for the build matrix.
+      - name: Verify lib/ stays web-compatible
+        run: |
+          if grep -rnE "^import 'dart:(ffi|io|mirrors)'|^import 'package:drift/native\.dart'" lib/; then
+            echo "::error::lib/ imports a library that is unavailable on web."
+            echo "Move it to test/, or guard it behind a conditional import."
+            exit 1
+          fi
+          echo "lib/ is web-compatible"
+
       - name: Analyze
         run: flutter analyze --fatal-infos --fatal-warnings
 

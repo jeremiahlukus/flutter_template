@@ -181,6 +181,12 @@ Added to cut the gap between "template" and "shippable".
       [0020](specs/0020-push-notifications.md), [0002](specs/0002-notes-sync.md).
 - [x] **`CLAUDE.md` / `AGENTS.md`** — condensed rules, gates, and known traps for
       coding agents
+- [x] **Two CI-only bugs fixed after the first real run** — `lib/` imported
+      `drift/native.dart` for a test-only helper, so `flutter build web` had
+      never compiled; and `test_rules/package-lock.json` was pinned to a private
+      registry CI cannot reach. Both now have guards: a web-compatibility grep in
+      CI, and a committed `test_rules/.npmrc`.
+      → [0003-R11](specs/0003-local-persistence.md), [spec 0016](specs/0016-emulator-and-rules.md)
 
 ---
 

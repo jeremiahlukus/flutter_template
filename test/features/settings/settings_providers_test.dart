@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_template/src/database/app_database.dart';
 import 'package:flutter_template/src/features/settings/settings_providers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -154,7 +153,7 @@ void main() {
     });
 
     test('the choice survives a restart', () async {
-      final db = AppDatabase.memory();
+      final db = inMemoryDatabase();
       addTearDown(db.close);
 
       final first = TestHarness.create(database: db);

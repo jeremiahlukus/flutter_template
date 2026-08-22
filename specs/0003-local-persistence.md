@@ -29,6 +29,7 @@ corrupts the one field the sync logic depends on.
 | 0003-R8 | An unrecognised stored preference MUST fall back to a default, never throw. |
 | 0003-R9 | Watched queries MUST emit on every relevant write. |
 | 0003-R10 | Note titles MUST be capped at 200 characters at the schema level. |
+| 0003-R11 | Nothing in `lib/` may import a native-only library. |
 
 ## Non-goals
 
@@ -47,9 +48,17 @@ Two tables, declared in `lib/src/database/tables.dart`:
 
 `storeDateTimeAsText: true` is set via `options`, satisfying R2.
 
-`AppDatabase.memory()` uses `NativeDatabase.memory()`, which needs no
-`path_provider` and no platform channels. That single factory is why the
-repository, provider, and widget layers are all testable.
+`inMemoryDatabase()` — in `test/helpers/test_database.dart`, **not** on
+`AppDatabase` — uses `NativeDatabase.memory()`, which needs no `path_provider`
+and no platform channels. That one helper is why the repository, provider, and
+widget layers are all testable.
+
+R11 is why it lives in `test/`. It was originally an `AppDatabase.memory()`
+factory in `lib/`, which meant `lib/` imported `package:drift/native.dart` →
+`dart:ffi`, and **`flutter build web` could not compile at all**. `flutter
+analyze` is silent about this; the only signal was a failing build job. CI now
+greps `lib/` for native-only imports as a cheap early check. Production code uses
+`drift_flutter`'s `driftDatabase()`, which handles web.
 
 ### Coverage note
 
@@ -72,6 +81,7 @@ never at runtime. The schema itself is covered by
 | 0003-R8 | `test/features/settings/settings_providers_test.dart` › `ThemeModeController.decode` › `falls back to system for a corrupt value` |
 | 0003-R9 | `test/database/app_database_test.dart` › `notes` › `watchNotes emits on every write` |
 | 0003-R10 | `test/database/tables_test.dart` › `Notes` › `title is capped at 200 characters` |
+| 0003-R11 | `.github/workflows/ci.yaml` › `Verify lib/ stays web-compatible` |
 
 ## Open questions
 

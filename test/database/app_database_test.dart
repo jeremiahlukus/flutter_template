@@ -1,10 +1,12 @@
 import 'package:flutter_template/src/database/app_database.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../helpers/test_database.dart';
+
 void main() {
   late AppDatabase db;
 
-  setUp(() => db = AppDatabase.memory());
+  setUp(() => db = inMemoryDatabase());
   tearDown(() => db.close());
 
   NoteRow row(

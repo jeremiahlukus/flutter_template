@@ -645,6 +645,19 @@ simply inert in production while every Dart test passed — because
 If you add a Firestore path: add the rule, and add a case to `test_rules/`.
 That suite is the only thing that would have caught this.
 
+### Nothing in `lib/` may import a native-only library
+
+One `dart:ffi` import reachable from `lib/` makes `flutter build web` fail to
+compile, and **`flutter analyze` says nothing about it** — the first sign is a red
+build matrix. That happened here: `AppDatabase.memory()` was a convenience
+factory in `lib/`, and `package:drift/native.dart` dragged `dart:ffi` in behind
+it. The web build had never worked.
+
+The in-memory database now lives in `test/helpers/test_database.dart`, and CI
+greps `lib/` for `dart:ffi`, `dart:io`, `dart:mirrors`, and `drift/native.dart`
+before it bothers analyzing. Use `drift_flutter`'s `driftDatabase()` in
+production code — it handles every platform, web included.
+
 ### Every interactive widget carries a `ValueKey`
 
 Not decoration. It is what lets integration drivers target a specific row instead

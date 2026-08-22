@@ -25,7 +25,7 @@ void main() {
 
   group('AppDatabase.watchNotes', () {
     test('is unbounded when no limit is given', () async {
-      final db = AppDatabase.memory();
+      final db = inMemoryDatabase();
       addTearDown(db.close);
       await seed(db, 40);
 
@@ -33,7 +33,7 @@ void main() {
     });
 
     test('respects a limit', () async {
-      final db = AppDatabase.memory();
+      final db = inMemoryDatabase();
       addTearDown(db.close);
       await seed(db, 40);
 
@@ -41,7 +41,7 @@ void main() {
     });
 
     test('a limit takes the newest rows, not an arbitrary slice', () async {
-      final db = AppDatabase.memory();
+      final db = inMemoryDatabase();
       addTearDown(db.close);
       await seed(db, 40);
 
@@ -51,7 +51,7 @@ void main() {
     });
 
     test('a limit larger than the table returns everything', () async {
-      final db = AppDatabase.memory();
+      final db = inMemoryDatabase();
       addTearDown(db.close);
       await seed(db, 5);
 
@@ -59,7 +59,7 @@ void main() {
     });
 
     test('ordering is stable for identical timestamps', () async {
-      final db = AppDatabase.memory();
+      final db = inMemoryDatabase();
       addTearDown(db.close);
       final at = DateTime.utc(2026, 5, 5);
       for (final id in ['b', 'a', 'c']) {
@@ -74,7 +74,7 @@ void main() {
     });
 
     test('countNotes reports the row count', () async {
-      final db = AppDatabase.memory();
+      final db = inMemoryDatabase();
       addTearDown(db.close);
       await seed(db, 7);
 
@@ -82,7 +82,7 @@ void main() {
     });
 
     test('the count is zero for an empty table', () async {
-      final db = AppDatabase.memory();
+      final db = inMemoryDatabase();
       addTearDown(db.close);
 
       expect(await db.countNotes(), 0);

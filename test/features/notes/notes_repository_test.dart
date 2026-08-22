@@ -32,7 +32,7 @@ void main() {
 
   setUp(() {
     firestore = FakeFirebaseFirestore();
-    db = AppDatabase.memory();
+    db = inMemoryDatabase();
     analytics = RecordingAnalyticsService();
     repo = NotesRepository(
       firestore: firestore,

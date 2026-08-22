@@ -1,5 +1,4 @@
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/src/database/tables.dart';
@@ -10,9 +9,6 @@ part 'app_database.g.dart';
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor])
     : super(executor ?? driftDatabase(name: 'flutter_template'));
-
-  /// In-memory database for tests. Each call is an isolated, empty schema.
-  factory AppDatabase.memory() => AppDatabase(inMemoryExecutor());
 
   @override
   int get schemaVersion => 1;
@@ -125,13 +121,12 @@ class AppDatabase extends _$AppDatabase {
           .map((row) => row?.value);
 }
 
-/// Exposed separately so tests can build an executor without a Flutter binding.
+/// Overridden in tests with an in-memory database.
 ///
-/// [NativeDatabase.memory] needs no `path_provider` and no platform channels,
-/// which is exactly what makes the Drift layer unit-testable.
-QueryExecutor inMemoryExecutor() => NativeDatabase.memory();
-
-/// Overridden in tests with `AppDatabase.memory()`.
+/// Tests build one with `inMemoryDatabase()` from `test/helpers/`, deliberately
+/// **not** a factory here: that would need `package:drift/native.dart`, which
+/// imports `dart:ffi` and makes the whole app fail to compile for web. Nothing in
+/// `lib/` may reference the native executor.
 final appDatabaseProvider = Provider<AppDatabase>((ref) {
   final db = AppDatabase();
   ref.onDispose(db.close);

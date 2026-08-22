@@ -23,7 +23,7 @@ void main() {
 
   setUp(() {
     firestore = FakeFirebaseFirestore();
-    db = AppDatabase.memory();
+    db = inMemoryDatabase();
     // Built directly rather than through Riverpod: these are repository-level
     // tests, and the provider graph adds nothing but setup.
     notes = NotesRepository(

@@ -79,6 +79,17 @@ Node and a JDK.
 | 0016-R8 | `…` › `emulators` › `are off unless explicitly requested` |
 | 0016-R9 | `.github/workflows/ci.yaml` › `rules` job |
 
+### The lockfile has to be committed, and pinned to the public registry
+
+`npm ci` requires `package-lock.json`, so it is committed. But the first
+generated lockfile pinned all 901 `resolved` URLs to a **private corporate
+Artifactory** — inherited from the machine's global npm config. CI has no
+credentials for it, so the rules job failed with an npm authentication error, and
+an internal hostname ended up in a public repo.
+
+`test_rules/.npmrc` now pins `registry.npmjs.org` for this package, so the
+lockfile is reproducible regardless of whoever's global config generated it.
+
 ## Open questions
 
 - The Storage rules' size limits are tested with real multi-megabyte buffers,
