@@ -43,7 +43,7 @@ dependencies:
   firebase_messaging: ^16.5.0
 
 dev_dependencies:
-  build_runner: ^2.15.1
+  build_runner: ^2.16.0
   drift_dev: ^2.34.0
   # In-memory Firestore; the whole notes/sync suite runs on this.
   fake_cloud_firestore: ^4.2.0
