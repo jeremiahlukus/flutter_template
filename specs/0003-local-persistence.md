@@ -30,6 +30,8 @@ corrupts the one field the sync logic depends on.
 | 0003-R9 | Watched queries MUST emit on every relevant write. |
 | 0003-R10 | Note titles MUST be capped at 200 characters at the schema level. |
 | 0003-R11 | Nothing in `lib/` may import a native-only library. |
+| 0003-R12 | The on-disk database name MUST be a single named constant, pinned by a test, and MUST NOT be derived from the package name. |
+| 0003-R13 | Exactly one `AppDatabase` MUST exist per process; the provider MUST be an injection seam that fails loudly if unset, never a default constructor. |
 
 ## Non-goals
 
@@ -73,7 +75,7 @@ never at runtime. The schema itself is covered by
 |---|---|
 | 0003-R1 | `test/database/app_database_test.dart` › `notes` › `starts empty` |
 | 0003-R2 | `…` › `timestamp fidelity` › `preserves sub-second precision through a write and read` |
-| 0003-R3 | `…` › `schemaVersion is pinned so migrations are deliberate` |
+| 0003-R3 | `…` › `schemaVersion is pinned so a bump is deliberate` |
 | 0003-R4 | `test/database/tables_test.dart` › `database wiring` › `foreign keys are enabled on open` |
 | 0003-R5 | `test/database/app_database_test.dart` › `notes` › `orders newest first` |
 | 0003-R6 | `…` › `replaceNotes` › `preserves unsynced local work` |
@@ -82,6 +84,8 @@ never at runtime. The schema itself is covered by
 | 0003-R9 | `test/database/app_database_test.dart` › `notes` › `watchNotes emits on every write` |
 | 0003-R10 | `test/database/tables_test.dart` › `Notes` › `title is capped at 200 characters` |
 | 0003-R11 | `.github/workflows/ci.yaml` › `Verify lib/ stays web-compatible` |
+| 0003-R12 | `test/database/app_database_test.dart` › `the on-disk database name is pinned` |
+| 0003-R13 | `test/database/app_database_test.dart` › `appDatabaseProvider must be overridden` |
 
 ## Open questions
 

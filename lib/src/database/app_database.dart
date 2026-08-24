@@ -8,7 +8,25 @@ part 'app_database.g.dart';
 @DriftDatabase(tables: [Notes, SettingsEntries])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor])
-    : super(executor ?? driftDatabase(name: 'flutter_template'));
+    : super(executor ?? driftDatabase(name: databaseName));
+
+  /// The on-disk database file name.
+  ///
+  /// **If you are replacing an app that is already shipped, keep its existing
+  /// name here.** Renaming this points the app at a brand-new empty file beside
+  /// the real one: every user's local data is still on disk with nothing
+  /// referencing it, and there is no error — it presents as "the update wiped my
+  /// account". Carry the old `schemaVersion` and its migrations forward too.
+  ///
+  /// A find-and-replace of the package name lands on this line, which is why it
+  /// carries `// keep-on-rename`: `tool/rename_package.dart` reverts the rename
+  /// on any line with that marker, so renaming the package cannot silently
+  /// rename the database. Changing this is a decision, not a side effect.
+  ///
+  /// Only a test can catch a regression here, and only by asserting against the
+  /// source: an in-memory database never opens a file, so the name is invisible
+  /// at runtime.
+  static const databaseName = 'flutter_template'; // keep-on-rename
 
   @override
   int get schemaVersion => 1;
@@ -121,14 +139,36 @@ class AppDatabase extends _$AppDatabase {
           .map((row) => row?.value);
 }
 
-/// Overridden in tests with an in-memory database.
+/// The app's single [AppDatabase]. **Must be overridden** — `bootstrap` supplies
+/// the real one, tests supply an in-memory one.
 ///
-/// Tests build one with `inMemoryDatabase()` from `test/helpers/`, deliberately
-/// **not** a factory here: that would need `package:drift/native.dart`, which
-/// imports `dart:ffi` and makes the whole app fail to compile for web. Nothing in
-/// `lib/` may reference the native executor.
-final appDatabaseProvider = Provider<AppDatabase>((ref) {
-  final db = AppDatabase();
-  ref.onDispose(db.close);
-  return db;
-});
+/// A throwing placeholder rather than a working default, matching
+/// `firebase_options.dart`. The default used to construct its own instance,
+/// which reads as convenient and quietly punishes any fork whose database has
+/// work to do before the first frame: you build one in `bootstrap` to prime
+/// settings, override *a different* provider with it by mistake, and now two
+/// `AppDatabase` objects share one file. Drift only warns:
+///
+/// ```text
+/// WARNING (drift): It looks like you've created the database class AppDatabase
+/// multiple times. When these two databases use the same QueryExecutor, race
+/// conditions will occur and might corrupt the database.
+/// ```
+///
+/// Two connections mean two sets of streams, so a write through one never
+/// invalidates a `watch` on the other — a corruption risk in production, and
+/// hanging `pumpAndSettle` in tests. Throwing makes that impossible instead of
+/// merely logged.
+///
+/// Tests build theirs with `inMemoryDatabase()` from `test/helpers/`,
+/// deliberately not a factory here: that needs `package:drift/native.dart`,
+/// which imports `dart:ffi` and breaks the web build. Nothing in `lib/` may
+/// reference the native executor.
+final appDatabaseProvider = Provider<AppDatabase>(
+  (ref) => throw StateError(
+    'appDatabaseProvider was read without being overridden.\n'
+    'bootstrap() supplies the real database; tests supply an in-memory one via '
+    'TestHarness. If you need the database before the first frame, override '
+    '*this* provider — never introduce a second one for the same file.',
+  ),
+);

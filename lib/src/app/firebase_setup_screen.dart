@@ -4,6 +4,26 @@ import 'package:flutter_template/src/app/theme/app_theme.dart';
 import 'package:flutter_template/src/app/theme/design_tokens.dart';
 import 'package:flutter_template/src/l10n/l10n.dart';
 
+/// Thrown by the placeholder `DefaultFirebaseOptions`.
+///
+/// A named type rather than a bare `StateError` so `bootstrap` can tell "you
+/// have not configured Firebase" apart from "Firebase is configured but failed
+/// to start", and so a test can assert on the distinction.
+///
+/// It lives *here*, not in `lib/firebase_options.dart`, because that file is
+/// generated: `flutterfire configure` overwrites it, which would delete this
+/// class out from under `bootstrap` and `FirebaseSetupScreen`. This file is the
+/// only thing that renders for it, so it is the natural home.
+class FirebaseNotConfigured implements Exception {
+  const FirebaseNotConfigured();
+
+  @override
+  String toString() =>
+      'Firebase is not configured. Run `flutterfire configure` to regenerate '
+      'lib/firebase_options.dart, then rerun the app. '
+      'See task.md > Milestone 0 for the full checklist.';
+}
+
 /// Shown instead of the app when Firebase could not be initialised.
 ///
 /// A template that dies on launch is a bad first impression and a confusing one

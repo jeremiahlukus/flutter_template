@@ -136,6 +136,23 @@ Two related notes:
 Then work through [`task.md`](task.md) Milestone 0 to make the template yours
 (rename the package, set the bundle id, deploy the security rules).
 
+Start with the rename, and use the tool rather than a `sed` one-liner:
+
+```sh
+dart run tool/rename_package.dart your_app     # --dry-run to preview
+```
+
+A bare find-and-replace leaves the project **not analyzing** — roughly 65
+`directives_ordering` errors, because `package:your_app/...` does not sort where
+`package:flutter_template/...` did. The tool replaces, then runs
+`dart fix --code=directives_ordering` and `dart format`.
+
+It deliberately does **not** rename `AppDatabase.databaseName`. That constant is
+the on-disk SQLite file name, and if this template is replacing an app you have
+already shipped, changing it points the new build at an empty database beside the
+real one — every user's local data still on disk with nothing referencing it, and
+nothing thrown. Milestone 0 has the decision.
+
 ---
 
 ## Feature matrix
@@ -694,11 +711,70 @@ handlers `TemplateSignInScreen.recordSignIn` / `.recordSignUp`, which are unit
 tested directly. Everything else about the screen (rendering, branding, layout at
 three widths, the signed-in redirect) is covered normally.
 
-### `firebase_ui_oauth_google` is deliberately not included
+The same package also **cannot model an anonymous account being upgraded to a
+permanent one** — and it fails by crashing, not by returning something wrong.
 
-It drags in `desktop_webview_auth`, which has no Swift Package Manager support —
-already a build warning on iOS and macOS, and slated to become an error. Add it
-per-app if you need social sign-in.
+`MockUser.linkWithCredential` returns `MockUserCredential(false, mockUser: this)`,
+while `MockUserCredential` asserts `mockUser.isAnonymous == isAnonymous`. Link an
+anonymous user and those contradict, so the call throws:
+
+```
+_AssertionError: 'package:firebase_auth_mocks/src/mock_user_credential.dart':
+Failed assertion: line 10 pos 16:
+'mockUser == null || mockUser.isAnonymous == isAnonymous': is not true.
+```
+
+(Verified against `firebase_auth_mocks` 0.15.2.) `MockUser._isAnonymous` is also
+`final` with no setter, so even without the assert the user could never transition.
+Do not read the crash as a bug in your own linking code.
+
+If your app offers "try it without an account, sign up later", the link step is
+not unit-testable with these fakes. The options, in the order worth trying:
+
+1. **Test the seam, not the SDK.** Put the linking behind your own method on
+   `AuthRepository` and fake *that* — the same move already used for
+   `StorageRepository`. Your orchestration gets covered; the one SDK call does not.
+2. **Test it against the Firebase Auth emulator**, alongside the Firestore rules
+   suite in `test_rules/`. Real linking semantics, at the cost of an emulator run.
+3. **Cover it on-device**, per [`flutter-skill.md`](flutter-skill.md).
+
+What does not work is asserting on it in a widget test and believing the result.
+
+### `desktop_webview_auth` blocks Swift Package Manager, and you cannot drop it
+
+Every `flutter run` and `flutter build` for iOS and macOS prints:
+
+```
+The following plugins do not support Swift Package Manager for ios:
+  - desktop_webview_auth
+This will become an error in a future version of Flutter.
+```
+
+It is **not** optional and not something the template pulled in carelessly.
+`firebase_ui_auth` depends on `firebase_ui_oauth`, which depends on
+`desktop_webview_auth`, so it arrives transitively from the one auth UI package:
+
+```
+firebase_ui_auth → firebase_ui_oauth → desktop_webview_auth
+```
+
+Confirm it yourself with `flutter pub deps --style=compact | grep desktop_webview_auth`.
+
+Consequences to plan for:
+
+- **You cannot migrate this app to Swift Package Manager** while `firebase_ui_auth`
+  is a dependency. If SPM-only is a requirement, budget for replacing
+  `firebase_ui_auth` with hand-rolled auth screens over `firebase_auth` — the
+  package is a convenience, and `TemplateSignInScreen` is the only place it is used.
+- **The warning becomes an error in a future Flutter release.** When it does, this
+  stops being noise and starts being a broken build, on Flutter's schedule rather
+  than yours.
+- CocoaPods still works today, so nothing is blocked right now. Do not spend time
+  trying to silence the warning; there is no flag for it.
+
+`firebase_ui_oauth_google` is separately not included — social sign-in needs
+per-app provider setup — but adding it changes nothing here. The transitive
+dependency is already present either way.
 
 ### There is no fake for Cloud Storage
 
@@ -834,6 +910,7 @@ They explain most of the surprising decisions:
 | [0021](specs/0021-app-updates.md) | App updates | Version floor, failing open |
 | [0022](specs/0022-accessibility.md) | Accessibility | Tap targets, labels, text scale |
 | [0023](specs/0023-visual-regression.md) | Visual regression | Goldens, platform pinning |
+| [0024](specs/0024-settings-composability.md) | Settings composability | Public sections, suppressible chrome |
 
 ### Working agreements
 

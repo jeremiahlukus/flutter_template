@@ -24,7 +24,12 @@ void main() {
       expect(const FirebaseNotConfigured().toString(), contains('task.md'));
     });
 
-    test('the placeholder throws it', () {
+    test('the committed placeholder throws it', () {
+      // Asserts the *placeholder*, so it stops being true once you run
+      // `flutterfire configure` — the generated file throws `UnsupportedError`
+      // instead. Delete this one test at that point; the rest of the file, and
+      // the setup screen itself, keep working because `bootstrap` catches
+      // anything. task.md Milestone 0 lists this.
       expect(
         () => DefaultFirebaseOptions.currentPlatform,
         throwsA(isA<FirebaseNotConfigured>()),

@@ -1,5 +1,14 @@
+// ╔══════════════════════════════════════════════════════════════════════════╗
+// ║  GENERATED FILE — do not add anything to it.                              ║
+// ║                                                                          ║
+// ║  `flutterfire configure` overwrites this file wholesale. Anything you add ║
+// ║  here disappears the first time someone runs it, and the build breaks on  ║
+// ║  a type that was there a minute ago. Put app code anywhere else.          ║
+// ╚══════════════════════════════════════════════════════════════════════════╝
 // ignore_for_file: lines_longer_than_80_chars
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+import 'package:flutter_template/src/app/firebase_setup_screen.dart'
+    show FirebaseNotConfigured;
 
 /// Placeholder Firebase configuration.
 ///
@@ -17,19 +26,4 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 /// `FirebaseSetupScreen`, so the app still launches and explains itself.
 abstract final class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform => throw FirebaseNotConfigured();
-}
-
-/// Thrown by the placeholder [DefaultFirebaseOptions].
-///
-/// A named type rather than a bare `StateError` so `bootstrap` can tell "you
-/// have not configured Firebase" apart from "Firebase is configured but failed
-/// to start", and so a test can assert on the distinction.
-class FirebaseNotConfigured implements Exception {
-  const FirebaseNotConfigured();
-
-  @override
-  String toString() =>
-      'Firebase is not configured. Run `flutterfire configure` to regenerate '
-      'lib/firebase_options.dart, then rerun the app. '
-      'See task.md > Milestone 0 for the full checklist.';
 }

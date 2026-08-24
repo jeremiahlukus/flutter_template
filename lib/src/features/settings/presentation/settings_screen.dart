@@ -18,77 +18,112 @@ import 'package:go_router/go_router.dart';
 ///
 /// Doubles as a live preview of the design system: changing the accent colour
 /// re-derives the entire Material 3 scheme in place.
+///
+/// Chrome is separate from content on purpose. A fork with a tab bar wants these
+/// settings on a top-level destination, where a back arrow would invite the user
+/// to look for a screen that is not there — so pass `showBackButton: false`, or
+/// skip this widget entirely and drop [SettingsSections] into your own
+/// `Scaffold`. Every section below is public for the same reason: adding your own
+/// should not mean editing this file, because an edited file is what makes the
+/// next template pull a conflict.
 class SettingsScreen extends ConsumerWidget {
-  const SettingsScreen({super.key});
+  const SettingsScreen({this.showBackButton = true, super.key});
+
+  /// Whether to show a back arrow. False for a top-level tab destination.
+  final bool showBackButton;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(l10n.settingsTitle),
+        leading: showBackButton
+            ? IconButton(
+                key: const ValueKey('settings_back'),
+                // Tooltips double as semantics labels; an icon-only button
+                // without one is silence to a screen reader.
+                tooltip: l10n.back,
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => context.goNamed(AppRoute.notes.name),
+              )
+            : null,
+      ),
+      body: const SettingsSections(),
+    );
+  }
+}
+
+/// The settings content, without any chrome.
+///
+/// Use this directly to interleave your own sections:
+///
+/// ```dart
+/// ListView(children: const [
+///   MyAccountSection(),
+///   ThemeModeSection(),
+///   AnalyticsSection(),
+/// ])
+/// ```
+class SettingsSections extends ConsumerWidget {
+  const SettingsSections({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final config = ref.watch(appConfigProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.settingsTitle),
-        leading: IconButton(
-          key: const ValueKey('settings_back'),
-          // Tooltips double as semantics labels; an icon-only button without
-          // one is silence to a screen reader.
-          tooltip: l10n.back,
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.goNamed(AppRoute.notes.name),
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxWidth: AppBreakpoints.maxContentWidth,
         ),
-      ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: AppBreakpoints.maxContentWidth,
-          ),
-          child: ListView(
-            children: [
-              _SectionHeader(l10n.sectionAppearance),
-              const _ThemeModePicker(),
-              const _BrandPicker(),
-              const Divider(),
-              _SectionHeader(l10n.sectionLanguage),
-              const _LanguagePicker(),
-              const Divider(),
-              _SectionHeader(l10n.sectionNotifications),
-              const _PushToggle(),
-              const Divider(),
-              _SectionHeader(l10n.sectionPrivacy),
-              const _AnalyticsToggle(),
-              const Divider(),
-              _SectionHeader(l10n.sectionSync),
-              const _SyncTiles(),
-              const Divider(),
-              _SectionHeader(l10n.sectionAbout),
-              const OptionalUpdateTile(),
+        child: ListView(
+          children: [
+            SettingsSectionHeader(l10n.sectionAppearance),
+            const ThemeModeSection(),
+            const BrandSection(),
+            const Divider(),
+            SettingsSectionHeader(l10n.sectionLanguage),
+            const LanguageSection(),
+            const Divider(),
+            SettingsSectionHeader(l10n.sectionNotifications),
+            const PushSection(),
+            const Divider(),
+            SettingsSectionHeader(l10n.sectionPrivacy),
+            const AnalyticsSection(),
+            const Divider(),
+            SettingsSectionHeader(l10n.sectionSync),
+            const SyncSection(),
+            const Divider(),
+            SettingsSectionHeader(l10n.sectionAbout),
+            const OptionalUpdateTile(),
+            ListTile(
+              key: const ValueKey('app_version_tile'),
+              leading: const Icon(Icons.info_outline),
+              title: Text(l10n.appVersion),
+              trailing: Text(ref.watch(appVersionProvider)),
+            ),
+            // Only meaningful off production, and a production user seeing
+            // "prod" would just be noise.
+            if (!config.isProd)
               ListTile(
-                key: const ValueKey('app_version_tile'),
-                leading: const Icon(Icons.info_outline),
-                title: Text(l10n.appVersion),
-                trailing: Text(ref.watch(appVersionProvider)),
+                key: const ValueKey('environment_tile'),
+                leading: const Icon(Icons.dns_outlined),
+                title: Text(l10n.environmentLabel),
+                trailing: Text(config.environment.key),
               ),
-              // Only meaningful off production, and a production user seeing
-              // "prod" would just be noise.
-              if (!config.isProd)
-                ListTile(
-                  key: const ValueKey('environment_tile'),
-                  leading: const Icon(Icons.dns_outlined),
-                  title: Text(l10n.environmentLabel),
-                  trailing: Text(config.environment.key),
-                ),
-              const SizedBox(height: AppSpacing.lg),
-            ],
-          ),
+            const SizedBox(height: AppSpacing.lg),
+          ],
         ),
       ),
     );
   }
 }
 
-class _ThemeModePicker extends ConsumerWidget {
-  const _ThemeModePicker();
+class ThemeModeSection extends ConsumerWidget {
+  const ThemeModeSection({super.key});
 
   static String label(AppLocalizations l10n, ThemeMode mode) => switch (mode) {
     ThemeMode.system => l10n.themeSystem,
@@ -124,8 +159,8 @@ class _ThemeModePicker extends ConsumerWidget {
 }
 
 /// Horizontal swatch row. Tapping one re-seeds the whole theme.
-class _BrandPicker extends ConsumerWidget {
-  const _BrandPicker();
+class BrandSection extends ConsumerWidget {
+  const BrandSection({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -174,8 +209,8 @@ class _BrandPicker extends ConsumerWidget {
   }
 }
 
-class _LanguagePicker extends ConsumerWidget {
-  const _LanguagePicker();
+class LanguageSection extends ConsumerWidget {
+  const LanguageSection({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -211,8 +246,8 @@ class _LanguagePicker extends ConsumerWidget {
 /// Two gates, shown as one row: the in-app preference and the system
 /// permission. Requesting permission only when the user turns the switch on is
 /// deliberate — prompting unasked is the fastest way to get denied forever.
-class _PushToggle extends ConsumerWidget {
-  const _PushToggle();
+class PushSection extends ConsumerWidget {
+  const PushSection({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -244,8 +279,8 @@ class _PushToggle extends ConsumerWidget {
   }
 }
 
-class _AnalyticsToggle extends ConsumerWidget {
-  const _AnalyticsToggle();
+class AnalyticsSection extends ConsumerWidget {
+  const AnalyticsSection({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -266,8 +301,8 @@ class _AnalyticsToggle extends ConsumerWidget {
   }
 }
 
-class _SyncTiles extends ConsumerWidget {
-  const _SyncTiles();
+class SyncSection extends ConsumerWidget {
+  const SyncSection({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -300,8 +335,8 @@ class _SyncTiles extends ConsumerWidget {
   }
 }
 
-class _SectionHeader extends StatelessWidget {
-  const _SectionHeader(this.title);
+class SettingsSectionHeader extends StatelessWidget {
+  const SettingsSectionHeader(this.title, {super.key});
 
   final String title;
 

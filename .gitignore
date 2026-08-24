@@ -62,3 +62,19 @@ test/goldens/failures/
 # gen-l10n's untranslated-message report. Regenerated on every `pub get`, and
 # CI asserts it is empty — a tracked file that is always `{}` is just noise.
 lib/src/l10n/untranslated.json
+
+# Secrets. The template ships none, but a fork will add some, and the protection
+# has to already be here when it does — not added after the first `git add -A`.
+.env
+.env.*
+!.env.example
+*service-account*.json
+*-service-account.json
+
+# Signing material
+*.p12
+*.jks
+*.keystore
+*.mobileprovision
+*.cer
+key.properties

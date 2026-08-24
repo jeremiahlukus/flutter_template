@@ -124,11 +124,15 @@ void main() {
   });
 
   group('database wiring', () {
-    test('exposes exactly the two declared tables', () {
-      expect(
-        db.allTables.map((t) => t.actualTableName).toSet(),
-        {'notes', 'settings_entries'},
-      );
+    test('exposes every declared table', () {
+      // A set equality on purpose: a table appearing that nobody meant to add is
+      // exactly the drift worth failing on. **A fork is expected to extend this
+      // set** — if you added a table, add it here. That is the correct response
+      // to this test failing, not deleting the assertion.
+      expect(db.allTables.map((t) => t.actualTableName).toSet(), {
+        'notes',
+        'settings_entries',
+      });
     });
 
     test('foreign keys are enabled on open', () async {

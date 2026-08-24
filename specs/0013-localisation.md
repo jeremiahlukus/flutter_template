@@ -33,6 +33,7 @@ There is also a structural problem: domain objects have no `BuildContext`, so
 | 0013-R10 | A locale change MUST re-render without a restart. |
 | 0013-R11 | CI MUST fail on any untranslated message. |
 | 0013-R12 | Domain objects MUST NOT hard-code user-visible copy. |
+| 0013-R13 | Copy every fork keeps — onboarding, auth, setup, settings — MUST NOT name a feature the fork may delete. |
 
 ## Non-goals
 
@@ -83,6 +84,7 @@ translated words for placeholder names.
 | 0013-R10 | `…` › `rendering` › `a locale change re-renders without a restart` |
 | 0013-R11 | `.github/workflows/ci.yaml` › `Verify every message is translated` |
 | 0013-R12 | `test/features/notes/note_test.dart` › `displayTitle`; `titleOr` is passed `l10n.untitledNote` by the screen |
+| 0013-R13 | `test/l10n/l10n_test.dart` › `ARB files` › `copy outside the notes feature names no feature` |
 
 ## Open questions
 

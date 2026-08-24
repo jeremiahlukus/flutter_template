@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show ProviderException;
 import 'package:flutter_template/src/database/app_database.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -205,7 +207,59 @@ void main() {
     });
   });
 
-  test('schemaVersion is pinned so migrations are deliberate', () {
+  test('the on-disk database name is pinned', () {
+    // Renaming this silently repoints a shipped app at a new empty file — every
+    // user's data still on disk with nothing referencing it, and no error. It
+    // presents as "the update wiped my account".
+    //
+    // Asserted against the constant because it is the only way to catch it: an
+    // in-memory database never opens a file, so the name never appears at
+    // runtime in any test.
+    //
+    // **A greenfield fork should change both this and the constant.** A fork
+    // replacing a shipped app must change neither.
+    expect(AppDatabase.databaseName, 'flutter_template'); // keep-on-rename
+  });
+
+  test('appDatabaseProvider must be overridden', () {
+    // The provider is an injection seam, not a factory. If it built a database
+    // itself, a caller who forgot to override it would get a *second*
+    // connection to the same file rather than an error, and Drift's own warning
+    // applies: two instances over one file do not see each other's writes, and
+    // stream queries silently stop updating.
+    //
+    // Failing loudly here is the whole point — bootstrap() and TestHarness both
+    // supply the instance. The message is asserted because it is what a
+    // maintainer actually reads when this fires.
+    final container = ProviderContainer();
+    addTearDown(container.dispose);
+
+    // Riverpod 3 wraps anything a provider's build throws in a
+    // ProviderException, so the StateError is one level down.
+    expect(
+      () => container.read(appDatabaseProvider),
+      throwsA(
+        isA<ProviderException>().having(
+          (e) => e.exception,
+          'exception',
+          isA<StateError>().having(
+            (e) => e.message,
+            'message',
+            allOf(
+              contains('without being overridden'),
+              contains('TestHarness'),
+            ),
+          ),
+        ),
+      ),
+    );
+  });
+
+  test('schemaVersion is pinned so a bump is deliberate', () {
+    // **Bumping this is normal.** The test exists so that changing the schema
+    // forces you to change the version in the same commit — and, if the app is
+    // already shipped, to write the migration. Update the number here; do not
+    // delete the test.
     expect(db.schemaVersion, 1);
   });
 }

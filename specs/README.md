@@ -75,5 +75,6 @@ often the most useful part.
 | [0021](0021-app-updates.md) | App updates | Accepted |
 | [0022](0022-accessibility.md) | Accessibility | Accepted |
 | [0023](0023-visual-regression.md) | Visual regression | Accepted |
+| [0024](0024-settings-composability.md) | Settings composability | Accepted |
 
 Start a new one from [`templates/spec-template.md`](templates/spec-template.md).

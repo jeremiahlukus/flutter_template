@@ -168,9 +168,9 @@ class RouteErrorScreen extends StatelessWidget {
         title: context.l10n.pageNotFound,
         message: error?.toString() ?? context.l10n.pageNotFoundBody,
         action: FilledButton(
-          key: const ValueKey('back_to_notes_button'),
+          key: const ValueKey('back_to_home_button'),
           onPressed: () => context.goNamed(AppRoute.notes.name),
-          child: Text(context.l10n.backToNotes),
+          child: Text(context.l10n.backToHome),
         ),
       ),
     );

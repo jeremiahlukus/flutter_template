@@ -27,11 +27,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signIn => 'Sign in';
 
   @override
-  String get signInSubtitle => 'Welcome back. Sign in to sync your notes.';
+  String get signInSubtitle =>
+      'Welcome back. Sign in to pick up where you left off.';
 
   @override
-  String get signUpSubtitle =>
-      'Create an account to sync your notes across devices.';
+  String get signUpSubtitle => 'Create an account to sync across your devices.';
 
   @override
   String get termsFooter => 'By continuing you agree to the Terms of Service.';
@@ -199,7 +199,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signOutTitle => 'Sign out?';
 
   @override
-  String get signOutBody => 'Your notes stay synced to your account.';
+  String get signOutBody => 'Your data stays synced to your account.';
 
   @override
   String get deleteAccount => 'Delete account';
@@ -269,7 +269,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get analyticsSubtitle =>
-      'Helps improve the app. No note content is ever sent.';
+      'Helps improve the app. Your content is never sent.';
 
   @override
   String get waitingToUpload => 'Waiting to upload';
@@ -306,7 +306,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pageNotFoundBody => 'That page does not exist.';
 
   @override
-  String get backToNotes => 'Back to notes';
+  String get backToHome => 'Back to home';
 
   @override
   String get offlineBanner => 'Offline — changes are saved on this device';
@@ -321,25 +321,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingDone => 'Get started';
 
   @override
-  String get onboardingTitle1 => 'Your notes, everywhere';
+  String get onboardingTitle1 => 'On all your devices';
 
   @override
   String get onboardingBody1 =>
-      'Write on any device. Everything syncs to your account automatically.';
+      'Use any device. Everything syncs to your account automatically.';
 
   @override
   String get onboardingTitle2 => 'Works offline';
 
   @override
   String get onboardingBody2 =>
-      'Keep writing without a connection. Changes upload as soon as you are back.';
+      'Keep working without a connection. Changes upload as soon as you are back.';
 
   @override
   String get onboardingTitle3 => 'Yours alone';
 
   @override
   String get onboardingBody3 =>
-      'Notes live under your account and are readable only by you.';
+      'Your data lives under your account and is readable only by you.';
 
   @override
   String get authInvalidEmail => 'That email address is not valid.';
@@ -385,7 +385,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupBody =>
-      'This app needs Firebase to run. Auth, notes, and file storage all depend on it, so nothing works until it is configured.';
+      'This app needs Firebase to run. Auth, your data, and file storage all depend on it, so nothing works until it is configured.';
 
   @override
   String get setupStepsHeading => 'Run these once, from the project root:';

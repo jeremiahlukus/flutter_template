@@ -43,7 +43,7 @@ void main() {
       final harness = TestHarness.create();
       await harness.pumpApp(tester);
 
-      expect(find.textContaining('Sign in to sync your notes'), findsOne);
+      expect(find.textContaining('pick up where you left off'), findsOne);
     });
 
     testWidgets('shows the terms footer', (tester) async {

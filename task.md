@@ -12,13 +12,29 @@ Legend: `[x]` done · `[ ]` open · `[~]` partially done, see note
 Everything here is per-app setup. Nothing below this milestone works until it is
 done, because `lib/firebase_options.dart` deliberately throws.
 
-- [ ] **Rename the package.** `flutter_template` appears in `pubspec.yaml` and in
-      every `package:flutter_template/...` import.
+- [ ] **Rename the package.** Use the tool; do not hand-roll a `sed`.
       ```sh
-      # macOS/BSD sed; drop the '' on GNU
-      grep -rl 'flutter_template' lib test tool pubspec.yaml \
-        | xargs sed -i '' 's/flutter_template/your_app/g'
+      dart run tool/rename_package.dart your_app   # --dry-run to preview
       ```
+      A bare find-and-replace leaves the project **not analyzing** — around 65
+      `directives_ordering` errors, because `package:flutter_template/...` and
+      `package:your_app/...` sort differently, and import blocks that were
+      alphabetised no longer are. The tool does the replace and then runs
+      `dart fix --code=directives_ordering` and `dart format`, so you end on a
+      clean `flutter analyze`.
+
+      It deliberately leaves `AppDatabase.databaseName` alone — see the next
+      item. That works via a `// keep-on-rename` marker comment; add it to any
+      line of your own where the package name is data rather than a reference.
+- [ ] **Set the on-disk database name.** `AppDatabase.databaseName` in
+      `lib/src/database/app_database.dart`, plus the expectation pinning it in
+      `test/database/app_database_test.dart`.
+      - Greenfield? Set it to your app name and move on.
+      - **Replacing an app that is already shipped? Set it to that app's existing
+        database name, and carry its `schemaVersion` and migrations forward.** Get
+        this wrong and the app opens a brand-new empty file beside the real one.
+        Every user's data is still on disk with nothing referencing it, and
+        *nothing throws* — it reaches you as "the update wiped my account".
 - [ ] **Set the bundle id / application id.** `flutter create --org com.yourco
       --project-name your_app .` over the top, or edit
       `android/app/build.gradle.kts` and the Xcode target.
@@ -33,6 +49,10 @@ done, because `lib/firebase_options.dart` deliberately throws.
       Until you do, the app still launches — it shows the setup screen instead
       ([spec 0015](specs/0015-first-run.md)). Do **not** run
       `tool/stub_firebase_options.dart` locally; it is for CI.
+
+      Afterwards, delete the test `the committed placeholder throws it` in
+      `test/app/firebase_setup_screen_test.dart`. It asserts on the placeholder,
+      which no longer exists once this file is real.
 - [ ] **Enable Crashlytics** in the Firebase console (Crashlytics → Enable).
 - [ ] **Deploy the security rules.** They are written but not deployed:
       ```sh
@@ -48,6 +68,12 @@ done, because `lib/firebase_options.dart` deliberately throws.
       `lib/src/app/theme/app_brand.dart`. Trim the presets you do not want.
 - [ ] **Decide your locales.** Delete `app_es.arb` if you ship English only, or
       add more; `flutter pub get` regenerates.
+- [ ] **Reword the onboarding and setup copy.** The strings in
+      `lib/src/l10n/arb/` describe *this template*, not your app — onboarding,
+      the sign-in subtitles and the Firebase setup screen are the visible ones,
+      and they are the first thing a user reads. Grep every ARB for `note` and
+      for the app name; the copy has been kept feature-neutral so a rename is
+      the only edit needed, but that only holds until you add your own strings.
 - [ ] **Confirm the gates pass**: `flutter analyze && flutter test --coverage &&
       dart run tool/check_coverage.dart`
 - [ ] Delete the `notes` feature once you have a real one, or keep it as a

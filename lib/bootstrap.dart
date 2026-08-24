@@ -8,6 +8,7 @@ import 'package:flutter_template/src/app/firebase_setup_screen.dart';
 import 'package:flutter_template/src/core/config/config_providers.dart';
 import 'package:flutter_template/src/core/errors/error_reporter.dart';
 import 'package:flutter_template/src/core/logging/app_logger.dart';
+import 'package:flutter_template/src/database/app_database.dart';
 import 'package:flutter_template/src/features/auth/app_user.dart';
 import 'package:flutter_template/src/features/auth/auth_providers.dart';
 
@@ -45,10 +46,21 @@ Future<void> bootstrap({
         return;
       }
 
+      // The one database instance for the process. Constructed here rather than
+      // lazily in the provider so a fork can prime anything it needs before the
+      // first frame — read a persisted text scale, say, and paint at the right
+      // size instead of snapping to it a frame later.
+      //
+      // `appDatabaseProvider` throws unless overridden, which is what stops a
+      // second `AppDatabase` ever being opened on the same file.
+      final database = AppDatabase();
+
       // Built before `runApp` so the error handlers below report through the
       // same `ErrorReporter` the app uses, and so an error thrown during the
       // first frame is still captured.
-      final container = ProviderContainer();
+      final container = ProviderContainer(
+        overrides: [appDatabaseProvider.overrideWithValue(database)],
+      );
       await installErrorHandlers(container);
 
       runApp(

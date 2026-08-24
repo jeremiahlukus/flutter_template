@@ -1,50 +1,61 @@
 {
   "@@locale": "en",
-
   "appTitle": "Flutter Template",
-  "@appTitle": {"description": "Application name, shown in the task switcher and sign-in header"},
-
+  "@appTitle": {
+    "description": "Application name, shown in the task switcher and sign-in header"
+  },
   "back": "Back",
   "cancel": "Cancel",
   "delete": "Delete",
   "retry": "Retry",
   "signIn": "Sign in",
-
-  "signInSubtitle": "Welcome back. Sign in to sync your notes.",
-  "signUpSubtitle": "Create an account to sync your notes across devices.",
+  "signInSubtitle": "Welcome back. Sign in to pick up where you left off.",
+  "signUpSubtitle": "Create an account to sync across your devices.",
   "termsFooter": "By continuing you agree to the Terms of Service.",
-
   "notesTitle": "Notes",
   "newNote": "New note",
   "notesEmptyTitle": "No notes yet",
   "notesEmptyBody": "Tap \"New note\" to write your first one.",
   "notesLoadErrorTitle": "Could not load notes",
   "untitledNote": "Untitled note",
-  "@untitledNote": {"description": "Placeholder title for a note saved with a body but no title"},
-
+  "@untitledNote": {
+    "description": "Placeholder title for a note saved with a body but no title"
+  },
   "pendingCount": "{count, plural, =1{1 pending} other{{count} pending}}",
   "@pendingCount": {
     "description": "Badge showing how many notes are waiting to upload",
-    "placeholders": {"count": {"type": "int"}}
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
-
   "syncNowTooltip": "Sync now",
   "settingsTooltip": "Settings",
   "profileTooltip": "Profile",
   "deleteTooltip": "Delete",
-
   "syncSuccess": "Synced — {up} up, {down} down.",
   "@syncSuccess": {
     "description": "Snack bar after a clean sync",
-    "placeholders": {"up": {"type": "int"}, "down": {"type": "int"}}
+    "placeholders": {
+      "up": {
+        "type": "int"
+      },
+      "down": {
+        "type": "int"
+      }
+    }
   },
   "syncPartial": "{count, plural, =1{Synced, but 1 note could not upload.} other{Synced, but {count} notes could not upload.}}",
   "@syncPartial": {
     "description": "Snack bar when some writes are still stuck. Must not read as plain success.",
-    "placeholders": {"count": {"type": "int"}}
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "syncFailed": "Sync failed. Check your connection.",
-
   "editNote": "Edit note",
   "noteTitleLabel": "Title",
   "noteTitleHint": "Give it a name",
@@ -52,14 +63,25 @@
   "saveNote": "Save note",
   "savingNote": "Saving…",
   "noteTitleTooLong": "Title is too long — {max} characters maximum.",
-  "@noteTitleTooLong": {"placeholders": {"max": {"type": "int"}}},
+  "@noteTitleTooLong": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "noteBodyTooLong": "Note is too long — {max} characters maximum.",
-  "@noteBodyTooLong": {"placeholders": {"max": {"type": "int"}}},
+  "@noteBodyTooLong": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "nothingToSave": "Nothing to save — add a title or some text.",
   "saveFailedQueued": "Could not save. Your note is kept locally and will retry.",
   "deleteNoteTitle": "Delete note?",
   "deleteNoteBody": "This cannot be undone.",
-
   "profileTitle": "Profile",
   "signedOut": "Signed out.",
   "guest": "Guest",
@@ -78,15 +100,13 @@
   "avatarPickFailed": "Could not read that image.",
   "avatarRemove": "Remove avatar",
   "avatarRemoved": "Avatar removed.",
-
   "signOut": "Sign out",
   "signOutTitle": "Sign out?",
-  "signOutBody": "Your notes stay synced to your account.",
+  "signOutBody": "Your data stays synced to your account.",
   "deleteAccount": "Delete account",
   "deleteAccountTitle": "Delete account?",
   "deleteAccountBody": "This permanently removes your account and cannot be undone.",
   "deleteAccountFailed": "Could not delete the account. Sign in again and retry.",
-
   "settingsTitle": "Settings",
   "sectionAppearance": "Appearance",
   "sectionLanguage": "Language",
@@ -104,11 +124,10 @@
   "accentColour": "Accent colour",
   "languageSystem": "Match system",
   "analyticsTitle": "Share usage analytics",
-  "analyticsSubtitle": "Helps improve the app. No note content is ever sent.",
+  "analyticsSubtitle": "Helps improve the app. Your content is never sent.",
   "waitingToUpload": "Waiting to upload",
   "appVersion": "Version",
   "environmentLabel": "Environment",
-
   "updateRequiredTitle": "Update required",
   "updateRequiredBody": "This version is no longer supported. Update to keep using the app.",
   "updateOptionalTitle": "Update available",
@@ -117,20 +136,17 @@
   "updateLater": "Later",
   "pageNotFound": "Page not found",
   "pageNotFoundBody": "That page does not exist.",
-  "backToNotes": "Back to notes",
-
+  "backToHome": "Back to home",
   "offlineBanner": "Offline — changes are saved on this device",
-
   "onboardingSkip": "Skip",
   "onboardingNext": "Next",
   "onboardingDone": "Get started",
-  "onboardingTitle1": "Your notes, everywhere",
-  "onboardingBody1": "Write on any device. Everything syncs to your account automatically.",
+  "onboardingTitle1": "On all your devices",
+  "onboardingBody1": "Use any device. Everything syncs to your account automatically.",
   "onboardingTitle2": "Works offline",
-  "onboardingBody2": "Keep writing without a connection. Changes upload as soon as you are back.",
+  "onboardingBody2": "Keep working without a connection. Changes upload as soon as you are back.",
   "onboardingTitle3": "Yours alone",
-  "onboardingBody3": "Notes live under your account and are readable only by you.",
-
+  "onboardingBody3": "Your data lives under your account and is readable only by you.",
   "authInvalidEmail": "That email address is not valid.",
   "authUserDisabled": "This account has been disabled.",
   "authUserNotFound": "No account found for that email.",
@@ -143,17 +159,17 @@
   "authOperationNotAllowed": "That sign-in method is not enabled.",
   "authNotSignedIn": "You are not signed in.",
   "authGeneric": "Something went wrong. Please try again.",
-
   "setupTitle": "Firebase setup required",
-  "@setupTitle": {"description": "Shown instead of the app when Firebase has not been configured"},
-  "setupBody": "This app needs Firebase to run. Auth, notes, and file storage all depend on it, so nothing works until it is configured.",
+  "@setupTitle": {
+    "description": "Shown instead of the app when Firebase has not been configured"
+  },
+  "setupBody": "This app needs Firebase to run. Auth, your data, and file storage all depend on it, so nothing works until it is configured.",
   "setupStepsHeading": "Run these once, from the project root:",
   "setupRestartHint": "Then stop and rerun the app.",
   "setupChecklistHint": "task.md → Milestone 0 has the full checklist.",
   "setupDetails": "Error details",
   "setupCopied": "Copied to clipboard",
   "copy": "Copy",
-
   "storageUnauthorized": "You do not have permission to do that.",
   "storageNotFound": "That file no longer exists.",
   "storageQuotaExceeded": "Storage quota exceeded.",

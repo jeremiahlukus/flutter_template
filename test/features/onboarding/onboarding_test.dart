@@ -103,7 +103,7 @@ void main() {
       await harness.pumpApp(tester);
 
       expect(find.byKey(const ValueKey('onboarding_pages')), findsOne);
-      expect(find.text('Your notes, everywhere'), findsOne);
+      expect(find.text('On all your devices'), findsOne);
     });
 
     testWidgets('a returning user never sees it', (tester) async {
@@ -179,7 +179,7 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('onboarding_skip')));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('Sign in to sync'), findsOne);
+      expect(find.textContaining('pick up where you left off'), findsOne);
     });
 
     testWidgets('a signed-in user reaches the notes list after finishing', (

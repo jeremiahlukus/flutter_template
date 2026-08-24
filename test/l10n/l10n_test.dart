@@ -19,6 +19,43 @@ void main() {
     Set<String> messageKeys(Map<String, dynamic> data) =>
         data.keys.where((k) => !k.startsWith('@')).toSet();
 
+    test('copy outside the notes feature names no feature', () {
+      // The notes feature is a worked example a fork deletes. Onboarding, the
+      // auth subtitles and the setup screen are the first copy a user reads and
+      // are kept by every fork, so a stray "note" or "writing" there means the
+      // fork ships marketing for a feature it removed.
+      //
+      // Scoped to these prefixes deliberately: keys like `untitledNote` *should*
+      // say note, and go when the feature does.
+      const genericPrefixes = [
+        'onboarding',
+        'signIn',
+        'signUp',
+        'signOut',
+        'setup',
+        'analytics',
+      ];
+      // Stems, so "notes"/"writing" are caught along with "note"/"write".
+      const featureWords = ['note', 'writ', 'nota', 'escrib'];
+
+      for (final locale in AppLocales.supported) {
+        final data = arb(locale.languageCode);
+        for (final key in messageKeys(data)) {
+          if (!genericPrefixes.any(key.startsWith)) continue;
+          final value = (data[key] as String).toLowerCase();
+          for (final word in featureWords) {
+            expect(
+              value.contains(word),
+              isFalse,
+              reason:
+                  '$key in app_${locale.languageCode}.arb says "$word": '
+                  'copy a fork keeps must not name a feature it may delete',
+            );
+          }
+        }
+      }
+    });
+
     test('every supported locale has an ARB file', () {
       for (final locale in AppLocales.supported) {
         expect(

@@ -54,7 +54,7 @@ void main() {
       await harness.pumpApp(tester);
 
       expect(find.text('Notes'), findsNothing);
-      expect(find.textContaining('Sign in to sync'), findsOne);
+      expect(find.textContaining('pick up where you left off'), findsOne);
     });
 
     testWidgets('signing out from the profile returns to sign-in', (
@@ -71,7 +71,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // The guard reacts to the auth stream, with no explicit navigation call.
-      expect(find.textContaining('Sign in to sync'), findsOne);
+      expect(find.textContaining('pick up where you left off'), findsOne);
     });
 
     testWidgets('navigating notes → settings → back preserves state', (
@@ -112,7 +112,7 @@ void main() {
       // Twice on purpose: the app bar title and the empty-state headline.
       expect(find.text('Page not found'), findsNWidgets(2));
       expect(find.textContaining('no such route'), findsOne);
-      expect(find.text('Back to notes'), findsOne);
+      expect(find.text('Back to home'), findsOne);
     });
 
     testWidgets('falls back to generic copy with no error', (tester) async {

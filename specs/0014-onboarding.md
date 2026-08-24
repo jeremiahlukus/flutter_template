@@ -27,6 +27,7 @@ if the gate is right. Two ways it goes wrong:
 | 0014-R7 | Skip MUST be available on every page. |
 | 0014-R8 | Finishing MUST land a signed-out user on sign-in and a signed-in user on the notes list. |
 | 0014-R9 | Finishing MUST re-run the route guard without an explicit navigation. |
+| 0014-R10 | The intro copy MUST describe template capabilities (sync, offline, per-user privacy), not the `notes` example feature. |
 
 ## Non-goals
 
@@ -60,6 +61,7 @@ user off `/welcome` (R6). The router also listens to
 | 0014-R7 | `test/features/onboarding/onboarding_test.dart` › `OnboardingScreen` › `Skip completes it immediately` |
 | 0014-R8 | `…` › `a signed-out user reaches sign-in after finishing` / `a signed-in user reaches the notes list after finishing` |
 | 0014-R9 | `…` › `finishing marks it complete and moves on` |
+| 0014-R10 | `test/l10n/l10n_test.dart` › `ARB files` › `copy outside the notes feature names no feature` |
 
 ## Open questions
 

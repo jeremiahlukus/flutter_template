@@ -137,13 +137,13 @@ abstract class AppLocalizations {
   /// No description provided for @signInSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Welcome back. Sign in to sync your notes.'**
+  /// **'Welcome back. Sign in to pick up where you left off.'**
   String get signInSubtitle;
 
   /// No description provided for @signUpSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Create an account to sync your notes across devices.'**
+  /// **'Create an account to sync across your devices.'**
   String get signUpSubtitle;
 
   /// No description provided for @termsFooter.
@@ -431,7 +431,7 @@ abstract class AppLocalizations {
   /// No description provided for @signOutBody.
   ///
   /// In en, this message translates to:
-  /// **'Your notes stay synced to your account.'**
+  /// **'Your data stays synced to your account.'**
   String get signOutBody;
 
   /// No description provided for @deleteAccount.
@@ -563,7 +563,7 @@ abstract class AppLocalizations {
   /// No description provided for @analyticsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Helps improve the app. No note content is ever sent.'**
+  /// **'Helps improve the app. Your content is never sent.'**
   String get analyticsSubtitle;
 
   /// No description provided for @waitingToUpload.
@@ -632,11 +632,11 @@ abstract class AppLocalizations {
   /// **'That page does not exist.'**
   String get pageNotFoundBody;
 
-  /// No description provided for @backToNotes.
+  /// No description provided for @backToHome.
   ///
   /// In en, this message translates to:
-  /// **'Back to notes'**
-  String get backToNotes;
+  /// **'Back to home'**
+  String get backToHome;
 
   /// No description provided for @offlineBanner.
   ///
@@ -665,13 +665,13 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingTitle1.
   ///
   /// In en, this message translates to:
-  /// **'Your notes, everywhere'**
+  /// **'On all your devices'**
   String get onboardingTitle1;
 
   /// No description provided for @onboardingBody1.
   ///
   /// In en, this message translates to:
-  /// **'Write on any device. Everything syncs to your account automatically.'**
+  /// **'Use any device. Everything syncs to your account automatically.'**
   String get onboardingBody1;
 
   /// No description provided for @onboardingTitle2.
@@ -683,7 +683,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingBody2.
   ///
   /// In en, this message translates to:
-  /// **'Keep writing without a connection. Changes upload as soon as you are back.'**
+  /// **'Keep working without a connection. Changes upload as soon as you are back.'**
   String get onboardingBody2;
 
   /// No description provided for @onboardingTitle3.
@@ -695,7 +695,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingBody3.
   ///
   /// In en, this message translates to:
-  /// **'Notes live under your account and are readable only by you.'**
+  /// **'Your data lives under your account and is readable only by you.'**
   String get onboardingBody3;
 
   /// No description provided for @authInvalidEmail.
@@ -779,7 +779,7 @@ abstract class AppLocalizations {
   /// No description provided for @setupBody.
   ///
   /// In en, this message translates to:
-  /// **'This app needs Firebase to run. Auth, notes, and file storage all depend on it, so nothing works until it is configured.'**
+  /// **'This app needs Firebase to run. Auth, your data, and file storage all depend on it, so nothing works until it is configured.'**
   String get setupBody;
 
   /// No description provided for @setupStepsHeading.
