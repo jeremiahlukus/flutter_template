@@ -787,6 +787,39 @@ One test compares the two implementations' path output directly. That is the onl
 cheap defence against the client and `storage.rules` drifting apart — if they do,
 uploads land somewhere the rules do not protect, and nothing fails loudly.
 
+### `flutter_skill`'s tap overlay throws on every tap
+
+The QA harness's own tap-visualisation painter crashes:
+
+```
+'dart:ui/painting.dart': Failed assertion: line 346 pos 12: is not true.
+#2  Color.withOpacity
+#3  _ParticleEffectPainter._drawActionParticles (package:flutter_skill/flutter_skill.dart:4199)
+```
+
+It computes `withOpacity(0.8 * (1 - progress))`, which goes negative once
+`progress` exceeds 1, and `withOpacity` asserts its argument is within 0..1. The
+result is an "Uncaught framework error" box per frame for the duration of the
+animation, on **every** driven tap.
+
+Nothing in this app is involved — it is `flutter_skill`'s indicator overlay
+painting itself. It matters only because it looks exactly like an app crash in
+the run log while you are trying to read that log for real failures. Turn the
+overlay off before driving a flow:
+
+```
+ext.flutter.flutter_skill.disableIndicators
+```
+
+or pass `FlutterSkillBinding.ensureInitialized(autoEnableIndicators: false)` in
+`tool/main_dev.dart`. Verified against `flutter_skill` 0.9.36.
+
+Two smaller quirks from the same package, so you do not misdiagnose them as
+missing keys: `inspectInteractive` reports the route *underneath* a pushed
+screen, and it does not resolve a tappable `TextSpan` inside a `RichText` (the
+"Register" link on the sign-in screen). Use `getTextContent` for the former and
+`tapAt` for the latter.
+
 ### Widget tests and `pumpAndSettle`
 
 A `CircularProgressIndicator` is a perpetual animation, so `pumpAndSettle` times

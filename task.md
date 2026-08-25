@@ -38,6 +38,21 @@ done, because `lib/firebase_options.dart` deliberately throws.
 - [ ] **Set the bundle id / application id.** `flutter create --org com.yourco
       --project-name your_app .` over the top, or edit
       `android/app/build.gradle.kts` and the Xcode target.
+- [ ] **Set the app's *display* name.** Separate from both of the above, and the
+      rename tool deliberately leaves it alone — it cannot guess that "Flutter
+      Template" should become "Acme Notes" rather than `acme_notes`. Five places,
+      all user-visible:
+      | Where | Shows up |
+      |---|---|
+      | `appTitle` in **every** `lib/src/l10n/arb/*.arb` | The sign-in screen heading |
+      | `CFBundleDisplayName` in `ios/Runner/Info.plist` | Under the iOS icon |
+      | `android:label` in `android/app/src/main/AndroidManifest.xml` | Under the Android icon |
+      | `PRODUCT_NAME` in `macos/Runner/Configs/AppInfo.xcconfig` | macOS app name and menu bar |
+      | `web/index.html` + `web/manifest.json` | Browser tab and installed PWA |
+
+      Miss these and the app introduces itself as "Flutter Template" on the
+      sign-in screen and sits under the launcher as `flutter_template`. Found by
+      actually running a fresh fork, not by reading the checklist.
 - [ ] **Create the Firebase project** and enable Email/Password auth, Firestore,
       Cloud Storage, and Analytics.
 - [ ] **Generate the real Firebase config.**

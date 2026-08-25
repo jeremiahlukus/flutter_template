@@ -3,7 +3,7 @@
 _Run these flows manually using the flutter-skill MCP tools after connecting to
 the app._
 
-Widget tests (951 of them, 94.0% coverage) plus 36 security-rules tests already
+Widget tests (974 of them, 93.68% coverage) plus 48 security-rules tests already
 cover every screen and rule in isolation. These flows exist for what widget tests structurally cannot reach:
 real Firebase, real sqlite on device, process restarts, and the offline→online
 transition that the whole sync design ([spec 0002](specs/0002-notes-sync.md))
@@ -13,20 +13,46 @@ exists to handle.
 
 ## Status
 
-**Only FLOW-00 has been run.** It is the one flow that works without a Firebase
-project, and it passed on an iPhone 17 simulator — finding one real build bug on
-the way (see FLOW-00's result). Everything else needs a configured project and
-still reads `⏳ NOT RUN`; a fabricated PASS in this file is worse than no file at
-all.
+**FLOW-00 has been run as written.** The numbered flows below otherwise still
+read `⏳ NOT RUN` — a fabricated PASS in this file is worse than no file at all.
 
 | Gate | State |
 |---|---|
 | `flutter analyze --fatal-infos --fatal-warnings` | ✅ clean |
-| `flutter test --exclude-tags golden` | ✅ 951 passed |
+| `flutter test --exclude-tags golden` | ✅ 974 passed |
 | `flutter test --tags golden` | ✅ 12 goldens |
-| `cd test_rules && npm test` | ✅ 36 rules tests |
-| Coverage (85% floor) | ✅ 94.0% |
+| `cd test_rules && npm test` | ✅ 48 rules tests |
+| Coverage (85% floor) | ✅ 93.68% |
 | On-device flows | **1 / 33 run** — FLOW-00 ✅ PASS |
+
+### Separately: a fresh fork was exercised end to end (2026-08-25)
+
+Not one of the numbered flows, so nothing below is ticked — but it is the
+strongest evidence the template currently has, and it is what these flows exist
+to catch. A clean clone was renamed with `tool/rename_package.dart`, given a real
+`firebase_options.dart`, and run on an iPhone 17 simulator, first against a real
+Firebase project and then against the emulator suite via
+`--dart-define=USE_EMULATORS=true`.
+
+Confirmed on device:
+
+- Real Firebase initialises; the setup screen correctly does **not** appear.
+- Replacing the generated `firebase_options.dart` no longer breaks the build —
+  the reason `FirebaseNotConfigured` was moved out of it.
+- `Auth → emulator` / `Firestore → emulator` redirection works ([0016-R6](specs/0016-emulator-and-rules.md)).
+- Registration through `firebase_ui_auth` succeeds — the flow that
+  [cannot be driven in a widget test](README.md#known-limitations).
+- A note written on device reached `users/{uid}/notes/{noteId}` in Firestore,
+  with `updatedAt` stored in **UTC**.
+- **The failure path is honest.** With `allow create, update: if false` in the
+  rules, the list showed a `1 pending` badge and the snackbar read *"Synced, but
+  1 note could not upload."* — not a false success. Restoring the rules cleared
+  the badge and both notes landed server-side.
+- A locale change re-renders live, in Spanish, with no restart ([0013-R10](specs/0013-localisation.md)).
+
+Two things it found, both now fixed: the app **display name** was in no
+Milestone 0 item (a fork shipped as "Flutter Template"), and the numbers in this
+table were stale.
 
 ---
 
