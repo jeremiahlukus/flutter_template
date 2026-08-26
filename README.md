@@ -109,7 +109,7 @@ it shows a setup screen naming the exact commands, rather than crashing:
 The placeholder `lib/firebase_options.dart` throws a named
 `FirebaseNotConfigured`, and `bootstrap()` catches it. Shipping fake credentials
 instead would produce confusing `FirebaseException`s at the first auth call, far
-from the actual cause. → [spec 0015](specs/0015-first-run.md)
+from the actual cause. → [spec 0015](specs/0015-first-run/spec.md)
 
 ```sh
 flutter pub get                         # also runs gen-l10n
@@ -162,31 +162,31 @@ otherwise.
 
 | Feature | Status | Spec | Entry point |
 |---|---|---|---|
-| Email auth (sign in / up / reset) | ✅ | [0001](specs/0001-authentication.md) | `features/auth/` |
-| Notes CRUD | ✅ | [0002](specs/0002-notes-sync.md) | `features/notes/` |
-| Offline cache + two-way sync | ✅ | [0002](specs/0002-notes-sync.md) | `notes_repository.dart` |
-| Auto-sync on reconnect | ✅ | [0011](specs/0011-connectivity.md) | `ReconnectSyncCoordinator` |
-| Pagination | ✅ | [0018](specs/0018-pagination.md) | `core/paging/` |
-| Local database | ✅ | [0003](specs/0003-local-persistence.md) | `database/` |
-| Routing + auth guard | ✅ | [0004](specs/0004-routing.md) | `routing/` |
-| Onboarding | ✅ | [0014](specs/0014-onboarding.md) | `features/onboarding/` |
-| Design system (tokens, brands) | ✅ | [0008](specs/0008-design-system.md) | `app/theme/` |
-| Dark mode + accent picker | ✅ | [0008](specs/0008-design-system.md) | `settings_screen.dart` |
-| Localisation (en, es) | ✅ | [0013](specs/0013-localisation.md) | `l10n/arb/` |
-| Analytics + consent gate | ✅ | [0005](specs/0005-analytics.md) | `core/analytics/` |
-| Crash reporting | ✅ | [0010](specs/0010-error-reporting.md) | `core/errors/` |
-| Flavours (dev/staging/prod) | ✅ | [0009](specs/0009-environments.md) | `core/config/` |
-| File upload + image picking | ✅ | [0019](specs/0019-media.md) | `features/storage/` |
-| HTTP client for your backend | ✅ | [0017](specs/0017-api-client.md) | `core/network/` |
-| Forced-update gate | ✅ | [0021](specs/0021-app-updates.md) | `features/update/` |
-| Push notifications (Dart side) | ⚠️ needs native setup | [0020](specs/0020-push-notifications.md) | `features/push/` |
-| Deep links | ⚠️ declared, unverified on device | [0004](specs/0004-routing.md) | manifest + `Info.plist` |
-| Security rules + emulator | ✅ | [0016](specs/0016-emulator-and-rules.md) | `test_rules/` |
-| Accessibility suite | ✅ | [0022](specs/0022-accessibility.md) | `test/a11y/` |
-| Golden tests | ✅ | [0023](specs/0023-visual-regression.md) | `test/goldens/` |
+| Email auth (sign in / up / reset) | ✅ | [0001](specs/0001-authentication/spec.md) | `features/auth/` |
+| Notes CRUD | ✅ | [0002](specs/0002-notes-sync/spec.md) | `features/notes/` |
+| Offline cache + two-way sync | ✅ | [0002](specs/0002-notes-sync/spec.md) | `notes_repository.dart` |
+| Auto-sync on reconnect | ✅ | [0011](specs/0011-connectivity/spec.md) | `ReconnectSyncCoordinator` |
+| Pagination | ✅ | [0018](specs/0018-pagination/spec.md) | `core/paging/` |
+| Local database | ✅ | [0003](specs/0003-local-persistence/spec.md) | `database/` |
+| Routing + auth guard | ✅ | [0004](specs/0004-routing/spec.md) | `routing/` |
+| Onboarding | ✅ | [0014](specs/0014-onboarding/spec.md) | `features/onboarding/` |
+| Design system (tokens, brands) | ✅ | [0008](specs/0008-design-system/spec.md) | `app/theme/` |
+| Dark mode + accent picker | ✅ | [0008](specs/0008-design-system/spec.md) | `settings_screen.dart` |
+| Localisation (en, es) | ✅ | [0013](specs/0013-localisation/spec.md) | `l10n/arb/` |
+| Analytics + consent gate | ✅ | [0005](specs/0005-analytics/spec.md) | `core/analytics/` |
+| Crash reporting | ✅ | [0010](specs/0010-error-reporting/spec.md) | `core/errors/` |
+| Flavours (dev/staging/prod) | ✅ | [0009](specs/0009-environments/spec.md) | `core/config/` |
+| File upload + image picking | ✅ | [0019](specs/0019-media/spec.md) | `features/storage/` |
+| HTTP client for your backend | ✅ | [0017](specs/0017-api-client/spec.md) | `core/network/` |
+| Forced-update gate | ✅ | [0021](specs/0021-app-updates/spec.md) | `features/update/` |
+| Push notifications (Dart side) | ⚠️ needs native setup | [0020](specs/0020-push-notifications/spec.md) | `features/push/` |
+| Deep links | ⚠️ declared, unverified on device | [0004](specs/0004-routing/spec.md) | manifest + `Info.plist` |
+| Security rules + emulator | ✅ | [0016](specs/0016-emulator-and-rules/spec.md) | `test_rules/` |
+| Accessibility suite | ✅ | [0022](specs/0022-accessibility/spec.md) | `test/a11y/` |
+| Golden tests | ✅ | [0023](specs/0023-visual-regression/spec.md) | `test/goldens/` |
 | App icons + splash | ⚠️ config only, no artwork | — | `assets/branding/` |
 | Search | ❌ not built | — | — |
-| Social sign-in | ❌ not built | [0001](specs/0001-authentication.md) | — |
+| Social sign-in | ❌ not built | [0001](specs/0001-authentication/spec.md) | — |
 
 ---
 
@@ -471,7 +471,7 @@ Every tappable control is tested to meet the 48dp Material touch-target minimum.
 The type scale is spelled out rather than left to the default, so swapping in
 `google_fonts` is a single edit in `AppTheme._textTheme`.
 
-→ [spec 0008](specs/0008-design-system.md)
+→ [spec 0008](specs/0008-design-system/spec.md)
 
 ---
 
@@ -494,7 +494,7 @@ after the SDK has settled gets nothing until the *next* transition, which leaves
 the router stuck in its loading state on a warm start. Consecutive duplicates are
 filtered so the seed costs nothing when the SDK does replay.
 
-→ [spec 0001](specs/0001-authentication.md)
+→ [spec 0001](specs/0001-authentication/spec.md)
 
 ### `updatedAt` is always UTC, and Drift stores datetimes as text
 
@@ -507,7 +507,7 @@ truncates sub-second precision and drops the timezone. Since `updatedAt` is the
 basis of sync conflict resolution, the default quietly corrupts the one field the
 sync logic depends on. `DriftDatabaseOptions(storeDateTimeAsText: true)` fixes it.
 
-→ [spec 0002](specs/0002-notes-sync.md), [spec 0003](specs/0003-local-persistence.md)
+→ [spec 0002](specs/0002-notes-sync/spec.md), [spec 0003](specs/0003-local-persistence/spec.md)
 
 ### Sync pushes before it pulls, and never clobbers a pending write
 
@@ -524,14 +524,14 @@ A delete is deliberately asymmetric with a save: a failed remote delete still
 removes the local copy, because a note that reappears after the user deleted it is
 more alarming than a tombstone that takes a while to propagate.
 
-→ [spec 0002](specs/0002-notes-sync.md)
+→ [spec 0002](specs/0002-notes-sync/spec.md)
 
 ### Nothing outside `firebase_providers.dart` may touch a Firebase singleton
 
 Every test in the suite depends on this holding. If you need a new Firebase
 service, add a provider — do not call `.instance` from a feature.
 
-→ [spec 0001](specs/0001-authentication.md)
+→ [spec 0001](specs/0001-authentication/spec.md)
 
 ### Reading remote documents tolerates bad data
 
@@ -873,23 +873,49 @@ read, and a test that fails if someone changes their mind without changing the
 spec. The specs are also where the *rejected* options live — which is usually the
 part that stops a well-meaning simplification from reintroducing a bug.
 
+### The rules are written down
+
+[`.specify/memory/constitution.md`](.specify/memory/constitution.md) holds the
+seven principles this repo is actually governed by — spec before code, every
+requirement names its test, four gates, the suite needs nothing, offline by
+default, localised/accessible/themed by construction, and a fork must not have to
+edit the template. `/speckit-plan` checks a design against them before any code is
+written, which is the difference between a written-down rule and an enforced one.
+
+Nothing in that file is new. It is the same guidance that was already spread
+across this README and `CLAUDE.md`, collected so a tool can read it.
+
 ### The loop
 
-```
-1. WRITE     Add or edit a spec. Number every requirement.
-2. REVIEW    Agree the spec before writing code. Cheapest place to be wrong.
-3. TEST      Write failing tests that name the requirement IDs.
-4. BUILD     Implement until the tests pass.
-5. VERIFY    Fill in the spec's Verification table with the real test names.
-6. GATE      analyze clean, tests green, coverage ≥ 85%.
-```
+Driven by [spec-kit](https://github.com/github/spec-kit)'s lean preset — five
+commands, each producing one file:
 
-Step 5 is the one people skip and the one that makes this worth doing. A spec
-with an empty Verification table is a wish, not a spec.
+| Step | Command | Produces |
+|---|---|---|
+| 1 | `/speckit-specify <description>` | `spec.md` — numbered requirements |
+| 2 | `/speckit-plan` | `plan.md` — the design, checked against the constitution |
+| 3 | `/speckit-tasks` | `tasks.md` — ordered, tests before code, gates last |
+| 4 | `/speckit-implement` | the code, ticking tasks off as it goes |
+
+`/speckit-specify` allocates the next spec number and creates the branch, so
+neither is picked by hand. `/speckit-constitution` amends the rules.
+
+The commands are a convenience, not a requirement: a spec written by hand in the
+same format is a spec. They exist so the parts people forget — the numbering, the
+Verification table, running all four gates — are not the parts you have to
+remember.
 
 ### Anatomy of a spec
 
-Every file in `specs/` has the same seven sections:
+Each spec is a directory, `specs/NNNN-slug/`:
+
+| File | What it is |
+|---|---|
+| `spec.md` | **What and why** — context, requirements, non-goals, Verification, open questions |
+| `plan.md` | **How** — the design and the trade-offs taken |
+| `tasks.md` | Ordered work items (new specs only; the 24 below shipped before this layout) |
+
+Inside `spec.md`:
 
 | Section | What goes in it |
 |---|---|
@@ -897,53 +923,54 @@ Every file in `specs/` has the same seven sections:
 | **Context** | The problem. Why the obvious approach is not enough. |
 | **Requirements** | Numbered, individually testable. `MUST` / `SHOULD` / `MAY`. |
 | **Non-goals** | What this deliberately does not do, so scope creep is visible. |
-| **Design** | How it works, and the trade-offs taken. |
-| **Verification** | Requirement ID → the test that proves it. |
+| **Verification** | Requirement ID → the test that proves it, or `—` if unproven. |
 | **Open questions** | Known unknowns. Empty is a valid answer. |
 
 Requirement IDs are `<SPEC>-R<n>` — `0002-R5` is the fifth requirement of spec
-0002. Grep is the traceability tool; there is nothing to install. Start a new spec
-from [`specs/templates/spec-template.md`](specs/templates/spec-template.md).
+0002. They are permanent: never renumbered, retired by marking superseded. Grep is
+the traceability tool; there is nothing to install. Start a new spec with
+`/speckit-specify`, or by hand from
+[`.specify/templates/spec-template.md`](.specify/templates/spec-template.md).
 
 ### Reading order
 
 If you are new to the codebase — human or otherwise — read these three first.
 They explain most of the surprising decisions:
 
-1. [0002 · Offline-first notes sync](specs/0002-notes-sync.md) — the core data
+1. [0002 · Offline-first notes sync](specs/0002-notes-sync/spec.md) — the core data
    flow, and the two ways a naive version silently loses user data.
-2. [0007 · Quality gates](specs/0007-quality-gates.md) — what "green" means here.
-3. [0008 · Design system](specs/0008-design-system.md) — why there are no inline
+2. [0007 · Quality gates](specs/0007-quality-gates/spec.md) — what "green" means here.
+3. [0008 · Design system](specs/0008-design-system/spec.md) — why there are no inline
    colours or magic numbers.
 
 ### The full index
 
 | # | Spec | Covers |
 |---|---|---|
-| [0001](specs/0001-authentication.md) | Authentication | Auth stream, `AppUser`, failure mapping |
-| [0002](specs/0002-notes-sync.md) | Offline-first notes sync | Push-before-pull, pending writes |
-| [0003](specs/0003-local-persistence.md) | Local persistence | Drift schema, UTC timestamps |
-| [0004](specs/0004-routing.md) | Routing and guards | Redirect truth table, deep links |
-| [0005](specs/0005-analytics.md) | Analytics | Consent gate, screen-view observer |
-| [0006](specs/0006-file-storage.md) | File storage | Path scheme, in-memory double |
-| [0007](specs/0007-quality-gates.md) | Quality gates | Coverage floor, exclusions |
-| [0008](specs/0008-design-system.md) | Design system | Tokens, semantic colours, brands |
-| [0009](specs/0009-environments.md) | Environments | Flavours, `AppConfig`, banners |
-| [0010](specs/0010-error-reporting.md) | Error reporting | Crashlytics behind an interface |
-| [0011](specs/0011-connectivity.md) | Connectivity | Offline banner, reconnect sync |
-| [0012](specs/0012-ui-kit.md) | Shared UI kit | `AsyncValueView`, empty/error states |
-| [0013](specs/0013-localisation.md) | Localisation | ARB parity, plurals, locale picker |
-| [0014](specs/0014-onboarding.md) | Onboarding | First-run gate, ordering vs auth |
-| [0015](specs/0015-first-run.md) | First run | Launching unconfigured |
-| [0016](specs/0016-emulator-and-rules.md) | Emulator and rules | Rules tested for real |
-| [0017](specs/0017-api-client.md) | API client | Typed failures, retry policy |
-| [0018](specs/0018-pagination.md) | Pagination | Growing window, keyset paging |
-| [0019](specs/0019-media.md) | Image picking | Downscale, cancellation |
-| [0020](specs/0020-push-notifications.md) | Push notifications | Opt-in, token rotation |
-| [0021](specs/0021-app-updates.md) | App updates | Version floor, failing open |
-| [0022](specs/0022-accessibility.md) | Accessibility | Tap targets, labels, text scale |
-| [0023](specs/0023-visual-regression.md) | Visual regression | Goldens, platform pinning |
-| [0024](specs/0024-settings-composability.md) | Settings composability | Public sections, suppressible chrome |
+| [0001](specs/0001-authentication/spec.md) | Authentication | Auth stream, `AppUser`, failure mapping |
+| [0002](specs/0002-notes-sync/spec.md) | Offline-first notes sync | Push-before-pull, pending writes |
+| [0003](specs/0003-local-persistence/spec.md) | Local persistence | Drift schema, UTC timestamps |
+| [0004](specs/0004-routing/spec.md) | Routing and guards | Redirect truth table, deep links |
+| [0005](specs/0005-analytics/spec.md) | Analytics | Consent gate, screen-view observer |
+| [0006](specs/0006-file-storage/spec.md) | File storage | Path scheme, in-memory double |
+| [0007](specs/0007-quality-gates/spec.md) | Quality gates | Coverage floor, exclusions |
+| [0008](specs/0008-design-system/spec.md) | Design system | Tokens, semantic colours, brands |
+| [0009](specs/0009-environments/spec.md) | Environments | Flavours, `AppConfig`, banners |
+| [0010](specs/0010-error-reporting/spec.md) | Error reporting | Crashlytics behind an interface |
+| [0011](specs/0011-connectivity/spec.md) | Connectivity | Offline banner, reconnect sync |
+| [0012](specs/0012-ui-kit/spec.md) | Shared UI kit | `AsyncValueView`, empty/error states |
+| [0013](specs/0013-localisation/spec.md) | Localisation | ARB parity, plurals, locale picker |
+| [0014](specs/0014-onboarding/spec.md) | Onboarding | First-run gate, ordering vs auth |
+| [0015](specs/0015-first-run/spec.md) | First run | Launching unconfigured |
+| [0016](specs/0016-emulator-and-rules/spec.md) | Emulator and rules | Rules tested for real |
+| [0017](specs/0017-api-client/spec.md) | API client | Typed failures, retry policy |
+| [0018](specs/0018-pagination/spec.md) | Pagination | Growing window, keyset paging |
+| [0019](specs/0019-media/spec.md) | Image picking | Downscale, cancellation |
+| [0020](specs/0020-push-notifications/spec.md) | Push notifications | Opt-in, token rotation |
+| [0021](specs/0021-app-updates/spec.md) | App updates | Version floor, failing open |
+| [0022](specs/0022-accessibility/spec.md) | Accessibility | Tap targets, labels, text scale |
+| [0023](specs/0023-visual-regression/spec.md) | Visual regression | Goldens, platform pinning |
+| [0024](specs/0024-settings-composability/spec.md) | Settings composability | Public sections, suppressible chrome |
 
 ### Working agreements
 
@@ -972,7 +999,7 @@ disagreement; it breaks something concrete.
 - **Exceptions carry a `code` and an English `message`.** The code is the
   contract; the message is a developer-facing fallback.
 - **Fail open on ambiguity** in anything that can lock a user out — see
-  [0021](specs/0021-app-updates.md).
+  [0021](specs/0021-app-updates/spec.md).
 - **Comments explain *why*, not what.** If a line looks wrong but is deliberate,
   say why it is deliberate.
 

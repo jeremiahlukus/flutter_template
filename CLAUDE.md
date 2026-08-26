@@ -6,16 +6,23 @@ short version an agent needs to not break things.
 
 ## The one rule
 
-This project is **spec-driven**. Behaviour a maintainer will rely on is written
-down in [`specs/`](specs/) *before* it is built, and every requirement names the
-test that proves it.
+This project is **spec-driven**. The rules live in
+[`.specify/memory/constitution.md`](.specify/memory/constitution.md) — that file is
+the source of truth, and this one only points at it. Principles I and II are the
+ones you will touch every time: specify before you build, and every requirement
+names its test.
 
-- Changing behaviour? Read the relevant spec first, and update it in the same
-  change. Requirement IDs look like `0002-R5` — grep for them.
-- Adding behaviour? Add numbered requirements to a spec, then failing tests, then
-  code. `specs/README.md` has the loop; `specs/templates/spec-template.md` is the
-  starting point.
-- A spec's **Verification** table must name real tests. An empty one is a bug.
+- **Adding or changing behaviour?** Run `/speckit-specify`, then `/speckit-plan`,
+  `/speckit-tasks`, `/speckit-implement`. The loop is in
+  [`specs/README.md`](specs/README.md).
+- **Changing existing behaviour?** Read that spec first and update it in the same
+  change. Requirement IDs look like `0002-R5` — grep for them. They are permanent
+  (Principle I), so never renumber.
+- **A spec's Verification table must name real tests**, or an honest `—`
+  (Principle II). Naming a test that does not exist is the one thing it exists to
+  prevent.
+- Specs are directories: `specs/NNNN-slug/spec.md` is what and why,
+  `plan.md` is how.
 
 [`task.md`](task.md) is the source of truth for what is done, what is
 deliberately not done, and what is known-broken. Check it before reporting
@@ -68,13 +75,13 @@ network.
 These are real bugs that were found and fixed here. Do not reintroduce them.
 
 - **A provider must not write to a provider it watches.** It re-enters its own
-  build and hangs the suite. Derive instead. → [0018](specs/0018-pagination.md)
+  build and hangs the suite. Derive instead. → [0018](specs/0018-pagination/spec.md)
 - **Do not `ref.read` an auto-dispose provider from a scroll handler** or any
   callback outside the widget lifecycle. It builds and tears down on every call.
 - **`async*` over a never-closing broadcast stream cannot be cancelled.** Use
-  `Stream.multi` with an explicit `onCancel`. → [0001](specs/0001-authentication.md)
+  `Stream.multi` with an explicit `onCancel`. → [0001](specs/0001-authentication/spec.md)
 - **`Timestamp.toDate()` returns local time.** Normalise to UTC at every
-  boundary. → [0002](specs/0002-notes-sync.md)
+  boundary. → [0002](specs/0002-notes-sync/spec.md)
 - **Use `is` checks, not casts, on remote data.** One bad document must not break
   a list.
 - **A perpetual `CircularProgressIndicator` makes `pumpAndSettle` time out.**
@@ -83,7 +90,7 @@ These are real bugs that were found and fixed here. Do not reintroduce them.
   throws out of the save) or the rules (which reject it after the local write
   succeeded, leaving it queued forever).
 - **Fail open on ambiguity** in anything that can lock a user out.
-  → [0021](specs/0021-app-updates.md)
+  → [0021](specs/0021-app-updates/spec.md)
 
 ## Testing
 
@@ -110,7 +117,7 @@ avoids the whole issue.
 
 Security rules **cannot** be tested in Dart (the fakes support neither custom
 functions nor `request.resource`). They run against the real emulator in
-`test_rules/`. → [0016](specs/0016-emulator-and-rules.md)
+`test_rules/`. → [0016](specs/0016-emulator-and-rules/spec.md)
 
 ## Before you say "done"
 

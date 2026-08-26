@@ -62,7 +62,7 @@ done, because `lib/firebase_options.dart` deliberately throws.
       ```
       This replaces the throwing placeholder in `lib/firebase_options.dart`.
       Until you do, the app still launches — it shows the setup screen instead
-      ([spec 0015](specs/0015-first-run.md)). Do **not** run
+      ([spec 0015](specs/0015-first-run/spec.md)). Do **not** run
       `tool/stub_firebase_options.dart` locally; it is for CI.
 
       Afterwards, delete the test `the committed placeholder throws it` in
@@ -93,7 +93,7 @@ done, because `lib/firebase_options.dart` deliberately throws.
       dart run tool/check_coverage.dart`
 - [ ] Delete the `notes` feature once you have a real one, or keep it as a
       worked example. It is the reference implementation for
-      [spec 0002](specs/0002-notes-sync.md).
+      [spec 0002](specs/0002-notes-sync/spec.md).
 
 ---
 
@@ -101,9 +101,9 @@ done, because `lib/firebase_options.dart` deliberately throws.
 
 - [x] Firebase Core bootstrap with `FlutterError.onError` + zone guard
 - [x] Riverpod 3 provider graph; every Firebase singleton behind a seam
-      → [0001-R1](specs/0001-authentication.md)
+      → [0001-R1](specs/0001-authentication/spec.md)
 - [x] `go_router` with a pure, exhaustively-tested route guard
-      → [spec 0004](specs/0004-routing.md)
+      → [spec 0004](specs/0004-routing/spec.md)
 - [x] Material 3 theming from a single seed colour, light + dark
 - [x] `very_good_analysis` with every relaxation justified in
       `analysis_options.yaml`
@@ -113,32 +113,32 @@ done, because `lib/firebase_options.dart` deliberately throws.
 
 - [x] `firebase_ui_auth` sign-in / sign-up / password reset
 - [x] `AuthRepository` mapping every Firebase code to user-fit copy
-      → [0001-R6](specs/0001-authentication.md)
+      → [0001-R6](specs/0001-authentication/spec.md)
 - [x] `AppUser` domain model with `label` / `initials` fallbacks
 - [x] Auth stream seeds its current value and is cancellable
-      → [0001-R2, 0001-R4](specs/0001-authentication.md)
+      → [0001-R2, 0001-R4](specs/0001-authentication/spec.md)
 - [x] Profile: rename, avatar upload, sign out, delete account
 - [x] Email-verification warning surfaced in the UI
 
 ## Milestone 3 — Data *(done)*
 
 - [x] Drift schema, in-memory factory, UTC-safe datetimes
-      → [spec 0003](specs/0003-local-persistence.md)
+      → [spec 0003](specs/0003-local-persistence/spec.md)
 - [x] Offline-first notes: push-before-pull, pending-write preservation
-      → [spec 0002](specs/0002-notes-sync.md)
+      → [spec 0002](specs/0002-notes-sync/spec.md)
 - [x] Firestore scoped to `users/{uid}/notes`
 - [x] Cloud Storage repository + in-memory double
-      → [spec 0006](specs/0006-file-storage.md)
+      → [spec 0006](specs/0006-file-storage/spec.md)
 - [x] Settings persisted in Drift, driving the live theme
 
 ## Milestone 4 — Quality *(done)*
 
 - [x] 968 Dart tests + 48 rules tests + 12 goldens; **93.7%** line coverage against an 85% floor
 - [x] `tool/check_coverage.dart` — zero-dependency gate, justified exclusions
-      → [spec 0007](specs/0007-quality-gates.md)
+      → [spec 0007](specs/0007-quality-gates/spec.md)
 - [x] CI: format → codegen freshness → analyze → test → coverage → build matrix
 - [x] Whole suite runs with no Firebase project and no network
-      → [0007-R9](specs/0007-quality-gates.md)
+      → [0007-R9](specs/0007-quality-gates/spec.md)
 - [x] Firestore + Storage rules written to mirror the client's path scheme
 - [x] ARB parity gate: CI fails on any untranslated or stale message
 
@@ -149,77 +149,77 @@ Added to cut the gap between "template" and "shippable".
 - [x] **Design system** — spacing/radius/duration/breakpoint tokens, semantic
       status colours as a `ThemeExtension` (WCAG AA verified), six brand presets
       re-seeding the whole theme, explicit type scale, every component themed
-      → [spec 0008](specs/0008-design-system.md)
+      → [spec 0008](specs/0008-design-system/spec.md)
 - [x] **Environments** — `--dart-define=APP_ENV`, per-environment `AppConfig`,
       corner banner off production, version + environment in Settings
-      → [spec 0009](specs/0009-environments.md)
+      → [spec 0009](specs/0009-environments/spec.md)
 - [x] **Crash reporting** — Crashlytics behind an `ErrorReporter` interface,
       wired to `FlutterError.onError` and the zone guard, no-op in dev
-      → [spec 0010](specs/0010-error-reporting.md)
+      → [spec 0010](specs/0010-error-reporting/spec.md)
 - [x] **Connectivity + automatic sync** — offline banner on every screen, queued
-      writes pushed on reconnect → [spec 0011](specs/0011-connectivity.md)
+      writes pushed on reconnect → [spec 0011](specs/0011-connectivity/spec.md)
 - [x] **Shared UI kit** — `AsyncValueView` plus empty/error/loading states, so a
       screen is not four branches of boilerplate
-      → [spec 0012](specs/0012-ui-kit.md)
+      → [spec 0012](specs/0012-ui-kit/spec.md)
 - [x] **Localisation** — `gen-l10n`, English + Spanish, ICU plurals, persisted
       locale picker, ARB parity enforced in CI
-      → [spec 0013](specs/0013-localisation.md)
+      → [spec 0013](specs/0013-localisation/spec.md)
 - [x] **Onboarding** — three-page intro, once per device, gated before auth
-      → [spec 0014](specs/0014-onboarding.md)
+      → [spec 0014](specs/0014-onboarding/spec.md)
 - [x] **Analytics opt-out now honoured** — a consent decorator, so no call site
-      has to remember → [0005-R9](specs/0005-analytics.md)
+      has to remember → [0005-R9](specs/0005-analytics/spec.md)
 - [x] **Launches unconfigured** — a setup screen naming the exact commands,
       instead of a startup crash; verified on an iPhone 17 simulator
-      → [spec 0015](specs/0015-first-run.md)
+      → [spec 0015](specs/0015-first-run/spec.md)
 - [x] **iOS deployment target raised to 15.0** — `cloud_firestore` requires it,
       and Flutter's scaffold ships 13.0, so a fresh clone could not `pod install`
-      → [0015-R10](specs/0015-first-run.md)
+      → [0015-R10](specs/0015-first-run/spec.md)
 - [x] **Crash reports attributed to the signed-in user**, cleared on sign-out
-      → [0010-R7](specs/0010-error-reporting.md)
+      → [0010-R7](specs/0010-error-reporting/spec.md)
 - [x] **`bootstrap()` error wiring is now tested** — extracted into
       `installErrorHandlers` and `reportZoneError`
-      → [spec 0010](specs/0010-error-reporting.md)
+      → [spec 0010](specs/0010-error-reporting/spec.md)
 - [x] **Domain failure copy is localised** — `AuthFailure`/`StorageFailure` codes
       map to ARB strings in `core/errors/failure_messages.dart`
-      → [spec 0013](specs/0013-localisation.md)
+      → [spec 0013](specs/0013-localisation/spec.md)
 - [x] **The coverage gate is tested** — parser and threshold logic extracted to
-      `tool/coverage_report.dart` → [spec 0007](specs/0007-quality-gates.md)
+      `tool/coverage_report.dart` → [spec 0007](specs/0007-quality-gates/spec.md)
 - [x] **Responsive layout verified at four widths**, including the content-width
-      cap → [0008-R12](specs/0008-design-system.md)
+      cap → [0008-R12](specs/0008-design-system/spec.md)
 
 ## Milestone 6 — Production features *(done)*
 
 - [x] **Firebase emulator suite** — `firebase.json`, opt-in redirection via
       `--dart-define=USE_EMULATORS=true`, and **36 security-rules tests** running
       against the real emulator in CI. Closes the "rules untested" gap for both
-      Firestore and Storage. → [spec 0016](specs/0016-emulator-and-rules.md)
+      Firestore and Storage. → [spec 0016](specs/0016-emulator-and-rules/spec.md)
 - [x] **API client** — Dio behind a typed `ApiClient`; every failure arrives as an
       `ApiFailure`, ID token attached per-request, exponential-backoff retry on
-      idempotent methods only → [spec 0017](specs/0017-api-client.md)
+      idempotent methods only → [spec 0017](specs/0017-api-client/spec.md)
 - [x] **Pagination** — bounded Drift query with a growing window, keyset paging
-      for the Firestore pull → [spec 0018](specs/0018-pagination.md)
+      for the Firestore pull → [spec 0018](specs/0018-pagination/spec.md)
 - [x] **Image picking** — camera/library, downscale + JPEG re-encode, replacing
-      the placeholder 1×1 PNG → [spec 0019](specs/0019-media.md)
+      the placeholder 1×1 PNG → [spec 0019](specs/0019-media/spec.md)
 - [x] **Push notifications** — opt-in only, token registration with rotation
       handling, notification taps opening validated routes
-      → [spec 0020](specs/0020-push-notifications.md)
+      → [spec 0020](specs/0020-push-notifications/spec.md)
 - [x] **Forced-update gate** — a remote version floor that fails open on every
-      ambiguous case → [spec 0021](specs/0021-app-updates.md)
+      ambiguous case → [spec 0021](specs/0021-app-updates/spec.md)
 - [x] **Deep links** — custom scheme declared on both platforms, `https` filter
-      ready for a domain → [0004-R10](specs/0004-routing.md)
+      ready for a domain → [0004-R10](specs/0004-routing/spec.md)
 - [x] **Accessibility suite** — tap targets, labels, contrast, and 2× text scale
       across every screen. Found four real bugs.
-      → [spec 0022](specs/0022-accessibility.md)
+      → [spec 0022](specs/0022-accessibility/spec.md)
 - [x] **Golden tests** — 12 design-system goldens, 6 brands × light/dark, in a
-      platform-pinned CI job → [spec 0023](specs/0023-visual-regression.md)
+      platform-pinned CI job → [spec 0023](specs/0023-visual-regression/spec.md)
 - [x] **Project chores** — `flutter_launcher_icons` + `flutter_native_splash`
       config, PR template, issue forms, CODEOWNERS, Dependabot
 - [x] **Four production bugs fixed after an audit** — the security rules denied
       both push-token registration and the update-policy read (silently, since
       both swallow their errors); a signed-out device kept its push token; and an
       over-long note either crashed the save or never synced. See
-      [spec 0016](specs/0016-emulator-and-rules.md),
-      [0020](specs/0020-push-notifications.md), [0002](specs/0002-notes-sync.md).
+      [spec 0016](specs/0016-emulator-and-rules/spec.md),
+      [0020](specs/0020-push-notifications/spec.md), [0002](specs/0002-notes-sync/spec.md).
 - [x] **`CLAUDE.md` / `AGENTS.md`** — condensed rules, gates, and known traps for
       coding agents
 - [x] **Two CI-only bugs fixed after the first real run** — `lib/` imported
@@ -227,10 +227,10 @@ Added to cut the gap between "template" and "shippable".
       never compiled; and `test_rules/package-lock.json` was pinned to a private
       registry CI cannot reach. Both now have guards: a web-compatibility grep in
       CI, and a committed `test_rules/.npmrc`.
-      → [0003-R11](specs/0003-local-persistence.md), [spec 0016](specs/0016-emulator-and-rules.md)
+      → [0003-R11](specs/0003-local-persistence/spec.md), [spec 0016](specs/0016-emulator-and-rules/spec.md)
 - [x] **Dependabot tuned for the Flutter SDK's version pins** — `intl` cannot be
       bumped while `flutter_localizations` pins it, so it is ignored rather than
-      reopened weekly. → [spec 0007](specs/0007-quality-gates.md)
+      reopened weekly. → [spec 0007](specs/0007-quality-gates/spec.md)
 
 ---
 
@@ -244,14 +244,14 @@ These are deliberate and documented, not oversights. Each is a real task.
 - [ ] **No schema migration test.** There is one schema version, so there is
       nothing to migrate yet. The moment there are two, add `drift_dev`'s
       schema verification — a silent migration bug is expensive.
-      → [spec 0003, Non-goals](specs/0003-local-persistence.md)
+      → [spec 0003, Non-goals](specs/0003-local-persistence/spec.md)
 - [ ] **No integration tests.** Widget tests cover the screens; nothing runs on
       a device in CI. The emulator suite makes this practical now — see
       [`flutter-skill.md`](flutter-skill.md) for the manual flows, **none of
       which has been run** beyond the first-launch check.
 - [ ] **Native push setup is not done.** APNs certificate, entitlements, and the
       Android notification channel are per-app.
-      → [spec 0020, Non-goals](specs/0020-push-notifications.md)
+      → [spec 0020, Non-goals](specs/0020-push-notifications/spec.md)
 - [ ] **Deep links are unverified.** The custom scheme is declared but no flow
       has been run on a device, and App Links need `assetlinks.json` and
       `apple-app-site-association` hosted on a domain you own.
@@ -259,14 +259,14 @@ These are deliberate and documented, not oversights. Each is a real task.
       design; icons and splash need your artwork before either generator runs.
 - [ ] **The API client has no caller.** The notes feature is Firestore-backed, so
       the typed-method shape is unexercised by a real endpoint.
-      → [spec 0017, Open questions](specs/0017-api-client.md)
+      → [spec 0017, Open questions](specs/0017-api-client/spec.md)
 - [ ] **Deployment-target drift is unguarded.** iOS 15.0 / macOS 10.15 satisfy
       today's Firebase plugins. Nothing fails when a plugin upgrade raises the
       bar, except the CI build itself.
-      → [spec 0015, Open questions](specs/0015-first-run.md)
+      → [spec 0015, Open questions](specs/0015-first-run/spec.md)
 - [ ] **No backoff on a failed sync.** A reconnect triggers one attempt;
       repeated failure waits for the next transition or a manual tap.
-      → [spec 0011, Non-goals](specs/0011-connectivity.md)
+      → [spec 0011, Non-goals](specs/0011-connectivity/spec.md)
 
 ## Milestone 8 — Likely next features
 
@@ -276,7 +276,7 @@ Not started. Ordered roughly by how often a real app needs them.
       Xcode schemes are native work
 - [ ] `integration_test` running against the emulator suite in CI
 - [ ] Social sign-in — note the `desktop_webview_auth` / SPM caveat in
-      [spec 0001, Non-goals](specs/0001-authentication.md)
+      [spec 0001, Non-goals](specs/0001-authentication/spec.md)
 - [ ] Localised date and number formatting (`intl` is already a dependency)
 - [ ] Remote Config / feature flags
 - [ ] Note attachments, using the storage `attachmentPath` helper
@@ -299,7 +299,7 @@ to install.
 
 **Never reach for a Firebase singleton.** Add a provider to
 `firebase_providers.dart` instead. Every test in the suite depends on this
-holding. → [0001-R1](specs/0001-authentication.md)
+holding. → [0001-R1](specs/0001-authentication/spec.md)
 
 **Justify every lint relaxation.** `analysis_options.yaml` has a comment per
 disabled rule explaining why it cannot or should not be satisfied. A bare
@@ -310,11 +310,11 @@ disable is a TODO in disguise.
 
 **No inline magic numbers in the UI.** Spacing, radii, and durations come from
 `design_tokens.dart`; status colours from `AppSemanticColors`. That is what keeps
-a rebrand to one enum value. → [spec 0008](specs/0008-design-system.md)
+a rebrand to one enum value. → [spec 0008](specs/0008-design-system/spec.md)
 
 **No hard-coded user-visible strings.** Add a key to `app_en.arb`, translate it in
 every other ARB, and read it via `context.l10n`. CI fails on a missing
-translation. → [spec 0013](specs/0013-localisation.md)
+translation. → [spec 0013](specs/0013-localisation/spec.md)
 
 ## Commands
 

@@ -78,3 +78,6 @@ lib/src/l10n/untranslated.json
 *.mobileprovision
 *.cer
 key.properties
+
+# Per-checkout spec-kit state: which feature is currently active.
+.specify/feature.json

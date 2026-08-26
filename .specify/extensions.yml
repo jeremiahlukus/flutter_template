@@ -1,0 +1,23 @@
+# Extension hook registry.
+#
+# One extension is installed: `git`. It creates the feature branch and allocates
+# the next four-digit spec number when /speckit-specify runs.
+#
+# Every auto-commit hook is deliberately absent. The constitution (Governance §
+# "Auto-commit is off") requires explicit approval for every commit and push, and
+# a hook that writes history on your behalf cannot ask for it. If you want them,
+# add `after_*` entries pointing at `speckit.git.commit` and flip the matching
+# key in .specify/extensions/git/git-config.yml — but read that section first.
+installed:
+  - git
+settings:
+  auto_execute_hooks: true
+hooks:
+  before_specify:
+    - extension: git
+      command: speckit.git.feature
+      enabled: true
+      optional: false
+      prompt: Create the feature branch?
+      description: Create the feature branch and allocate the next spec number
+      condition: null

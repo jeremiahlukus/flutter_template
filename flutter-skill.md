@@ -6,7 +6,7 @@ the app._
 Widget tests (974 of them, 93.68% coverage) plus 48 security-rules tests already
 cover every screen and rule in isolation. These flows exist for what widget tests structurally cannot reach:
 real Firebase, real sqlite on device, process restarts, and the offline→online
-transition that the whole sync design ([spec 0002](specs/0002-notes-sync.md))
+transition that the whole sync design ([spec 0002](specs/0002-notes-sync/spec.md))
 exists to handle.
 
 ---
@@ -39,7 +39,7 @@ Confirmed on device:
 - Real Firebase initialises; the setup screen correctly does **not** appear.
 - Replacing the generated `firebase_options.dart` no longer breaks the build —
   the reason `FirebaseNotConfigured` was moved out of it.
-- `Auth → emulator` / `Firestore → emulator` redirection works ([0016-R6](specs/0016-emulator-and-rules.md)).
+- `Auth → emulator` / `Firestore → emulator` redirection works ([0016-R6](specs/0016-emulator-and-rules/spec.md)).
 - Registration through `firebase_ui_auth` succeeds — the flow that
   [cannot be driven in a widget test](README.md#known-limitations).
 - A note written on device reached `users/{uid}/notes/{noteId}` in Firestore,
@@ -48,7 +48,7 @@ Confirmed on device:
   rules, the list showed a `1 pending` badge and the snackbar read *"Synced, but
   1 note could not upload."* — not a false success. Restoring the rules cleared
   the badge and both notes landed server-side.
-- A locale change re-renders live, in Spanish, with no restart ([0013-R10](specs/0013-localisation.md)).
+- A locale change re-renders live, in Spanish, with no restart ([0013-R10](specs/0013-localisation/spec.md)).
 
 Two things it found, both now fixed: the app **display name** was in no
 Milestone 0 item (a fork shipped as "Flutter Template"), and the numbers in this
@@ -128,7 +128,7 @@ If you add a screen and find yourself reaching for `tap_at`, add a key instead.
 1. **The sign-in form is `firebase_ui_auth`'s, not ours.** Its fields have no
    app-supplied keys. Target them by label ("Email", "Password") or by index.
    This is also why the sign-in flow cannot be automated in widget tests — see
-   [spec 0001, Known limitation](specs/0001-authentication.md).
+   [spec 0001, Known limitation](specs/0001-authentication/spec.md).
 2. **Screens with a `CircularProgressIndicator` never settle.** A spinner is a
    perpetual animation. Do not wait for a quiescent frame on `notes_loading`;
    screenshot and move on.
@@ -199,7 +199,7 @@ interrupted, restore it manually before the next flow.
 ## FLOW-00 · An unconfigured app explains itself
 
 The only flow that runs **without** a Firebase project — and the one a new
-contributor hits first. → [spec 0015](specs/0015-first-run.md)
+contributor hits first. → [spec 0015](specs/0015-first-run/spec.md)
 
 ```
 # Fresh clone, no `flutterfire configure` run yet.
@@ -239,7 +239,7 @@ Firebase needs 15.0. Raised in `ios/Podfile` and `IPHONEOS_DEPLOYMENT_TARGET`.
 ## FLOW-01 · Sign up a new account → land on an empty notes list
 
 Covers the first-run path and the signed-out → signed-in redirect
-([0004-R4](specs/0004-routing.md)).
+([0004-R4](specs/0004-routing/spec.md)).
 
 ```
 screenshot()                        # sign-in screen, "Flutter Template" header
@@ -279,7 +279,7 @@ avatar in `profile_button` shows the account's initials.
 
 ## FLOW-03 · A wrong password shows readable copy, not a raw error code
 
-Guards [0001-R6](specs/0001-authentication.md).
+Guards [0001-R6](specs/0001-authentication/spec.md).
 
 ```
 tap(text: "Email")
@@ -383,7 +383,7 @@ text." and stay on the editor. Note count unchanged.
 ## FLOW-08 · Offline write → pending chip → reconnect → sync clears it
 
 **The most important flow in this file.** This is the entire point of
-[spec 0002](specs/0002-notes-sync.md), and no widget test can reach it.
+[spec 0002](specs/0002-notes-sync/spec.md), and no widget test can reach it.
 
 ```
 # 1. Go offline (simulator: Settings › Airplane Mode, or disable host networking)
@@ -415,7 +415,7 @@ screenshot()
 - After reconnecting and syncing, the snack bar reports `1 up`, the chip
   disappears, and the note is present in the Firestore console.
 - **Critically:** the note is *not* deleted by the pull half of the sync. That is
-  [0002-R5 and 0002-R6](specs/0002-notes-sync.md) — push before pull, and never
+  [0002-R5 and 0002-R6](specs/0002-notes-sync/spec.md) — push before pull, and never
   clobber a pending write.
 
 ---
@@ -516,14 +516,14 @@ screenshot()
 
 **Pass criteria:** success message shown. In the Firebase console, an object
 exists at `users/<uid>/avatar.jpg` — matching the path the Storage rules protect
-([0006-R9](specs/0006-file-storage.md)). The upload is a 1×1 placeholder PNG by
+([0006-R9](specs/0006-file-storage/spec.md)). The upload is a 1×1 placeholder PNG by
 design; there is no image picker.
 
 ---
 
 ## FLOW-14 · Sign out clears the local cache
 
-Guards [0002-R12](specs/0002-notes-sync.md) — a real privacy issue if it breaks.
+Guards [0002-R12](specs/0002-notes-sync/spec.md) — a real privacy issue if it breaks.
 
 ```
 # Start signed in with at least 2 notes.
@@ -605,7 +605,7 @@ screenshot()
 
 **Pass criteria:** the sign-in screen, not the profile. Repeat for `/settings`
 and `/notes/some-id`. **Requires per-app deep-link setup** — see
-[spec 0004, Non-goals](specs/0004-routing.md). Mark `⏭️ SKIP` if not configured.
+[spec 0004, Non-goals](specs/0004-routing/spec.md). Mark `⏭️ SKIP` if not configured.
 
 ---
 
@@ -680,7 +680,7 @@ screenshot()
 **Pass criteria:** the intro appears **before** the sign-in screen, advances
 through three pages, the final button reads "Get started", and finishing lands on
 sign-in. After the restart the intro does **not** reappear — that is
-[0014-R3](specs/0014-onboarding.md), and a flash of it here is a failure.
+[0014-R3](specs/0014-onboarding/spec.md), and a flash of it here is a failure.
 
 ---
 
@@ -718,7 +718,7 @@ mistaking staging for dev is how a demo ends up on the wrong backend.
 
 ## FLOW-24 · The accent colour re-themes the whole app
 
-The design system's live test. → [spec 0008](specs/0008-design-system.md)
+The design system's live test. → [spec 0008](specs/0008-design-system/spec.md)
 
 ```
 tap(key: "settings_button")
@@ -763,7 +763,7 @@ screenshot()
 ```
 
 **Pass criteria:** the UI switches immediately with no restart
-([0013-R10](specs/0013-localisation.md)). **No English text is left anywhere** —
+([0013-R10](specs/0013-localisation/spec.md)). **No English text is left anywhere** —
 app bars, empty states, snack bars, dialogs, tooltips. Selecting "Match system"
 returns to the device language. Watch for clipped or overflowing text: Spanish
 strings are typically 15–30% longer than English.
@@ -772,7 +772,7 @@ strings are typically 15–30% longer than English.
 
 ## FLOW-26 · The offline banner and automatic reconnect sync
 
-The most valuable of the new flows. → [spec 0011](specs/0011-connectivity.md)
+The most valuable of the new flows. → [spec 0011](specs/0011-connectivity/spec.md)
 
 ```
 # 1. Online. Note there is no banner.
@@ -822,7 +822,7 @@ screenshot()
 
 **Pass criteria:** no sync snack bar, and no Firestore read burst in the console.
 A sync on every launch would hammer the backend for nothing
-([0011-R7](specs/0011-connectivity.md)).
+([0011-R7](specs/0011-connectivity/spec.md)).
 
 ---
 
@@ -844,7 +844,7 @@ tap(key: "save_note_button")
 **Pass criteria:** with the switch off, Firebase Analytics DebugView shows **no**
 events for these actions — not `note_saved`, not `screen_view`. Turn it back on
 and confirm events resume. This used to be a stored-but-ignored preference;
-[0005-R9](specs/0005-analytics.md) is what closed it.
+[0005-R9](specs/0005-analytics/spec.md) is what closed it.
 
 Note that DebugView needs `adb shell setprop debug.firebase.analytics.app <pkg>`
 (Android) or the `-FIRDebugEnabled` launch argument (iOS), and this flow must be
@@ -854,7 +854,7 @@ run against a **staging or prod** build — dev sends nothing either way.
 
 ## FLOW-29 · Push opt-in prompts only on request
 
-Requires APNs/FCM setup. → [spec 0020](specs/0020-push-notifications.md)
+Requires APNs/FCM setup. → [spec 0020](specs/0020-push-notifications/spec.md)
 
 ```
 # Fresh install. Do NOT expect a permission prompt on launch.
@@ -898,7 +898,7 @@ screenshot()                        # Settings screen again
 
 **Pass criteria:** taps navigate in both the backgrounded and **terminated**
 cases. The cold-start case comes through a different SDK call
-([0020-R11](specs/0020-push-notifications.md)) and is the one that usually
+([0020-R11](specs/0020-push-notifications/spec.md)) and is the one that usually
 silently does nothing. A payload with `"route": "/nope"` must be ignored, not
 navigated to.
 
@@ -915,7 +915,7 @@ navigated to.
 
 **Pass criteria:** a new token document exists and the old one is gone. Register
 once at sign-in and skip this, and a device silently stops receiving with no
-error anywhere — which is why [0020-R5](specs/0020-push-notifications.md) exists.
+error anywhere — which is why [0020-R5](specs/0020-push-notifications/spec.md) exists.
 
 ---
 
@@ -943,13 +943,13 @@ screenshot()
 **Pass criteria:** a required update **replaces** the app — no notes UI reachable.
 An optional update does not gate anything and appears as a single Settings row.
 Delete the document entirely and confirm the app still works: it must
-[fail open](specs/0021-app-updates.md).
+[fail open](specs/0021-app-updates/spec.md).
 
 ---
 
 ## FLOW-33 · The notes list pages
 
-Needs 31+ notes; the page size is 30. → [spec 0018](specs/0018-pagination.md)
+Needs 31+ notes; the page size is 30. → [spec 0018](specs/0018-pagination/spec.md)
 
 ```
 # Seed 60 notes (fastest via the Firestore console or the emulator UI, then Sync).
@@ -962,7 +962,7 @@ screenshot()
 ```
 
 **Pass criteria:** rows keep appearing as you scroll, with **no spinner parked at
-the bottom** ([0018-R9](specs/0018-pagination.md)) and no visible stutter.
+the bottom** ([0018-R9](specs/0018-pagination/spec.md)) and no visible stutter.
 Scrolling past the last note stops loading rather than looping.
 
 ---
