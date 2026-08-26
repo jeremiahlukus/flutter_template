@@ -50,8 +50,8 @@ testability. So the emulator it is.
 | 0016-R3 | `…firestore…` › `isolation between users`; `…storage…` › `denies another user reading it` |
 | 0016-R4 | `…firestore…` › `document shape validation` |
 | 0016-R5 | `…firestore…` › `deny by default`; `…storage…` › `deny by default` |
-| 0016-R6 | `test/core/config/app_environment_test.dart` › `emulators` › `are opt-in` |
-| 0016-R7 | `…` › `emulators` › `are never enabled in production` |
+| 0016-R6 | `test/core/config/app_environment_test.dart` › `emulators` › `are opt-in per environment` |
+| 0016-R7 | `…` › `emulators` › `are never enabled in production by current()` |
 | 0016-R8 | `…` › `emulators` › `are off unless explicitly requested` |
 | 0016-R9 | `.github/workflows/ci.yaml` › `rules` job |
 

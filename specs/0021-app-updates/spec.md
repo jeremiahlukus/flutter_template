@@ -39,7 +39,7 @@ also a remote kill switch, so the failure modes matter more than the feature.
 | ID | Test |
 |---|---|
 | 0021-R1 | `test/features/update/app_version_test.dart` › `ordering` › `does not compare components lexicographically` |
-| 0021-R2 | `…` › `tryParse` › `returns null rather than throwing on nonsense`; `UpdatePolicy.fromMap` › `unparseable versions become null` |
+| 0021-R2 | `…` › `tryParse` › `returns null rather than throwing on nonsense`; `UpdatePolicy.fromMap` › `unparseable versions become null, not an exception` |
 | 0021-R3 | `test/features/update/update_gate_test.dart` › `UpdateGate` › `replaces the app when an update is required` |
 | 0021-R4 | `…` › `UpdateGate` › `does not gate an optional update` |
 | 0021-R5 | `…` › `updatePolicyProvider` › `is empty when the document is missing` |

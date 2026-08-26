@@ -28,6 +28,11 @@ being a gate. Two specific ways that happens:
 | 0007-R8 | The gate MUST report the least-covered files on failure. |
 | 0007-R9 | The suite MUST run with no Firebase project and no network. |
 | 0007-R10 | The Flutter version MUST be pinned in CI. |
+| 0007-R11 | Every requirement MUST have a Verification row, and every row a requirement. |
+| 0007-R12 | A test named in a Verification row MUST exist, by that exact name. |
+| 0007-R13 | Every repo path named in a Verification row MUST exist. |
+| 0007-R14 | An unproven requirement MUST state why, not just `—`. |
+| 0007-R15 | The number of rows naming no verifiable test MUST NOT grow silently. |
 
 ## Non-goals
 
@@ -43,7 +48,7 @@ being a gate. Two specific ways that happens:
 | ID | Test |
 |---|---|
 | 0007-R1 | `.github/workflows/ci.yaml` › `Enforce coverage threshold` |
-| 0007-R2 | `tool/check_coverage.dart` › `_excluded` |
+| 0007-R2 | `test/tool/coverage_report_test.dart` › `exclusions` › `an excluded file does not affect the total` |
 | 0007-R3 | `tool/check_coverage.dart` (each entry is commented) |
 | 0007-R4 | `.github/workflows/ci.yaml` › `Analyze` |
 | 0007-R5 | `.github/workflows/ci.yaml` › `Verify formatting` |
@@ -52,6 +57,11 @@ being a gate. Two specific ways that happens:
 | 0007-R8 | `tool/check_coverage.dart` › failure branch |
 | 0007-R9 | The whole suite: `flutter test` with no configuration |
 | 0007-R10 | `.github/workflows/ci.yaml` › `env.FLUTTER_VERSION` |
+| 0007-R11 | `test/specs/verification_test.dart` › `structure` › `every requirement has a verification row, and vice versa` |
+| 0007-R12 | `…` › `rows resolve` › `a named test exists in the file the row points at` |
+| 0007-R13 | `…` › `rows resolve` › `every repo path named in a Verification row exists` |
+| 0007-R14 | `…` › `honesty` › `an unproven requirement says why` |
+| 0007-R15 | `…` › `honesty` › `rows nothing can verify stay within budget` |
 
 ### Dependabot and SDK-pinned packages
 

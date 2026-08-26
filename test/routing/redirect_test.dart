@@ -12,11 +12,87 @@ void main() {
     required String location,
     required bool signedIn,
     bool authResolved = true,
+    bool onboardingCompleted = true,
   }) => resolveRedirect(
     location: location,
     signedIn: signedIn,
     authResolved: authResolved,
+    onboardingCompleted: onboardingCompleted,
   );
+
+  group('onboarding', () {
+    test('takes precedence over the auth guard', () {
+      // 0014-R5. The intro explains the app, so it comes before being asked to
+      // create an account. A signed-out user heading for a protected route is
+      // sent to the intro, *not* to sign-in — which is what "precedence" means
+      // here, and is the whole reason the check sits above the auth branch.
+      expect(
+        redirect(
+          location: AppRoute.notes.path,
+          signedIn: false,
+          onboardingCompleted: false,
+        ),
+        AppRoute.onboarding.path,
+      );
+
+      // Even the public sign-in route defers to it.
+      expect(
+        redirect(
+          location: AppRoute.signIn.path,
+          signedIn: false,
+          onboardingCompleted: false,
+        ),
+        AppRoute.onboarding.path,
+      );
+
+      // And a signed-in user who has not seen it still sees it.
+      expect(
+        redirect(
+          location: AppRoute.notes.path,
+          signedIn: true,
+          onboardingCompleted: false,
+        ),
+        AppRoute.onboarding.path,
+      );
+
+      // The intro itself is reachable while incomplete, or the guard would loop.
+      expect(
+        redirect(
+          location: AppRoute.onboarding.path,
+          signedIn: false,
+          onboardingCompleted: false,
+        ),
+        isNull,
+      );
+    });
+
+    test('a completed user is bounced off the intro', () {
+      // 0014-R6. Unreachable once finished, including by typing the URL — and
+      // where you land depends on whether you are signed in.
+      expect(
+        redirect(location: AppRoute.onboarding.path, signedIn: false),
+        AppRoute.signIn.path,
+      );
+      expect(
+        redirect(location: AppRoute.onboarding.path, signedIn: true),
+        AppRoute.notes.path,
+      );
+    });
+
+    test('an unresolved auth state still wins over the intro', () {
+      // Ordering detail worth pinning: redirecting before Firebase has reported
+      // would flash the intro at a returning user mid-launch.
+      expect(
+        redirect(
+          location: AppRoute.notes.path,
+          signedIn: false,
+          authResolved: false,
+          onboardingCompleted: false,
+        ),
+        isNull,
+      );
+    });
+  });
 
   group('while auth is still resolving', () {
     test('never redirects, whatever the location', () {

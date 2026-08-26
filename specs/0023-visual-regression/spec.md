@@ -39,11 +39,11 @@ since the beginning with nothing using it.
 
 | ID | Test |
 |---|---|
-| 0023-R1 | `test/goldens/design_system_golden_test.dart` › `showcase` builder |
+| 0023-R1 | `test/goldens/design_system_golden_test.dart` › `brand themes` (one golden per brand and brightness, built by the `showcase` helper) |
 | 0023-R2 | `…` › `brand themes` — 6 brands × light/dark |
 | 0023-R3 | `@Tags(['golden'])` on the library; declared in `dart_test.yaml` |
 | 0023-R4 | `.github/workflows/ci.yaml` › `Test` step › `--exclude-tags golden` |
-| 0023-R5 | `.github/workflows/ci.yaml` › `goldens` job on `macos-latest` |
+| 0023-R5 | `.github/workflows/ci.yaml` › `goldens` job on `macos-15` |
 | 0023-R6 | `…` › `Upload failure diffs` step |
 
 ## Open questions
