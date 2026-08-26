@@ -2,6 +2,12 @@ include: package:very_good_analysis/analysis_options.yaml
 
 analyzer:
   exclude:
+    # Node dependencies, not Dart source. `firebase-tools` 15 vendors Dart
+    # *templates* for `firebase init functions`, which do not compile on their own
+    # — 7 errors, all fatal under --fatal-infos, in files nobody in this repo
+    # wrote. CI cannot catch this: the rules job and the analyze job run on
+    # separate runners, so no runner ever has both node_modules and the analyzer.
+    - "test_rules/node_modules/**"
     - "**/*.g.dart"
     - "**/*.freezed.dart"
     - "**/generated_plugin_registrant.dart"

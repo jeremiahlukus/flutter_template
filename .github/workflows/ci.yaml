@@ -70,15 +70,26 @@ jobs:
             exit 1
           fi
 
-      # A single `dart:ffi` or `dart:io` import reachable from lib/ makes the
-      # whole web build fail to compile, and `flutter analyze` says nothing about
-      # it. This caught a real one: `drift/native.dart` pulled in for a test-only
-      # helper. Cheaper to check here than to wait for the build matrix.
+      # `dart:ffi` reachable from lib/ makes the web build fail to compile, and
+      # `flutter analyze` says nothing about it. This caught a real one:
+      # `drift/native.dart` pulled in for a test-only helper. Cheaper to check
+      # here than to wait for the build matrix.
+      #
+      # `dart:io` is deliberately NOT banned. It compiles for web perfectly well
+      # — verified with `flutter build web --release` green while lib/ imported it
+      # and used File, Directory, Platform and Process from code reachable from
+      # main(). Flutter ships web stubs that throw at runtime, not at build time.
+      # Banning it broke forks whose production code touches the filesystem, and
+      # the remedy this step used to print was unsatisfiable: a conditional import
+      # still leaves `import 'dart:io'` in a lib/ file for the grep to find.
+      # Whether lib/ compiles for web is the `Build web` job's question, and it
+      # answers it honestly.
       - name: Verify lib/ stays web-compatible
         run: |
-          if grep -rnE "^import 'dart:(ffi|io|mirrors)'|^import 'package:drift/native\.dart'" lib/; then
-            echo "::error::lib/ imports a library that is unavailable on web."
-            echo "Move it to test/, or guard it behind a conditional import."
+          if grep -rnE "^import 'dart:(ffi|mirrors)'|^import 'package:drift/native\.dart'" lib/; then
+            echo "::error::lib/ imports a library that cannot compile for web."
+            echo "Move it to test/, or split the native path behind a conditional"
+            echo "import so no lib/ file imports it directly."
             exit 1
           fi
           echo "lib/ is web-compatible"
@@ -135,9 +146,13 @@ jobs:
 
   goldens:
     name: Golden files
-    # Pinned to the platform the committed goldens were generated on. Do not
-    # move this to ubuntu without regenerating them.
-    runs-on: macos-latest
+    # Pinned to the platform *and image* the committed goldens were generated on.
+    # Rounded-corner anti-aliasing differs between platform Skia builds, which is
+    # why this job is separate at all — and `macos-latest` moves as GitHub rolls
+    # its runner images, so it would let a runner bump turn this red on a commit
+    # that changed nothing. Same argument as pinning FLUTTER_VERSION. Bumping the
+    # image is a deliberate commit that regenerates the goldens.
+    runs-on: macos-15
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
