@@ -18,6 +18,20 @@ import 'package:flutter_test/flutter_test.dart';
 /// checked and are instead **budgeted** — see `maxUncheckableRows`. That budget
 /// is the anti-drift mechanism: adding a row nothing can verify means changing a
 /// committed number, in the diff, on purpose.
+/// Rows whose named path does not exist. Zero, so this is a hard gate here.
+///
+/// These three are ratchets: lowering one never fails, raising one is a
+/// deliberate edit visible in the diff. A fork that deletes features the
+/// inherited specs verify will need to raise them, then drive them back down.
+const maxUnresolvedPaths = 0;
+
+/// Rows naming a test that is not in the file they point at. **0 = hard gate.**
+const maxStaleTestNames = 0;
+
+/// Rows that name no verifiable test at all — a constant, a code path, or the
+/// whole suite. Legitimate, but the hole in the discipline, so it is pinned.
+const maxUncheckableRows = 23;
+
 void main() {
   final specs = _loadSpecs();
 
@@ -78,7 +92,13 @@ void main() {
           }
         }
       }
-      expect(problems, isEmpty, reason: problems.join('\n'));
+      expect(
+        problems.length,
+        lessThanOrEqualTo(maxUnresolvedPaths),
+        reason:
+            '${problems.length} row(s) name a path that does not exist '
+            '(budget $maxUnresolvedPaths):\n${problems.join('\n')}',
+      );
     });
 
     test('a named test exists in the file the row points at', () {
@@ -122,23 +142,31 @@ void main() {
           }
         }
       }
-      expect(problems, isEmpty, reason: problems.join('\n'));
+      expect(
+        problems.length,
+        lessThanOrEqualTo(maxStaleTestNames),
+        reason:
+            '${problems.length} row(s) name a test that is not there '
+            '(budget $maxStaleTestNames):\n${problems.join('\n')}',
+      );
     });
   });
 
   group('honesty', () {
-    test('an unproven requirement says why', () {
-      // `—` is allowed: it is the honest answer while a spec is ahead of its
-      // code. What is not allowed is a bare dash with no reason, which is
-      // indistinguishable from an oversight.
+    test('an Accepted spec explains every unproven requirement', () {
+      // A bare `—` is the honest answer while a spec is ahead of its code, so it
+      // is fine in a Draft. Once a spec is Accepted the feature has shipped, and
+      // a dash with no explanation is indistinguishable from an oversight.
       final problems = <String>[];
       for (final spec in specs) {
+        if (!spec.status.startsWith('Accepted')) continue;
         for (final row in spec.rows) {
           if (!row.isUnproven) continue;
           if (row.text.replaceFirst('—', '').trim().isEmpty) {
             problems.add(
-              '${spec.path} ${row.id}: unproven with no reason given. Write '
-              '`— *(why, and what would prove it)*`, or name the test.',
+              '${spec.path} ${row.id}: Accepted but unproven, with no reason '
+              'given. Write `— *(why, and what would prove it)*`, name the '
+              'test, or put the spec back to Draft.',
             );
           }
         }
@@ -159,7 +187,6 @@ void main() {
       // are raising it, satisfy yourself the row genuinely cannot name a test.
       // Lowering it never fails — turning one of these into a real test name is
       // the point.
-      const maxUncheckableRows = 23;
       final uncheckable = <String>[];
       for (final spec in specs) {
         for (final row in spec.rows) {

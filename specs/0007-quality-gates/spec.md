@@ -31,8 +31,8 @@ being a gate. Two specific ways that happens:
 | 0007-R11 | Every requirement MUST have a Verification row, and every row a requirement. |
 | 0007-R12 | A test named in a Verification row MUST exist, by that exact name. |
 | 0007-R13 | Every repo path named in a Verification row MUST exist. |
-| 0007-R14 | An unproven requirement MUST state why, not just `—`. |
-| 0007-R15 | The number of rows naming no verifiable test MUST NOT grow silently. |
+| 0007-R14 | An `Accepted` spec MUST explain every unproven requirement, not just leave `—`. |
+| 0007-R15 | The counts of unresolved paths, stale test names, and unverifiable rows MUST NOT grow silently. |
 
 ## Non-goals
 
@@ -60,7 +60,7 @@ being a gate. Two specific ways that happens:
 | 0007-R11 | `test/specs/verification_test.dart` › `structure` › `every requirement has a verification row, and vice versa` |
 | 0007-R12 | `…` › `rows resolve` › `a named test exists in the file the row points at` |
 | 0007-R13 | `…` › `rows resolve` › `every repo path named in a Verification row exists` |
-| 0007-R14 | `…` › `honesty` › `an unproven requirement says why` |
+| 0007-R14 | `…` › `honesty` › `an Accepted spec explains every unproven requirement` |
 | 0007-R15 | `…` › `honesty` › `rows nothing can verify stay within budget` |
 
 ### Dependabot and SDK-pinned packages
