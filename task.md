@@ -3,6 +3,12 @@
 Working checklist for this template. Specs live in [`specs/`](specs/); this file
 tracks the *work*.
 
+Adding a feature? Use the workflow rather than editing this file first:
+`/speckit-specify` → `/speckit-plan` → `/speckit-tasks` → `/speckit-implement`.
+It writes `specs/<NNNN>-<slug>/tasks.md`, which is where per-feature work belongs.
+This file is for template-level work that spans features — the milestones below —
+and for recording anything left incomplete.
+
 Legend: `[x]` done · `[ ]` open · `[~]` partially done, see note
 
 ---
@@ -133,7 +139,7 @@ done, because `lib/firebase_options.dart` deliberately throws.
 
 ## Milestone 4 — Quality *(done)*
 
-- [x] 968 Dart tests + 48 rules tests + 12 goldens; **93.7%** line coverage against an 85% floor
+- [x] 984 Dart tests + 48 rules tests + 12 goldens; **93.7%** line coverage against an 85% floor
 - [x] `tool/check_coverage.dart` — zero-dependency gate, justified exclusions
       → [spec 0007](specs/0007-quality-gates/spec.md)
 - [x] CI: format → codegen freshness → analyze → test → coverage → build matrix

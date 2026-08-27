@@ -3,7 +3,7 @@
 _Run these flows manually using the flutter-skill MCP tools after connecting to
 the app._
 
-Widget tests (974 of them, 93.68% coverage) plus 48 security-rules tests already
+Widget tests (984 of them, 93.73% coverage) plus 48 security-rules tests already
 cover every screen and rule in isolation. These flows exist for what widget tests structurally cannot reach:
 real Firebase, real sqlite on device, process restarts, and the offline→online
 transition that the whole sync design ([spec 0002](specs/0002-notes-sync/spec.md))
@@ -19,10 +19,10 @@ read `⏳ NOT RUN` — a fabricated PASS in this file is worse than no file at a
 | Gate | State |
 |---|---|
 | `flutter analyze --fatal-infos --fatal-warnings` | ✅ clean |
-| `flutter test --exclude-tags golden` | ✅ 974 passed |
+| `flutter test --exclude-tags golden` | ✅ 984 passed |
 | `flutter test --tags golden` | ✅ 12 goldens |
 | `cd test_rules && npm test` | ✅ 48 rules tests |
-| Coverage (85% floor) | ✅ 93.68% |
+| Coverage (85% floor) | ✅ 93.73% |
 | On-device flows | **1 / 33 run** — FLOW-00 ✅ PASS |
 
 ### Separately: a fresh fork was exercised end to end (2026-08-25)

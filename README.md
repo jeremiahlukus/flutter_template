@@ -5,25 +5,31 @@ offline-first Drift cache, a tested route guard, a real design system,
 flavours, crash reporting, localisation, onboarding — and CI that refuses to go
 green below 85% coverage.
 
-> **Start here.** This project is **spec-driven**: behaviour is written down in
-> [`specs/`](specs/) before it is built, and every requirement names the test that
-> proves it. Before changing anything, read
+> **Start here.** This project is **spec-driven**, using
+> [spec-kit](https://github.com/github/spec-kit)'s lean preset: behaviour is
+> specified in [`specs/`](specs/) before it is built, every requirement names the
+> test that proves it, and **a test in the suite fails if that name is wrong**.
+> The loop is four commands — `/speckit-specify`, `/speckit-plan`,
+> `/speckit-tasks`, `/speckit-implement` — and the rules they check against are in
+> [`.specify/memory/constitution.md`](.specify/memory/constitution.md).
+>
+> Before changing anything, read
 > [How this template is developed](#how-this-template-is-developed) and the spec
 > for the area you are touching. [`task.md`](task.md) tracks what is done, what is
 > deliberately not done, and what is known-broken.
 >
 > **Working with a coding agent?** [`CLAUDE.md`](CLAUDE.md) (aliased as
-> [`AGENTS.md`](AGENTS.md)) is the condensed version: the hard rules, the four
-> gates, the `TestHarness` API, and the traps that have already caused real bugs
-> in this codebase.
+> [`AGENTS.md`](AGENTS.md)) is the condensed version: the constitution's
+> principles by number, the four gates, the `TestHarness` API, and the traps that
+> have already caused real bugs in this codebase.
 
 | | |
 |---|---|
-| **Tests** | 968 Dart + 48 security-rules + 12 goldens |
+| **Tests** | 984 Dart + 48 security-rules + 12 goldens |
 | **Line coverage** | 93.7% (85% floor, enforced in CI) |
 | **Analyzer** | `very_good_analysis`, zero issues, `--fatal-infos` |
 | **Flutter / Dart** | 3.44.0 / 3.12 |
-| **Specs** | 23, every requirement mapped to a named test |
+| **Specs** | 24, every requirement mapped to a named test — checked, not trusted |
 
 ---
 
@@ -318,6 +324,12 @@ assets/branding/                your icon and splash art goes here
 flutter test
 flutter test --coverage && dart run tool/check_coverage.dart --min 85
 ```
+
+One suite is worth calling out because it tests the documentation rather than the
+code: `test/specs/verification_test.dart` resolves every spec's Verification table
+against the filesystem, so a renamed test fails the build instead of leaving a row
+that still reads as proof. See
+[The Verification table is checked, not trusted](#the-verification-table-is-checked-not-trusted).
 
 The suite needs **no Firebase project and no network**. That is the design
 constraint everything else follows from:
@@ -932,6 +944,54 @@ the traceability tool; there is nothing to install. Start a new spec with
 `/speckit-specify`, or by hand from
 [`.specify/templates/spec-template.md`](.specify/templates/spec-template.md).
 
+### The Verification table is checked, not trusted
+
+This is the part that makes the rest worth doing.
+
+A table mapping requirements to tests is only as good as its freshness, and it
+rots in the one way you cannot see: **rename a test and the row still reads as
+proof.** So `test/specs/verification_test.dart` resolves every row in every spec
+against the filesystem. It runs inside `flutter test`, so there is no separate
+gate to remember.
+
+| It fails if | Because |
+|---|---|
+| A requirement has no Verification row, or a row has no requirement | The table drifted from the spec above it |
+| A named test is not in the file the row points at | The test was renamed, moved, or never existed |
+| A repo path in a row does not exist | The file moved and the row did not |
+| An `Accepted` spec leaves a requirement at `—` with no reason | Shipped and unexplained is indistinguishable from forgotten |
+| The count of unverifiable rows grows | See below |
+
+Strictness is deliberately uneven. Dart and JS test names are quoted literals, so
+the quotes are required — that is what catches a rename from `bounced off the
+intro` to `bounced off the intro (v2)`, which a substring check passes as a
+prefix. YAML step names and prose citations have no such shape and fall back to a
+substring, because **a gate that produces false failures is a gate someone
+disables**, and being wrong in that direction costs more than the precision buys.
+
+Some rows genuinely cannot name a test — they cite a constant, a code path, or the
+fact that the suite runs at all. Rather than force a fake test name, the *count* of
+those is pinned in the test file. Lowering it never fails; raising it is a
+deliberate edit visible in the diff. Same for the two hard-gate counts, which are
+zero here: a fork that deletes features the inherited specs verify will need to
+raise them, then drive them back down.
+
+**What it found on its first run**, which is the argument for it rather than a
+hypothetical:
+
+- `0014-R5` and `0014-R6` named two tests that **had never existed**. The
+  onboarding-precedence requirements had been reading as proven since the spec was
+  written; the guard's `onboardingCompleted` branch was untested because the test
+  file's helper never passed it. Those tests exist now.
+- `0007-R2` cited a symbol renamed from `_excluded` to `excluded`.
+- `0015-R9` named a test renamed the day before.
+- `0023-R5` still said `macos-latest` after the goldens runner was pinned.
+- Four more rows had shortened a test name without marking the truncation.
+
+It then caught its own rot the same afternoon: renaming one of its own tests left
+`0007-R14` pointing at a name that no longer existed, and the suite went red on the
+next run. → [0007-R11 … R15](specs/0007-quality-gates/spec.md)
+
 ### Reading order
 
 If you are new to the codebase — human or otherwise — read these three first.
@@ -975,12 +1035,15 @@ They explain most of the surprising decisions:
 ### Working agreements
 
 These are the rules that keep the codebase coherent. Breaking one is not a style
-disagreement; it breaks something concrete.
+disagreement; it breaks something concrete. All of them are principles in
+[the constitution](.specify/memory/constitution.md), which is where they are
+stated authoritatively — `/speckit-plan` checks a design against it before code is
+written.
 
 | Rule | What breaks if you don't |
 |---|---|
-| **Spec first** for behaviour a maintainer will rely on | The reasoning is lost, and the next person re-litigates it |
-| **Every requirement names a test** | The spec drifts from the code silently |
+| **Spec first** for behaviour a maintainer will rely on (I) | The reasoning is lost, and the next person re-litigates it |
+| **Every requirement names a test** (II) | Nothing — the suite fails, which is the point |
 | **Never reach for a Firebase singleton** — add a provider | Every test in the suite depends on this holding |
 | **No magic numbers in the UI** — use `design_tokens.dart` | A rebrand stops being one enum value |
 | **No hard-coded user-visible strings** — use an ARB key | CI fails; and a locale ships half-translated |
@@ -989,6 +1052,11 @@ disagreement; it breaks something concrete.
 
 ### Conventions an agent should follow
 
+- **Use the workflow.** `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` →
+  `/speckit-implement`. It allocates the spec number and branch, checks the design
+  against the constitution, and turns every unproven requirement into a task. A
+  spec written by hand in the same format is fine; skipping the Verification table
+  is not, and the suite will say so.
 - **Keys on every interactive widget.** `ValueKey('thing_action')`. Integration
   drivers target keys, not coordinates.
 - **Tooltips on every icon-only button.** They are the accessibility label; the
@@ -1004,6 +1072,18 @@ disagreement; it breaks something concrete.
   say why it is deliberate.
 
 ## Commands
+
+The workflow, in a Claude Code session:
+
+```
+/speckit-specify <what you want>   # spec.md, next number, feature branch
+/speckit-plan                      # plan.md, checked against the constitution
+/speckit-tasks                     # tasks.md, tests before code, gates last
+/speckit-implement                 # the code, ticking tasks off
+/speckit-constitution              # amend the rules
+```
+
+Everything else:
 
 ```sh
 flutter pub get                      # also runs gen-l10n

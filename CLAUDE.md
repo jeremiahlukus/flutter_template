@@ -122,7 +122,11 @@ functions nor `request.resource`). They run against the real emulator in
 ## Before you say "done"
 
 - All four gates pass.
-- The spec you touched has its Verification table updated.
+- The spec you touched has its Verification table updated, naming the test by its
+  **exact** name. `test/specs/verification_test.dart` resolves every row against
+  the filesystem, so an approximate name fails the suite — which is the intended
+  behaviour, not an inconvenience to work around.
+- If you renamed a test, you updated the row that names it.
 - New strings exist in every ARB file.
 - `task.md` reflects anything you left incomplete — say so plainly rather than
   omitting it.
