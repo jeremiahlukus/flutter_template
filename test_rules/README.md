@@ -9,6 +9,11 @@ Dart: `fake_cloud_firestore` supports neither custom functions nor
 npm ci && npm test     # needs JDK 21+ (firebase-tools 15)
 ```
 
+`@firebase/rules-unit-testing` and `firebase` must move together: v5 of the
+testing library declares a `firebase@^12` peer, so bumping either alone fails
+`npm ci` with `ERESOLVE`. Dependabot opens them as separate PRs and cannot know
+that — see #61.
+
 `flutter test` never sees this package, and CI runs it as its own job.
 
 ## Why `overrides` exists
