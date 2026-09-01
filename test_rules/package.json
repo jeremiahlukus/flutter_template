@@ -13,5 +13,10 @@
     "firebase-tools": "^15.28.2",
     "vitest": "^4.1.11",
     "firebase": "^11.0.0"
+  },
+  "overrides": {
+    "re2": "^1.26.1",
+    "uuid": "^11.1.1",
+    "@opentelemetry/core": "^2.8.0"
   }
 }
