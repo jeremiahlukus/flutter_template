@@ -25,3 +25,25 @@ R11 needs `getInitialMessage()`, which is separate from the opened-message
 stream. `pushRouteProvider` merges both, so a cold-start tap is not silently
 dropped. R12 validates against `AppRoute.paths` before navigating, because a
 payload is untrusted input.
+
+### Mapping platform statuses, exhaustively
+
+`FirebasePushService._map` has **no wildcard case**, and that is the design rather
+than an oversight. `firebase_messaging` 16.6.0 added `AuthorizationStatus
+.deniedPermanently`; because the switch is exhaustive, the analyzer failed the
+build on the dependency bump and forced someone to decide what the new state
+means. A `_ =>` fallback would have folded an unknown OS permission state into
+whichever case sat first, silently, in a patch release.
+
+`deniedPermanently` collapses onto `PushPermission.denied`: neither can deliver,
+and this app re-prompts on neither, so nothing downstream can distinguish them.
+It is Android 13+ only — Apple reports permanent denial as plain `denied`.
+
+One thing upstream changed that this repo has **not** followed, recorded here so
+the gap is deliberate rather than forgotten: `firebase_messaging` now documents
+plain `denied` on Android 13+ as possibly re-promptable, and recommends calling
+`requestPermission()` again rather than sending the user to system settings.
+`PushPermission.denied.canPrompt` is `false`, so the settings screen does the
+opposite — it shows a blocked message. Changing that is a UX decision with its own
+requirements, not something to fold into a version bump.
+

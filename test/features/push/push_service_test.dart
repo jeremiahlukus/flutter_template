@@ -1,5 +1,11 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_template/src/features/push/push_service.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
+class _MockMessaging extends Mock implements FirebaseMessaging {}
+
+class _MockSettings extends Mock implements NotificationSettings {}
 
 void main() {
   group('PushPermission', () {
@@ -21,6 +27,56 @@ void main() {
       expect(PushPermission.denied.canPrompt, isFalse);
       expect(PushPermission.granted.canPrompt, isFalse);
       expect(PushPermission.provisional.canPrompt, isFalse);
+    });
+  });
+
+  group('FirebasePushService permission mapping', () {
+    // 0020-R16. Exercised through `currentPermission()` because the mapper is
+    // private; mocking the two SDK types is cheaper than making it visible.
+    Future<PushPermission> map(AuthorizationStatus status) {
+      final settings = _MockSettings();
+      when(() => settings.authorizationStatus).thenReturn(status);
+      final messaging = _MockMessaging();
+      when(messaging.getNotificationSettings).thenAnswer((_) async => settings);
+      return FirebasePushService(messaging).currentPermission();
+    }
+
+    test('every platform status maps to one of ours', () async {
+      // The real assertion is *totality*. `firebase_messaging` 16.6.0 added
+      // `deniedPermanently`, and the switch having no wildcard is what turned
+      // that into a failed build rather than a silent mis-mapping. This loop
+      // fails the same way if a future version adds another value — before
+      // anyone has to notice the analyzer output.
+      for (final status in AuthorizationStatus.values) {
+        await expectLater(
+          map(status),
+          completion(isA<PushPermission>()),
+          reason: '$status does not map to a PushPermission',
+        );
+      }
+    });
+
+    test('a permanent denial is treated exactly like a denial', () async {
+      // Android 13+ only; Apple reports permanent denial as plain `denied`.
+      // Collapsing them is deliberate: neither can deliver, and this app does
+      // not re-prompt on either, so nothing downstream can tell them apart.
+      expect(
+        await map(AuthorizationStatus.deniedPermanently),
+        PushPermission.denied,
+      );
+      expect(await map(AuthorizationStatus.denied), PushPermission.denied);
+    });
+
+    test('the other three statuses keep their own meaning', () async {
+      expect(await map(AuthorizationStatus.authorized), PushPermission.granted);
+      expect(
+        await map(AuthorizationStatus.provisional),
+        PushPermission.provisional,
+      );
+      expect(
+        await map(AuthorizationStatus.notDetermined),
+        PushPermission.notDetermined,
+      );
     });
   });
 
