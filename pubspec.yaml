@@ -8,11 +8,11 @@ environment:
 
 dependencies:
   # --- Firebase --------------------------------------------------------------
-  cloud_firestore: ^6.8.0
-  firebase_analytics: ^12.4.6
-  firebase_auth: ^6.5.7
+  cloud_firestore: ^6.9.0
+  firebase_analytics: ^12.5.0
+  firebase_auth: ^6.6.1
   firebase_core: ^4.13.0
-  firebase_storage: ^13.4.6
+  firebase_storage: ^13.5.0
   # Drop-in sign-in / sign-up / password-reset screens.
   firebase_ui_auth: ^3.1.0
 
@@ -34,13 +34,13 @@ dependencies:
   intl: ^0.20.2
   logger: ^2.7.0
   connectivity_plus: ^7.3.1
-  firebase_crashlytics: ^5.2.7
+  firebase_crashlytics: ^5.3.0
   package_info_plus: ^10.2.1
   dio: ^5.11.0
   image_picker: ^1.2.3
   flutter_image_compress: ^2.5.1
   url_launcher: ^6.3.2
-  firebase_messaging: ^16.5.0
+  firebase_messaging: ^16.6.0
 
 dev_dependencies:
   build_runner: ^2.15.1
