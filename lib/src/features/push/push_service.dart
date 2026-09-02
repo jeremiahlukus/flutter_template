@@ -94,10 +94,28 @@ class FirebasePushService implements PushService {
 
   final FirebaseMessaging _messaging;
 
+  /// Every platform status maps to one of ours, with **no wildcard case**.
+  ///
+  /// The exhaustiveness is the point: `firebase_messaging` 16.6.0 added
+  /// `deniedPermanently`, and because this switch has no `_ =>` fallback the
+  /// analyzer failed the build and forced the decision. A wildcard would have
+  /// silently folded a new OS state into whatever came first. → 0020-R16
+  ///
+  /// `deniedPermanently` collapses onto [PushPermission.denied] because the two
+  /// are indistinguishable to this app: neither can deliver, and we do not
+  /// re-prompt on either. It is Android 13+ only — Apple reports permanent
+  /// denial as plain `denied`.
+  ///
+  /// Worth knowing, and deliberately *not* acted on here: upstream now documents
+  /// plain `denied` on Android 13+ as possibly re-promptable, and suggests
+  /// preferring `requestPermission()` over sending the user to system settings.
+  /// `PushPermission.denied.canPrompt` is `false`, so we do the opposite. That is
+  /// a UX change with its own spec, not something to fold into a version bump.
   static PushPermission _map(AuthorizationStatus status) => switch (status) {
     AuthorizationStatus.authorized => PushPermission.granted,
     AuthorizationStatus.provisional => PushPermission.provisional,
     AuthorizationStatus.denied => PushPermission.denied,
+    AuthorizationStatus.deniedPermanently => PushPermission.denied,
     AuthorizationStatus.notDetermined => PushPermission.notDetermined,
   };
 

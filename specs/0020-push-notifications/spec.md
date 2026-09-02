@@ -33,6 +33,7 @@ Two things go wrong with push in almost every app:
 | 0020-R13 | Signing out MUST remove this device's token, even though the user is already gone. |
 | 0020-R14 | A different user signing in on one device MUST move the token, not duplicate it. |
 | 0020-R15 | Overlapping syncs MUST register once. |
+| 0020-R16 | Every platform `AuthorizationStatus` MUST map to a `PushPermission`, with no wildcard case. |
 
 ## Non-goals
 
@@ -61,6 +62,7 @@ Two things go wrong with push in almost every app:
 | 0020-R13 | `test/features/push/push_registration_test.dart` › `PushRegistrar` › `removes the token when the user signs out` |
 | 0020-R14 | `…` › `PushRegistrar` › `moves the token when a different user signs in` |
 | 0020-R15 | `…` › `PushRegistrar` › `concurrent syncs register once` |
+| 0020-R16 | `test/features/push/push_service_test.dart` › `FirebasePushService permission mapping` › `every platform status maps to one of ours` |
 
 ### Two bugs the audit found
 
