@@ -15,13 +15,26 @@ updates:
     # Bumping it fails with "version solving failed" every time, so the PR is
     # noise. Revisit when the SDK moves.
     #
-    # A related trap that is NOT ignored here: build_runner and drift_dev depend
-    # on `analyzer`, whose upper bound is capped by the `meta` version
-    # flutter_test pins. Those bumps genuinely become valid once Flutter updates,
-    # so they stay enabled — but a red PR on one is usually this, not your code.
-    # Check the "Install dependencies" step before investigating anything else.
+    # A related trap: build_runner and drift_dev depend on `analyzer`, whose upper
+    # bound is capped by what flutter_test pins. Those bumps genuinely become
+    # valid once Flutter updates, so the packages stay enabled — but a red PR on
+    # one is usually this, not your code. Check the "Install dependencies" step
+    # before investigating anything else.
+    #
+    # `drift_dev 2.34.5` is pinned out by *version*, not by name, because it
+    # provably cannot resolve today: it needs `analyzer ^13.0.0`, and
+    # flutter_test -> test_api 0.7.11 -> test caps analyzer below 6. Pub says
+    # "flutter_test from sdk is incompatible with drift_dev ^2.34.5". Closing the
+    # PR is not enough — it was recreated the next morning (#59, then #65) — and
+    # `@dependabot ignore this version` in a comment was not picked up.
+    #
+    # Only 2.34.5 is blocked. The next drift_dev release still opens a PR, which
+    # is the point: whichever version lands after Flutter ships a newer analyzer
+    # should be adopted.
     ignore:
       - dependency-name: intl
+      - dependency-name: drift_dev
+        versions: ["2.34.5"]
     groups:
       # Firebase packages move in lockstep; separate PRs just fight each other
       # over pubspec.lock.
