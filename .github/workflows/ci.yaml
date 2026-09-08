@@ -94,6 +94,16 @@ jobs:
           fi
           echo "lib/ is web-compatible"
 
+      # The spec discipline, enforced. Every Verification row is resolved against
+      # the filesystem, so a renamed test fails here instead of leaving a row
+      # that still reads like proof. Runs before Analyze because it is seconds,
+      # and a stale spec is worth knowing about before a 20-second analyze.
+      #
+      # The script is vendored from the speckit-skills marketplace; its version
+      # is recorded in .specify/verification.json.
+      - name: Verify every requirement names a real test
+        run: python3 .specify/scripts/check_verification.py
+
       - name: Analyze
         run: flutter analyze --fatal-infos --fatal-warnings
 

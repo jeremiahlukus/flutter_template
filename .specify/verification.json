@@ -1,0 +1,12 @@
+{
+  "code_root": ".",
+  "requirement_pattern": "\\d{4}-R\\d+",
+  "name_style": "quoted",
+  "checker_version": "1.1.0",
+  "budgets": {
+    "unresolved_paths": 0,
+    "stale_test_names": 0,
+    "uncheckable_rows": 23,
+    "unproven_requirements": 3
+  }
+}

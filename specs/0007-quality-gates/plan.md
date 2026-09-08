@@ -30,8 +30,9 @@ and no network.
 ### Checking the Verification tables themselves
 
 The tables were the strongest thing in this repo and the easiest to let rot:
-rename a test and the row still reads as proof. `test/specs/verification_test.dart`
-resolves every row against the filesystem, so a stale row fails the suite.
+rename a test and the row still reads as proof.
+`.specify/scripts/check_verification.py` resolves every row against the filesystem,
+so a stale row fails CI.
 
 It is strict where the format is knowable and honest where it is not. Dart and JS
 test names are quoted literals, so it demands the quotes — a rename to

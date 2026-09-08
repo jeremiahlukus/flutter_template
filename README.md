@@ -326,9 +326,9 @@ flutter test --coverage && dart run tool/check_coverage.dart --min 85
 ```
 
 One suite is worth calling out because it tests the documentation rather than the
-code: `test/specs/verification_test.dart` resolves every spec's Verification table
-against the filesystem, so a renamed test fails the build instead of leaving a row
-that still reads as proof. See
+code: `.specify/scripts/check_verification.py` resolves every spec's Verification
+table against the filesystem, so a renamed test fails the build instead of leaving
+a row that still reads as proof. See
 [The Verification table is checked, not trusted](#the-verification-table-is-checked-not-trusted).
 
 The suite needs **no Firebase project and no network**. That is the design
@@ -950,9 +950,15 @@ This is the part that makes the rest worth doing.
 
 A table mapping requirements to tests is only as good as its freshness, and it
 rots in the one way you cannot see: **rename a test and the row still reads as
-proof.** So `test/specs/verification_test.dart` resolves every row in every spec
-against the filesystem. It runs inside `flutter test`, so there is no separate
-gate to remember.
+proof.** So `.specify/scripts/check_verification.py` resolves every row in every
+spec against the filesystem. CI runs it as its own step, `Verify every requirement
+names a real test`, ahead of analyze — it takes seconds, and a stale spec is worth
+knowing about before a twenty-second analyze.
+
+The checker is **vendored** from
+[speckit-skills](https://github.com/jeremiahlukus/speckit-skills), which is its
+source of truth; CI needs the file in-repo, so the copy records its version in
+`.specify/verification.json` and `/speckit-init` reports when it is behind.
 
 | It fails if | Because |
 |---|---|

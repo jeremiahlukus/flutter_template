@@ -57,11 +57,11 @@ being a gate. Two specific ways that happens:
 | 0007-R8 | `tool/check_coverage.dart` › failure branch |
 | 0007-R9 | The whole suite: `flutter test` with no configuration |
 | 0007-R10 | `.github/workflows/ci.yaml` › `env.FLUTTER_VERSION` |
-| 0007-R11 | `test/specs/verification_test.dart` › `structure` › `every requirement has a verification row, and vice versa` |
-| 0007-R12 | `…` › `rows resolve` › `a named test exists in the file the row points at` |
-| 0007-R13 | `…` › `rows resolve` › `every repo path named in a Verification row exists` |
-| 0007-R14 | `…` › `honesty` › `an Accepted spec explains every unproven requirement` |
-| 0007-R15 | `…` › `honesty` › `rows nothing can verify stay within budget` |
+| 0007-R11 | `.github/workflows/ci.yaml` › `Verify every requirement names a real test` (structural check: requirement ↔ row parity) |
+| 0007-R12 | `…` › `Verify every requirement names a real test` (name resolution, strict for code files) |
+| 0007-R13 | `…` › `Verify every requirement names a real test` (path existence) |
+| 0007-R14 | `…` › `Verify every requirement names a real test` (an Accepted spec must explain a `—`) |
+| 0007-R15 | `…` › `Verify every requirement names a real test` (budgets in `.specify/verification.json` are ratchets) |
 
 ### Dependabot and SDK-pinned packages
 
