@@ -54,11 +54,11 @@ Two things go wrong with push in almost every app:
 | 0020-R5 | `…` › `PushRegistrar` › `re-registers when the token rotates` |
 | 0020-R6 | `…` › `PushRegistrar` › `removes the token when the user opts out` |
 | 0020-R7 | `…` › `PushRegistrar` › `keeps other devices registered` |
-| 0020-R8 | `PushRegistrar._sync` catch branch — logged, never surfaced |
-| 0020-R9 | `…` › `settings toggle` › `is disabled and explained when blocked in system settings` |
-| 0020-R10 | `…` › `pushRouteProvider` › `emits the route from a notification tap` |
-| 0020-R11 | `…` › `pushRouteProvider` › `emits the route from a cold-start launch message` |
-| 0020-R12 | `app_router.dart` validates against `AppRoute.paths` |
+| 0020-R8 | `test/features/push/push_failure_test.dart` › `a token lookup that throws is swallowed` |
+| 0020-R9 | `test/features/push/push_registration_test.dart` › `is disabled and explained when blocked in system settings` |
+| 0020-R10 | `test/features/push/push_registration_test.dart` › `emits the route from a notification tap` |
+| 0020-R11 | `test/features/push/push_registration_test.dart` › `emits the route from a cold-start launch message` |
+| 0020-R12 | `test/features/push/push_failure_test.dart` › `an undeclared route leaves the user where they were` |
 | 0020-R13 | `test/features/push/push_registration_test.dart` › `PushRegistrar` › `removes the token when the user signs out` |
 | 0020-R14 | `…` › `PushRegistrar` › `moves the token when a different user signs in` |
 | 0020-R15 | `…` › `PushRegistrar` › `concurrent syncs register once` |

@@ -47,7 +47,7 @@ somewhere the rules do not protect — and nothing fails loudly.
 | 0006-R6 | `…` › `readBytes` › `caps downloads at 8 MB` |
 | 0006-R7 | `…` › `uploadBytes` › `defaults the content type rather than sending none` |
 | 0006-R8 | `test/features/storage/storage_repository_test.dart` › `list` › `does not treat a prefix match as a directory match` |
-| 0006-R9 | `test_rules/storage.rules.test.js` (whole file) → [spec 0016](../0016-emulator-and-rules/spec.md) |
+| 0006-R9 | `test_rules/storage.rules.test.js` › `lets the owner upload their avatar` → [spec 0016](../0016-emulator-and-rules/spec.md) |
 
 ## Open questions
 

@@ -118,6 +118,20 @@ class PushRegistrar {
     _syncing = true;
     try {
       await _syncOnce();
+    } catch (error, stackTrace) {
+      // Nothing here is worth surfacing, and it must not escape: `_sync` is
+      // called from provider listeners and a stream subscription, so an error
+      // that gets out becomes an unhandled async error rather than anything the
+      // user could act on. The next sign-in or token refresh retries.
+      //
+      // The individual writes catch their own failures; this is the backstop
+      // for everything else — most obviously `PushService.token()`, which
+      // reaches FCM over the network.
+      AppLogger.instance.w(
+        'Push token sync failed; leaving it for the next attempt',
+        error: error,
+        stackTrace: stackTrace,
+      );
     } finally {
       _syncing = false;
     }

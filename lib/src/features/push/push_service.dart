@@ -192,6 +192,12 @@ class FakePushService implements PushService {
   PushPermission permissionAfterPrompt;
   String? currentToken;
 
+  /// Makes [token] throw, modelling FCM being unreachable.
+  ///
+  /// A knob rather than a subclass because the failure has to happen *inside*
+  /// the registrar's own call, which is the only place it can be swallowed.
+  bool throwOnToken = false;
+
   int promptCount = 0;
   int deleteCount = 0;
 
@@ -211,7 +217,10 @@ class FakePushService implements PushService {
   }
 
   @override
-  Future<String?> token() async => permission.canDeliver ? currentToken : null;
+  Future<String?> token() async {
+    if (throwOnToken) throw StateError('FCM unreachable');
+    return permission.canDeliver ? currentToken : null;
+  }
 
   @override
   Stream<String> onTokenRefresh() => _refresh.stream;

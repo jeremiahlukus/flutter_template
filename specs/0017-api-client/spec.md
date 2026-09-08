@@ -50,7 +50,7 @@ the app works.
 | 0017-R8 | `…` › `RetryInterceptor` › `backs off exponentially` / `retries a 500 up to the attempt limit` |
 | 0017-R9 | `…` › `failure mapping` › `a decode failure is reported, not thrown as a TypeError` |
 | 0017-R10 | `…` › `ApiLogInterceptor` › `logs a failure in quiet mode too` |
-| 0017-R11 | `ApiTimeouts` in `api_providers.dart`; 10s connect, 20s send/receive |
+| 0017-R11 | `test/core/network/api_timeouts_test.dart` › `the configured Dio carries every timeout` |
 
 ## Open questions
 

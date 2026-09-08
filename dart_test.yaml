@@ -1,3 +1,7 @@
 tags:
   golden:
     description: Golden-file tests. Run with --update-goldens to regenerate.
+  architecture:
+    description: >-
+      Filesystem-level invariants (import boundaries, design-token use). Fast,
+      no widgets — they read source rather than running it.

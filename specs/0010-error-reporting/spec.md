@@ -40,11 +40,11 @@ metric becomes meaningless.
 | 0010-R1 | `test/core/errors/error_reporter_test.dart` › `errorReporterProvider` › `uses Crashlytics where the environment enables it` |
 | 0010-R2 | `…` › `never lets reporting break the caller` (one test per method) |
 | 0010-R3 | `…` › `CrashlyticsErrorReporter` › `forwards a framework error as fatal` |
-| 0010-R4 | — *(wired in `bootstrap()`, which is not unit-tested; see Non-goals)* |
-| 0010-R5 | `…` › `errorReporterProvider` › `is a no-op where the environment disables reporting` |
-| 0010-R6 | — *(set in `bootstrap()`; see Non-goals)* |
-| 0010-R7 | `…` › `RecordingErrorReporter` › `records a non-fatal error with its reason` |
-| 0010-R8 | `…` › `CrashlyticsErrorReporter` › `a null user id becomes an empty identifier` |
+| 0010-R4 | `test/bootstrap_test.dart` › `reportZoneError` › `reports an uncaught zone error as fatal` |
+| 0010-R5 | `test/core/errors/error_reporter_test.dart` › `is a no-op where the environment disables reporting` |
+| 0010-R6 | `test/bootstrap_test.dart` › `installErrorHandlers` › `attaches the environment to every subsequent report` |
+| 0010-R7 | `test/core/errors/error_reporter_test.dart` › `records a non-fatal error with its reason` |
+| 0010-R8 | `test/core/errors/error_reporter_test.dart` › `a null user id becomes an empty identifier` |
 
 ## Open questions
 

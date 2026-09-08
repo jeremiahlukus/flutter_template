@@ -45,7 +45,7 @@ Writing these tests found **four real bugs in this template**, listed below.
 | 0022-R4 | `…` › `large text` (per screen, plus sign-in, onboarding, and setup) |
 | 0022-R5 | `…` › `semantics tree` › `the notes list exposes its rows to assistive tech` |
 | 0022-R6 | `test/app/theme/app_semantic_colors_test.dart` › `foreground colours are legible on their backgrounds` |
-| 0022-R7 | `…a11y…` — the `screens` map is the enumeration |
+| 0022-R7 | `test/a11y/accessibility_test.dart` › `every routable screen is covered, not a sample` |
 
 ## Open questions
 

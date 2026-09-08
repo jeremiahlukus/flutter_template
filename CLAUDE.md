@@ -52,16 +52,16 @@ All four gates must pass: analyze (zero issues, infos included), tests, coverage
 Riverpod 3 for state. `go_router` for navigation, with the guard extracted as a
 pure function. Firestore is the source of truth; **Drift is what the UI reads**,
 which is what makes the app work offline. Every Firebase SDK singleton sits
-behind a provider in `lib/src/core/providers/firebase_providers.dart`, and
-anything that touches a platform channel sits behind an interface with a fake
-beside it — that is why the whole suite runs with no Firebase project and no
-network.
+behind a provider — most in `lib/src/core/providers/firebase_providers.dart`,
+the rest in their own feature's provider file — and anything that touches a
+platform channel sits behind an interface with a fake beside it. That is why the
+whole suite runs with no Firebase project and no network.
 
 ## Hard rules
 
 | Rule | Why |
 |---|---|
-| Never call `FirebaseAuth.instance` (or friends) outside `firebase_providers.dart` | Every test depends on the seam |
+| Never reach a Firebase singleton except inside a provider factory | Every test depends on the seam; enforced by `test/architecture/architecture_test.dart` |
 | No inline colours, spacing, radii, or durations | Use `lib/src/app/theme/` — a rebrand is one enum value |
 | No hard-coded user-visible strings | Add to **both** `app_en.arb` and `app_es.arb`; CI fails otherwise |
 | Every interactive widget gets a `ValueKey` | Integration drivers target keys, not coordinates |
@@ -91,6 +91,11 @@ These are real bugs that were found and fixed here. Do not reintroduce them.
   succeeded, leaving it queued forever).
 - **Fail open on ambiguity** in anything that can lock a user out.
   → [0021](specs/0021-app-updates/spec.md)
+- **An `async` method called from a provider listener must catch everything.**
+  `PushRegistrar._sync` wrapped only its writes, so a failing
+  `PushService.token()` escaped as an unhandled async error — the crash R8
+  forbids. Nothing awaits these calls, so there is no caller to catch for them.
+  → [0020](specs/0020-push-notifications/spec.md)
 
 ## Testing
 

@@ -42,7 +42,7 @@ spinning forever.
 | 0012-R3 | `…` › `AsyncValueView` › `renders the empty state for loaded-but-empty data` |
 | 0012-R4 | `…` › `AsyncValueView` › `wires retry through to the error state` |
 | 0012-R5 | `…` › `AsyncValueView` › `applies errorKey so drivers can target the state` |
-| 0012-R6 | `test/app/theme/design_tokens_test.dart` (tokens); widgets read them directly |
+| 0012-R6 | `test/architecture/architecture_test.dart` › `no inline spacing, radii, or durations in presentation code` |
 
 ## Open questions
 

@@ -38,13 +38,13 @@ photo is ~4MB before you do anything about it.
 |---|---|
 | 0019-R1 | `test/features/auth/presentation/profile_screen_test.dart` › `avatar` › `offers camera and gallery` |
 | 0019-R2 | `…` › `avatar` › `cancelling the picker uploads nothing and says nothing` |
-| 0019-R3 | (same test — asserts no snack bar) |
-| 0019-R4 | `PlatformImageSourceService.maxDimension`, applied in `pickImage` and `compress` |
-| 0019-R5 | `PlatformImageSourceService.jpegQuality`; upload sets `image/jpeg` |
-| 0019-R6 | `PlatformImageSourceService.compress` catch branch |
-| 0019-R7 | `…` › `avatar` › `reports an unreadable image` |
-| 0019-R8 | `…` › `avatar` › `reports a storage failure with localised copy` |
-| 0019-R9 | `…` › `avatar` › `requests the chosen source` (via `FakeImageSourceService`) |
+| 0019-R3 | `test/features/auth/presentation/profile_screen_test.dart` › `avatar` › `cancelling the picker uploads nothing and says nothing` |
+| 0019-R4 | `test/features/storage/image_source_service_test.dart` › `asks the picker for at most maxDimension on both edges` |
+| 0019-R5 | `test/features/storage/image_source_service_test.dart` › `asks the picker for the fixed JPEG quality` |
+| 0019-R6 | `test/features/storage/image_source_service_test.dart` › `falls back to the original bytes` |
+| 0019-R7 | `test/features/auth/presentation/profile_screen_test.dart` › `avatar` › `reports an unreadable image` |
+| 0019-R8 | `test/features/auth/presentation/profile_screen_test.dart` › `avatar` › `reports a storage failure with localised copy` |
+| 0019-R9 | `test/features/auth/presentation/profile_screen_test.dart` › `avatar` › `requests the chosen source` (via `FakeImageSourceService`) |
 
 ## Open questions
 

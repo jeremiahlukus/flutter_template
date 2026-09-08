@@ -45,8 +45,8 @@ testability. So the emulator it is.
 
 | ID | Test |
 |---|---|
-| 0016-R1 | `test_rules/firestore.rules.test.js` (whole file) |
-| 0016-R2 | `test_rules/storage.rules.test.js` (whole file) |
+| 0016-R1 | `test_rules/firestore.rules.test.js` › `lets the owner read their own note` |
+| 0016-R2 | `test_rules/storage.rules.test.js` › `lets the owner read their avatar` |
 | 0016-R3 | `…firestore…` › `isolation between users`; `…storage…` › `denies another user reading it` |
 | 0016-R4 | `…firestore…` › `document shape validation` |
 | 0016-R5 | `…firestore…` › `deny by default`; `…storage…` › `deny by default` |

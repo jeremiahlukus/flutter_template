@@ -46,8 +46,8 @@ gaps cause the drift:
 
 | ID | Test |
 |---|---|
-| 0008-R1 | `test/app/theme/design_tokens_test.dart` (whole file) |
-| 0008-R2 | `…` › `AppSpacing` › `the scale is strictly ascending` / `every step is a whole number of logical pixels` |
+| 0008-R1 | `test/architecture/architecture_test.dart` › `no inline spacing, radii, or durations in presentation code` |
+| 0008-R2 | `test/app/theme/design_tokens_test.dart` › `AppSpacing` › `the scale is strictly ascending` |
 | 0008-R3 | `test/app/theme/app_semantic_colors_test.dart` › `palettes` › `light and dark differ on every role` |
 | 0008-R4 | `…` › `palettes` › `foreground colours are legible on their backgrounds` |
 | 0008-R5 | `…` › `of(context)` › `falls back to light when the extension is absent` |

@@ -49,13 +49,13 @@ being a gate. Two specific ways that happens:
 |---|---|
 | 0007-R1 | `.github/workflows/ci.yaml` › `Enforce coverage threshold` |
 | 0007-R2 | `test/tool/coverage_report_test.dart` › `exclusions` › `an excluded file does not affect the total` |
-| 0007-R3 | `tool/check_coverage.dart` (each entry is commented) |
+| 0007-R3 | `test/tool/coverage_exclusions_test.dart` › `every coverage exclusion carries a written justification` |
 | 0007-R4 | `.github/workflows/ci.yaml` › `Analyze` |
 | 0007-R5 | `.github/workflows/ci.yaml` › `Verify formatting` |
 | 0007-R6 | `.github/workflows/ci.yaml` › `Verify generated code is up to date` |
-| 0007-R7 | `tool/check_coverage.dart` imports only `dart:io` |
-| 0007-R8 | `tool/check_coverage.dart` › failure branch |
-| 0007-R9 | The whole suite: `flutter test` with no configuration |
+| 0007-R7 | `test/architecture/architecture_test.dart` › `the coverage tool needs nothing beyond the Dart SDK` |
+| 0007-R8 | `test/tool/coverage_report_test.dart` › `worstThan names only the files under the threshold` |
+| 0007-R9 | `test/architecture/architecture_test.dart` › `every Firebase singleton is reached only through a provider` |
 | 0007-R10 | `.github/workflows/ci.yaml` › `env.FLUTTER_VERSION` |
 | 0007-R11 | `.github/workflows/ci.yaml` › `Verify every requirement names a real test` (structural check: requirement ↔ row parity) |
 | 0007-R12 | `…` › `Verify every requirement names a real test` (name resolution, strict for code files) |

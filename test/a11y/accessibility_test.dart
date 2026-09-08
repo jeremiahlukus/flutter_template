@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_template/src/app/firebase_setup_screen.dart';
+import 'package:flutter_template/src/routing/app_routes.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/test_helpers.dart';
@@ -27,6 +28,47 @@ void main() {
       await tester.pumpAndSettle();
     },
   };
+
+  /// How every routable screen gets its accessibility coverage.
+  ///
+  /// Keyed by route rather than by name so that adding an [AppRoute] fails this
+  /// file until someone says how the new screen is covered. That is what makes
+  /// 0022-R7 ("every screen, not a sample") a check rather than a claim.
+  final coverage = <AppRoute, String>{
+    AppRoute.notes: 'notes list',
+    AppRoute.noteEditor: 'note editor',
+    AppRoute.profile: 'profile',
+    AppRoute.settings: 'settings',
+    // Not in the shared sweep: `open` signs a user in, and the guard bounces a
+    // signed-in user off both of these. They get dedicated tests under
+    // `large text` instead.
+    AppRoute.signIn: 'sign-in (dedicated test)',
+    AppRoute.onboarding: 'onboarding (dedicated test)',
+  };
+
+  group('coverage is exhaustive', () {
+    test('every routable screen is covered, not a sample', () {
+      expect(
+        coverage.keys.toSet(),
+        AppRoute.values.toSet(),
+        reason:
+            'A route with no accessibility coverage ships untested. Add it to '
+            'the shared sweep, or to `coverage` with a note saying why not.',
+      );
+    });
+
+    test('every screen in the shared sweep is a declared route', () {
+      // Catches the other direction: a sweep entry left behind after its route
+      // was removed, quietly asserting nothing.
+      for (final name in screens.keys) {
+        expect(
+          coverage.values,
+          contains(name),
+          reason: "`$name` is swept but is not any route's coverage",
+        );
+      }
+    });
+  });
 
   Future<TestHarness> open(
     WidgetTester tester,

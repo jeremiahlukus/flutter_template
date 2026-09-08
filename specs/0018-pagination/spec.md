@@ -45,7 +45,7 @@ list approach fights the query and drifts out of sync with it.
 | 0018-R4 | `test/core/paging/page_window_test.dart` › `hasMoreAfter` |
 | 0018-R5 | `…notes_pagination…` › `notes list UI` › `stops growing once the whole cache is shown` |
 | 0018-R6 | `…` › `sync paging` › `pulls a collection larger than one page` |
-| 0018-R7 | `notes_repository.dart` › keyset cursor on `FieldPath.documentId` |
+| 0018-R7 | `test/features/notes/notes_pagination_test.dart` › `pulls an exact multiple of the page size without duplicating` |
 | 0018-R8 | `…` › `sync paging` › `pulls an exact multiple of the page size without duplicating` |
 | 0018-R9 | `…` › `notes list UI` › `shows no trailing spinner, even with more to load` |
 

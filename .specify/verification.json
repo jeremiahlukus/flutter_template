@@ -6,7 +6,7 @@
   "budgets": {
     "unresolved_paths": 0,
     "stale_test_names": 0,
-    "uncheckable_rows": 23,
-    "unproven_requirements": 3
+    "uncheckable_rows": 0,
+    "unproven_requirements": 0
   }
 }

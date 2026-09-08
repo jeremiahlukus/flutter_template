@@ -107,15 +107,23 @@ Future<void> installErrorHandlers(ProviderContainer container) async {
 ///
 /// Reads a fresh reporter rather than closing over one, so a zone error thrown
 /// *before* the container exists is still reported.
+///
+/// [createContainer] exists only so a test can supply a recording reporter. The
+/// default is the real thing, and the optional parameter keeps the signature
+/// assignable to `runZonedGuarded`'s handler.
 @visibleForTesting
-void reportZoneError(Object error, StackTrace stackTrace) {
+void reportZoneError(
+  Object error,
+  StackTrace stackTrace, {
+  ProviderContainer Function() createContainer = ProviderContainer.new,
+}) {
   AppLogger.instance.e(
     'Uncaught zone error',
     error: error,
     stackTrace: stackTrace,
   );
 
-  final container = ProviderContainer();
+  final container = createContainer();
   try {
     container
         .read(errorReporterProvider)

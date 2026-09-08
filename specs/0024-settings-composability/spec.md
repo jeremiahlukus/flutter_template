@@ -55,7 +55,7 @@ changes the first time it is touched.
 | 0024-R3 | `…` › `a fork can interleave its own sections` (mounted in a bare `ListView`, no `SettingsScreen`) |
 | 0024-R4 | `…` › `the back arrow can be dropped for a tab destination` |
 | 0024-R5 | `…` › `the back arrow is present by default` |
-| 0024-R6 | Enforced by signature — every section is `const X({super.key})`; exercised by the keyed finders in the tests above. |
+| 0024-R6 | `test/features/settings/presentation/settings_composition_test.dart` › `every section accepts a Key a driver can target` |
 
 ## Open questions
 

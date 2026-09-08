@@ -56,8 +56,8 @@ even `pod install`.
 | 0015-R7 | `…` › `rendering` › `builds with no provider scope at all` (pumped bare) |
 | 0015-R8 | `…` › `robustness` › `renders on a narrow phone without overflowing` / `renders on a wide desktop window` |
 | 0015-R9 | `…` › `FirebaseNotConfigured` › `the committed placeholder throws it` |
-| 0015-R10 | — *(build-time; verified by an on-device run, not by the suite)* |
-| 0015-R11 | `tool/main_dev.dart` is outside `lib/`; `flutter analyze` would reject the import otherwise |
+| 0015-R10 | `test/platform/platform_config_test.dart` › `the iOS Podfile targets at least the Firebase minimum` |
+| 0015-R11 | `test/architecture/architecture_test.dart` › `nothing in lib imports the tooling in tool/` |
 
 ## Open questions
 

@@ -44,7 +44,7 @@ the sign-in screen; answer "yes" too early and a protected screen leaks.
 | ID | Test |
 |---|---|
 | 0004-R1 | `test/routing/app_routes_test.dart` › `paths and names` › `paths are unique` |
-| 0004-R2 | `test/routing/redirect_test.dart` (the whole file calls the function directly) |
+| 0004-R2 | `test/routing/redirect_test.dart` › `redirects converge — the result of a redirect is never redirected` |
 | 0004-R3 | `…` › `signed out` › `is sent to sign-in from every protected route` |
 | 0004-R4 | `…` › `signed in` › `is bounced off the sign-in screen to the notes list` |
 | 0004-R5 | `…` › `while auth is still resolving` › `never redirects, whatever the location` |
@@ -52,7 +52,7 @@ the sign-in screen; answer "yes" too early and a protected screen leaks.
 | 0004-R7 | `test/routing/app_routes_test.dart` › `isPublic` › `a path that merely starts with the same letters is not public` |
 | 0004-R8 | `test/app/app_test.dart` › `routing integration` › `signing out from the profile returns to sign-in` |
 | 0004-R9 | `test/app/app_test.dart` › `RouteErrorScreen` › `shows the error and offers a way back` |
-| 0004-R10 | `android/app/src/main/AndroidManifest.xml` intent filters; `ios/Runner/Info.plist` `CFBundleURLTypes` |
+| 0004-R10 | `test/platform/platform_config_test.dart` › `the custom scheme is declared on Android and iOS alike` |
 | 0004-R11 | `test/routing/app_routes_test.dart` › `paths` › `enumerates every route` |
 
 ## Open questions
