@@ -48,7 +48,7 @@ from pathlib import Path
 # verification.json, so `/speckit-init` in a repo that already has a `.specify/`
 # can tell whether its copy is behind the skill's — which is the only honest
 # answer to "the skill is the source of truth" when CI needs the file in-repo.
-CHECKER_VERSION = "1.1.0"
+CHECKER_VERSION = "1.3.0"
 
 DEFAULTS = {
     "code_root": ".",
@@ -230,7 +230,15 @@ def main() -> int:
 
     problems, unresolved, stale, uncheckable, unproven, no_table = [], [], [], [], [], []
 
-    for spec in (parse_spec(p, cfg["requirement_pattern"], code_root) for p in specs):
+    parsed = [parse_spec(p, cfg["requirement_pattern"], code_root) for p in specs]
+
+    # A markdown file under specs/ that declares no requirements is a document,
+    # not a spec — a migration log, a decision record, an index. Counting those
+    # as "specs with no Verification table" is noise that trains people to
+    # ignore the output.
+    parsed = [s for s in parsed if s["declared"] or s["rows"]]
+
+    for spec in parsed:
         rel = spec["path"].relative_to(repo_root)
         if not spec["has_table"]:
             no_table.append(str(rel))
@@ -316,7 +324,7 @@ def main() -> int:
         print(f"NOTE: verification.json records checker {vendored}, this script is "
               f"{CHECKER_VERSION}. Re-run /speckit-init to refresh the vendored copy.")
     print(f"Checker:      {CHECKER_VERSION}")
-    print(f"Specs:        {len(specs)}")
+    print(f"Specs:        {len(parsed)}")
     print(f"Code root:    {code_root}")
     print(f"Name style:   {style} (strict for {' '.join(strict_exts)})")
     if no_table:
@@ -333,32 +341,33 @@ def main() -> int:
         if key is None:
             if items:
                 failed = True
-                print(f"\n{label}: {len(items)}", file=sys.stderr)
+                print(f"\n{label}: {len(items)}")
                 for line in items:
-                    print(f"  {line}", file=sys.stderr)
+                    print(f"  {line}")
             continue
         budget = budgets.get(key, 0)
         if len(items) <= budget:
-            if items:
-                print(f"{label}: {len(items)} (within budget {budget})")
+            slack = budget - len(items)
+            note = f"  <-- {slack} of slack; re-pin with --write-budgets" if slack else ""
+            print(f"{label}: {len(items)} (budget {budget}){note}")
             continue
         failed = True
-        print(f"\n{label}: {len(items)}, budget {budget}", file=sys.stderr)
+        print(f"\n{label}: {len(items)}, OVER budget {budget} by {len(items) - budget}")
         for line in items:
-            print(f"  {line}", file=sys.stderr)
+            print(f"  {line}")
 
     if problems:
         failed = True
-        print(f"\nStructural problems: {len(problems)}", file=sys.stderr)
+        print(f"\nStructural problems: {len(problems)}")
         for line in problems:
-            print(f"  {line}", file=sys.stderr)
+            print(f"  {line}")
 
     if failed:
-        print("\nFAILED", file=sys.stderr)
-        print("\nIf a count is legitimately higher now, --write-budgets pins it — "
-              "but read the rows first.", file=sys.stderr)
+        print("\nFAILED — verification tables do not hold.")
+        print("If a count is legitimately higher now, --write-budgets pins it, "
+              "but read the rows above first.")
         return 1
-    print("\nOK")
+    print("\nOK — every requirement resolves.")
     return 0
 
 
