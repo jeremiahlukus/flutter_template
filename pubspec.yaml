@@ -36,7 +36,7 @@ dependencies:
   connectivity_plus: ^7.3.1
   firebase_crashlytics: ^5.3.0
   package_info_plus: ^10.2.1
-  dio: ^5.11.0
+  dio: ^5.11.1
   image_picker: ^1.2.3
   flutter_image_compress: ^2.5.1
   url_launcher: ^6.3.2
