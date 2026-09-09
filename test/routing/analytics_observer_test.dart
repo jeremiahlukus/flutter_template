@@ -85,9 +85,11 @@ void main() {
       ..didPop(route('/notes/1'), route('/'))
       ..didReplace(newRoute: route('/profile'), oldRoute: route('/'));
 
-    expect(
-      analytics.events.map((e) => e.parameters['screen_name']),
-      ['/', '/notes/1', '/', '/profile'],
-    );
+    expect(analytics.events.map((e) => e.parameters['screen_name']), [
+      '/',
+      '/notes/1',
+      '/',
+      '/profile',
+    ]);
   });
 }

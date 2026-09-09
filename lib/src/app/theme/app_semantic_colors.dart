@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 /// ```
 @immutable
 class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
-  const AppSemanticColors({
+  const new({
     required this.success,
     required this.onSuccess,
     required this.successContainer,
@@ -29,7 +29,7 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
   });
 
   /// Light-mode values, tuned to sit alongside a Material 3 light scheme.
-  factory AppSemanticColors.light() => const AppSemanticColors(
+  factory light() => const AppSemanticColors(
     success: Color(0xFF186B3A),
     onSuccess: Color(0xFFFFFFFF),
     successContainer: Color(0xFFA6F4C0),
@@ -46,7 +46,7 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
 
   /// Dark-mode values. Roles are inverted, not merely darkened — a container in
   /// dark mode is the dim surface and the accent is the bright one.
-  factory AppSemanticColors.dark() => const AppSemanticColors(
+  factory dark() => const AppSemanticColors(
     success: Color(0xFF8BD7A5),
     onSuccess: Color(0xFF003919),
     successContainer: Color(0xFF005227),

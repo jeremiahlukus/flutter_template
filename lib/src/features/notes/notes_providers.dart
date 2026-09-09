@@ -107,7 +107,7 @@ final notesControllerProvider = AsyncNotifierProvider<NotesController, void>(
 /// is on any tab — and it only fires on an offline→online *transition*, never on
 /// the initial status emission, which would sync on every cold start.
 class ReconnectSyncCoordinator {
-  ReconnectSyncCoordinator(this._ref) {
+  new(this._ref) {
     _subscription = _ref.listen<AsyncValue<NetworkStatus>>(
       networkStatusProvider,
       _onStatusChanged,

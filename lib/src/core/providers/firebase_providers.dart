@@ -36,10 +36,7 @@ final firebaseAuthProvider = Provider<FirebaseAuth>((ref) {
 final firestoreProvider = Provider<FirebaseFirestore>((ref) {
   final firestore = FirebaseFirestore.instance;
   if (ref.watch(appConfigProvider).useEmulators) {
-    firestore.useFirestoreEmulator(
-      EmulatorPorts.host,
-      EmulatorPorts.firestore,
-    );
+    firestore.useFirestoreEmulator(EmulatorPorts.host, EmulatorPorts.firestore);
     AppLogger.instance.i('Firestore → emulator');
   }
   return firestore;

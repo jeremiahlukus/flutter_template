@@ -15,7 +15,7 @@ import 'package:flutter_template/src/database/app_database.dart';
 /// meaningful.
 @immutable
 class Note {
-  const Note({
+  const new({
     required this.id,
     required this.title,
     required this.body,
@@ -23,7 +23,7 @@ class Note {
     this.pendingSync = false,
   });
 
-  factory Note.fromRow(NoteRow row) => Note(
+  factory fromRow(NoteRow row) => Note(
     id: row.id,
     title: row.title,
     body: row.body,
@@ -36,7 +36,7 @@ class Note {
   ///
   /// The type tests are `is` checks rather than casts on purpose: a stray number
   /// where a string belongs is data to ignore, not an exception to propagate.
-  factory Note.fromFirestore(String id, Map<String, dynamic> data) => Note(
+  factory fromFirestore(String id, Map<String, dynamic> data) => Note(
     id: id,
     title: data['title'] is String ? data['title'] as String : '',
     body: data['body'] is String ? data['body'] as String : '',
@@ -83,10 +83,7 @@ class Note {
   String get preview {
     final firstLine = body
         .split('\n')
-        .firstWhere(
-          (line) => line.trim().isNotEmpty,
-          orElse: () => '',
-        );
+        .firstWhere((line) => line.trim().isNotEmpty, orElse: () => '');
     return firstLine.length <= 80
         ? firstLine
         : '${firstLine.substring(0, 79)}…';

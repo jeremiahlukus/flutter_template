@@ -62,11 +62,7 @@ void main() {
 
     test('drops a record with no end_of_record', () {
       // A truncated report must not be silently treated as a passing one.
-      final report = CoverageReport.parse([
-        'SF:lib/a.dart',
-        'LF:10',
-        'LH:0',
-      ]);
+      final report = CoverageReport.parse(['SF:lib/a.dart', 'LF:10', 'LH:0']);
 
       expect(report.files, isEmpty);
       expect(report.isEmpty, isTrue);
@@ -252,10 +248,11 @@ void main() {
         ...record('lib/mid.dart', found: 10, hit: 5),
       ]);
 
-      expect(
-        report.included.map((f) => f.path),
-        ['lib/bad.dart', 'lib/mid.dart', 'lib/good.dart'],
-      );
+      expect(report.included.map((f) => f.path), [
+        'lib/bad.dart',
+        'lib/mid.dart',
+        'lib/good.dart',
+      ]);
     });
 
     test('worstThan names only the files under the threshold', () {

@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 /// is not worth the resolution risk.
 @immutable
 class AppVersion implements Comparable<AppVersion> {
-  const AppVersion(this.major, this.minor, this.patch);
+  const new(this.major, this.minor, this.patch);
 
   /// Parses `1.2.3`, tolerating a build suffix (`1.2.3+45`) and a `v` prefix.
   ///
@@ -81,12 +81,12 @@ enum UpdateRequirement {
 /// The remote answer to "is this build still OK?".
 @immutable
 class UpdatePolicy {
-  const UpdatePolicy({this.minimumSupported, this.latest, this.storeUrl});
+  const new({this.minimumSupported, this.latest, this.storeUrl});
 
   /// Reads the policy document. Missing or unparseable fields become null,
   /// which resolves to [UpdateRequirement.none] — failing *open* on purpose,
   /// because a typo in a config document must not lock every user out.
-  factory UpdatePolicy.fromMap(Map<String, dynamic> data) => UpdatePolicy(
+  factory fromMap(Map<String, dynamic> data) => UpdatePolicy(
     minimumSupported: _version(data['minimumSupported']),
     latest: _version(data['latest']),
     storeUrl: data['storeUrl'] is String ? data['storeUrl'] as String? : null,

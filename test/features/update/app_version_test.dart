@@ -151,18 +151,16 @@ void main() {
 
     test('is required below the floor', () {
       expect(
-        const UpdatePolicy(
-          minimumSupported: AppVersion(2, 0, 0),
-        ).requirementFor(current),
+        const UpdatePolicy(minimumSupported: AppVersion(2, 0, 0))
+            .requirementFor(current),
         UpdateRequirement.required,
       );
     });
 
     test('is none exactly at the floor', () {
       expect(
-        const UpdatePolicy(
-          minimumSupported: AppVersion(1, 5, 0),
-        ).requirementFor(current),
+        const UpdatePolicy(minimumSupported: AppVersion(1, 5, 0))
+            .requirementFor(current),
         UpdateRequirement.none,
       );
     });
@@ -205,9 +203,8 @@ void main() {
     test('is none when the current version is unknown', () {
       // Failing open: an unreadable local version must never lock a user out.
       expect(
-        const UpdatePolicy(
-          minimumSupported: AppVersion(99, 0, 0),
-        ).requirementFor(null),
+        const UpdatePolicy(minimumSupported: AppVersion(99, 0, 0))
+            .requirementFor(null),
         UpdateRequirement.none,
       );
     });

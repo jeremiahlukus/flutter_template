@@ -78,18 +78,16 @@ void main() {
 
     test('a connection error maps to network', () {
       expect(
-        ApiFailure.fromDio(
-          dioError(type: DioExceptionType.connectionError),
-        ).kind,
+        ApiFailure.fromDio(dioError(type: DioExceptionType.connectionError))
+            .kind,
         ApiFailureKind.network,
       );
     });
 
     test('a bad certificate maps to network', () {
       expect(
-        ApiFailure.fromDio(
-          dioError(type: DioExceptionType.badCertificate),
-        ).kind,
+        ApiFailure.fromDio(dioError(type: DioExceptionType.badCertificate))
+            .kind,
         ApiFailureKind.network,
       );
     });
@@ -114,11 +112,7 @@ void main() {
       };
 
       for (final kind in ApiFailureKind.values) {
-        expect(
-          kind.isRetryable,
-          retryable.contains(kind),
-          reason: kind.name,
-        );
+        expect(kind.isRetryable, retryable.contains(kind), reason: kind.name);
       }
     });
 
@@ -180,9 +174,8 @@ void main() {
     });
 
     test('toString names the kind, status, method, and path', () {
-      final text = ApiFailure.fromDio(
-        dioError(status: 404, path: '/missing'),
-      ).toString();
+      final text = ApiFailure.fromDio(dioError(status: 404, path: '/missing'))
+          .toString();
 
       expect(text, contains('notFound'));
       expect(text, contains('404'));

@@ -11,9 +11,7 @@ import '../helpers/test_helpers.dart';
 void main() {
   group('ARB files', () {
     Map<String, dynamic> arb(String locale) =>
-        jsonDecode(
-              File('lib/src/l10n/arb/app_$locale.arb').readAsStringSync(),
-            )
+        jsonDecode(File('lib/src/l10n/arb/app_$locale.arb').readAsStringSync())
             as Map<String, dynamic>;
 
     Set<String> messageKeys(Map<String, dynamic> data) =>
@@ -158,10 +156,7 @@ void main() {
     });
 
     test('English is supported', () {
-      expect(
-        AppLocales.supported.map((l) => l.languageCode),
-        contains('en'),
-      );
+      expect(AppLocales.supported.map((l) => l.languageCode), contains('en'));
     });
 
     test('every supported locale has a display name', () {

@@ -23,55 +23,52 @@ import 'package:flutter_template/src/features/auth/auth_providers.dart';
 Future<void> bootstrap({
   required FirebaseOptions Function() firebaseOptions,
 }) async {
-  return runZonedGuarded(
-    () async {
-      WidgetsFlutterBinding.ensureInitialized();
+  return runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
 
-      Object? setupFailure;
-      try {
-        await Firebase.initializeApp(options: firebaseOptions());
-      } catch (error, stackTrace) {
-        AppLogger.instance.e(
-          'Firebase failed to initialise; showing the setup screen',
-          error: error,
-          stackTrace: stackTrace,
-        );
-        setupFailure = error;
-      }
-
-      if (setupFailure != null) {
-        // Nothing downstream works without Firebase, so do not build the
-        // provider graph at all — just say what to do about it.
-        runApp(FirebaseSetupApp(error: setupFailure));
-        return;
-      }
-
-      // The one database instance for the process. Constructed here rather than
-      // lazily in the provider so a fork can prime anything it needs before the
-      // first frame — read a persisted text scale, say, and paint at the right
-      // size instead of snapping to it a frame later.
-      //
-      // `appDatabaseProvider` throws unless overridden, which is what stops a
-      // second `AppDatabase` ever being opened on the same file.
-      final database = AppDatabase();
-
-      // Built before `runApp` so the error handlers below report through the
-      // same `ErrorReporter` the app uses, and so an error thrown during the
-      // first frame is still captured.
-      final container = ProviderContainer(
-        overrides: [appDatabaseProvider.overrideWithValue(database)],
+    Object? setupFailure;
+    try {
+      await Firebase.initializeApp(options: firebaseOptions());
+    } catch (error, stackTrace) {
+      AppLogger.instance.e(
+        'Firebase failed to initialise; showing the setup screen',
+        error: error,
+        stackTrace: stackTrace,
       );
-      await installErrorHandlers(container);
+      setupFailure = error;
+    }
 
-      runApp(
-        UncontrolledProviderScope(
-          container: container,
-          child: const TemplateApp(),
-        ),
-      );
-    },
-    reportZoneError,
-  );
+    if (setupFailure != null) {
+      // Nothing downstream works without Firebase, so do not build the
+      // provider graph at all — just say what to do about it.
+      runApp(FirebaseSetupApp(error: setupFailure));
+      return;
+    }
+
+    // The one database instance for the process. Constructed here rather than
+    // lazily in the provider so a fork can prime anything it needs before the
+    // first frame — read a persisted text scale, say, and paint at the right
+    // size instead of snapping to it a frame later.
+    //
+    // `appDatabaseProvider` throws unless overridden, which is what stops a
+    // second `AppDatabase` ever being opened on the same file.
+    final database = AppDatabase();
+
+    // Built before `runApp` so the error handlers below report through the
+    // same `ErrorReporter` the app uses, and so an error thrown during the
+    // first frame is still captured.
+    final container = ProviderContainer(
+      overrides: [appDatabaseProvider.overrideWithValue(database)],
+    );
+    await installErrorHandlers(container);
+
+    runApp(
+      UncontrolledProviderScope(
+        container: container,
+        child: const TemplateApp(),
+      ),
+    );
+  }, reportZoneError);
 }
 
 /// Wires framework-error reporting and attaches build metadata.

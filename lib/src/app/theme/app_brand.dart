@@ -14,7 +14,7 @@ enum AppBrand {
   crimson('Crimson', Color(0xFFD32F2F)),
   slate('Slate', Color(0xFF455A64));
 
-  const AppBrand(this.label, this.seed);
+  new(this.label, this.seed);
 
   /// Human-readable name, shown in Settings.
   final String label;

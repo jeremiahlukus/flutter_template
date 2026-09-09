@@ -48,10 +48,7 @@ void main() {
       await harness.pumpApp(tester);
 
       // Writes still succeed offline, so the banner must not imply failure.
-      expect(
-        find.text('Offline — changes are saved on this device'),
-        findsOne,
-      );
+      expect(find.text('Offline — changes are saved on this device'), findsOne);
     });
 
     testWidgets('is localised', (tester) async {

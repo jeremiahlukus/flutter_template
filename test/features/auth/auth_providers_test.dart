@@ -89,9 +89,9 @@ void main() {
 
     test('signIn surfaces a failure as an error state', () async {
       final auth = MockFirebaseAuth();
-      whenCalling(
-        Invocation.method(#signInWithEmailAndPassword, null),
-      ).on(auth).thenThrow(FirebaseAuthException(code: 'wrong-password'));
+      whenCalling(Invocation.method(#signInWithEmailAndPassword, null))
+          .on(auth)
+          .thenThrow(FirebaseAuthException(code: 'wrong-password'));
 
       final harness = TestHarness.create(mockAuth: auth);
       final controller = harness.read(authControllerProvider.notifier);

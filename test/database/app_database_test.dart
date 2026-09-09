@@ -45,10 +45,7 @@ void main() {
       await db.upsertNote(row('new', day: 5));
       await db.upsertNote(row('mid', day: 3));
 
-      expect(
-        (await db.allNotes()).map((r) => r.id),
-        ['new', 'mid', 'old'],
-      );
+      expect((await db.allNotes()).map((r) => r.id), ['new', 'mid', 'old']);
     });
 
     test('findNote returns null for an unknown id', () async {
@@ -103,10 +100,10 @@ void main() {
       await db.upsertNote(row('stale'));
       await db.replaceNotes([row('fresh1'), row('fresh2')]);
 
-      expect(
-        (await db.allNotes()).map((r) => r.id).toSet(),
-        {'fresh1', 'fresh2'},
-      );
+      expect((await db.allNotes()).map((r) => r.id).toSet(), {
+        'fresh1',
+        'fresh2',
+      });
     });
 
     test('preserves unsynced local work', () async {

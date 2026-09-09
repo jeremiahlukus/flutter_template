@@ -102,10 +102,7 @@ void main() {
 
     test('propagates an injected failure', () async {
       storage.failWith = 'unauthorized';
-      await expectLater(
-        storage.readBytes('p'),
-        throwsA(isA<StorageFailure>()),
-      );
+      await expectLater(storage.readBytes('p'), throwsA(isA<StorageFailure>()));
     });
   });
 
@@ -136,10 +133,10 @@ void main() {
     });
 
     test('returns only entries under the directory, sorted', () async {
-      expect(
-        await storage.list('users/u1'),
-        ['users/u1/a.png', 'users/u1/b.png'],
-      );
+      expect(await storage.list('users/u1'), [
+        'users/u1/a.png',
+        'users/u1/b.png',
+      ]);
     });
 
     test('accepts a trailing slash', () async {

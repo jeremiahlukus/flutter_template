@@ -17,10 +17,7 @@ void main() {
 
   group('PlatformConnectivityService.classify', () {
     test('an empty result list is offline', () {
-      expect(
-        PlatformConnectivityService.classify([]),
-        NetworkStatus.offline,
-      );
+      expect(PlatformConnectivityService.classify([]), NetworkStatus.offline);
     });
 
     test('an explicit none is offline', () {
@@ -50,9 +47,10 @@ void main() {
     test('a mix of none and a real interface is online', () {
       // The platform reports every interface; one usable path is enough.
       expect(
-        PlatformConnectivityService.classify(
-          [ConnectivityResult.none, ConnectivityResult.wifi],
-        ),
+        PlatformConnectivityService.classify([
+          ConnectivityResult.none,
+          ConnectivityResult.wifi,
+        ]),
         NetworkStatus.online,
       );
     });

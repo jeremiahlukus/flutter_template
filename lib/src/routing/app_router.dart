@@ -97,9 +97,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   router = GoRouter(
     initialLocation: AppRoute.notes.path,
     refreshListenable: refresh,
-    observers: [
-      AnalyticsNavigatorObserver(ref.read(analyticsServiceProvider)),
-    ],
+    observers: [AnalyticsNavigatorObserver(ref.read(analyticsServiceProvider))],
     redirect: (context, state) {
       final auth = ref.read(authStateProvider);
       return resolveRedirect(
@@ -128,9 +126,8 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: 'notes/:id',
             name: AppRoute.noteEditor.name,
-            builder: (context, state) => NoteEditorScreen(
-              noteId: state.pathParameters['id']!,
-            ),
+            builder: (context, state) =>
+                NoteEditorScreen(noteId: state.pathParameters['id']!),
           ),
           GoRoute(
             path: 'profile',
@@ -155,7 +152,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 
 /// Shown for an unmatched or malformed route.
 class RouteErrorScreen extends StatelessWidget {
-  const RouteErrorScreen({required this.error, super.key});
+  const new({required this.error, super.key});
 
   final Exception? error;
 

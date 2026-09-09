@@ -35,7 +35,7 @@ abstract interface class ErrorReporter {
 
 /// Production implementation backed by Firebase Crashlytics.
 class CrashlyticsErrorReporter implements ErrorReporter {
-  const CrashlyticsErrorReporter(this._crashlytics);
+  const new(this._crashlytics);
 
   final FirebaseCrashlytics _crashlytics;
 
@@ -75,16 +75,12 @@ class CrashlyticsErrorReporter implements ErrorReporter {
   );
 
   @override
-  Future<void> setUserId(String? id) => _guard(
-    'setUserId',
-    () => _crashlytics.setUserIdentifier(id ?? ''),
-  );
+  Future<void> setUserId(String? id) =>
+      _guard('setUserId', () => _crashlytics.setUserIdentifier(id ?? ''));
 
   @override
-  Future<void> setCustomKey(String key, Object value) => _guard(
-    'setCustomKey',
-    () => _crashlytics.setCustomKey(key, value),
-  );
+  Future<void> setCustomKey(String key, Object value) =>
+      _guard('setCustomKey', () => _crashlytics.setCustomKey(key, value));
 
   @override
   Future<void> log(String message) =>
@@ -97,7 +93,7 @@ class CrashlyticsErrorReporter implements ErrorReporter {
 /// A no-op rather than a conditional at each call site, so feature code never has
 /// to ask whether reporting is on.
 class NoopErrorReporter implements ErrorReporter {
-  const NoopErrorReporter();
+  const new();
 
   @override
   Future<void> recordError(
@@ -164,7 +160,7 @@ class RecordingErrorReporter implements ErrorReporter {
 
 @immutable
 class ReportedError {
-  const ReportedError(this.error, {this.reason, this.fatal = false});
+  const new(this.error, {this.reason, this.fatal = false});
 
   final Object error;
   final String? reason;

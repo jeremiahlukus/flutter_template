@@ -3,9 +3,9 @@ import 'package:flutter_template/src/features/push/push_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class _MockMessaging extends Mock implements FirebaseMessaging {}
+class _MockMessaging extends Mock implements FirebaseMessaging;
 
-class _MockSettings extends Mock implements NotificationSettings {}
+class _MockSettings extends Mock implements NotificationSettings;
 
 void main() {
   group('PushPermission', () {

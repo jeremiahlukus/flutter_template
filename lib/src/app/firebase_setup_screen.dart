@@ -15,7 +15,7 @@ import 'package:flutter_template/src/l10n/l10n.dart';
 /// class out from under `bootstrap` and `FirebaseSetupScreen`. This file is the
 /// only thing that renders for it, so it is the natural home.
 class FirebaseNotConfigured implements Exception {
-  const FirebaseNotConfigured();
+  const new();
 
   @override
   String toString() =>
@@ -33,7 +33,7 @@ class FirebaseNotConfigured implements Exception {
 /// Deliberately self-contained: no Riverpod, no providers, no Firebase. It has
 /// to work in exactly the situation where everything else does not.
 class FirebaseSetupApp extends StatelessWidget {
-  const FirebaseSetupApp({this.error, super.key});
+  const new({this.error, super.key});
 
   final Object? error;
 
@@ -52,7 +52,7 @@ class FirebaseSetupApp extends StatelessWidget {
 
 /// The body of [FirebaseSetupApp]. Separated so it can be pumped directly.
 class FirebaseSetupScreen extends StatelessWidget {
-  const FirebaseSetupScreen({this.error, super.key});
+  const new({this.error, super.key});
 
   final Object? error;
 
@@ -156,7 +156,7 @@ class FirebaseSetupScreen extends StatelessWidget {
 }
 
 class _CommandRow extends StatelessWidget {
-  const _CommandRow({required this.command});
+  const new({required this.command});
 
   final String command;
 

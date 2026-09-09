@@ -8,10 +8,7 @@ import '../../helpers/test_helpers.dart';
 
 void main() {
   /// Documents currently registered for [uid].
-  Future<List<String>> registeredTokens(
-    TestHarness harness,
-    String uid,
-  ) async {
+  Future<List<String>> registeredTokens(TestHarness harness, String uid) async {
     final snapshot = await harness.firestore
         .collection(PushTokenLocation.collection(uid))
         .get();
@@ -167,10 +164,10 @@ void main() {
       await harness.read(pushRegistrarProvider).sync();
 
       // One document per device, so signing out here must not silence there.
-      expect(
-        (await registeredTokens(harness, 'user-1'))..sort(),
-        ['device-1', 'other-device'],
-      );
+      expect((await registeredTokens(harness, 'user-1'))..sort(), [
+        'device-1',
+        'other-device',
+      ]);
     });
 
     test('removes the token when the user signs out', () async {
@@ -216,10 +213,7 @@ void main() {
     });
 
     test('tokens live under the signed-in user only', () {
-      expect(
-        PushTokenLocation.document('u1', 't1'),
-        'users/u1/devices/t1',
-      );
+      expect(PushTokenLocation.document('u1', 't1'), 'users/u1/devices/t1');
       expect(PushTokenLocation.collection('u1'), 'users/u1/devices');
     });
   });

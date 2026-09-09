@@ -8,12 +8,14 @@ updates:
 
     # The Flutter SDK pins some package versions exactly, and Dependabot does not
     # model that — it happily opens PRs that can never resolve. Verified against
-    # Flutter 3.44:
+    # Flutter 3.47:
     #
-    #   intl        pinned to 0.20.2 by flutter_localizations
+    #   intl        capped at ^0.20.3 by flutter_localizations
     #
-    # Bumping it fails with "version solving failed" every time, so the PR is
-    # noise. Revisit when the SDK moves.
+    # The exact ceiling moves with the SDK — it was 0.20.2 on Flutter 3.44 — but
+    # there is always one, so bumping intl past it fails with "version solving
+    # failed" and the PR is noise. Recheck the ceiling when the SDK moves; only
+    # drop this entry if flutter_localizations stops constraining intl at all.
     #
     # A related trap: build_runner and drift_dev depend on `analyzer`, whose upper
     # bound is capped by what flutter_test pins. Those bumps genuinely become

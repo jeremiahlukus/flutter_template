@@ -32,6 +32,7 @@ import 'test_database.dart';
 
 // Re-exported so tests can seed a preference without a second import.
 export 'package:flutter_template/src/features/settings/setting_keys.dart';
+
 // The in-memory database lives in test/ because `drift/native.dart` imports
 // `dart:ffi`, which breaks the web build if referenced from lib/.
 export 'test_database.dart';
@@ -42,7 +43,7 @@ export 'test_database.dart';
 /// means a test can both *drive* the app and *assert* on what the fakes
 /// received, without re-reading providers to get at them.
 class TestHarness {
-  TestHarness._({
+  new _({
     required this.container,
     required this.auth,
     required this.firestore,
@@ -67,7 +68,7 @@ class TestHarness {
   ///
   /// Pass [database] to share one across harnesses, which is how a test models
   /// an app restart: same on-disk state, brand-new provider container.
-  factory TestHarness.create({
+  factory create({
     MockUser? user,
     MockFirebaseAuth? mockAuth,
     FakeFirebaseFirestore? firestore,

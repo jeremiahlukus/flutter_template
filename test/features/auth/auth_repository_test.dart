@@ -26,9 +26,9 @@ void main() {
   /// is how the failure paths below get exercised without a live backend.
   MockFirebaseAuth failing(Symbol method, String code) {
     final auth = MockFirebaseAuth();
-    whenCalling(
-      Invocation.method(method, null, const {}),
-    ).on(auth).thenThrow(FirebaseAuthException(code: code));
+    whenCalling(Invocation.method(method, null, const {}))
+        .on(auth)
+        .thenThrow(FirebaseAuthException(code: code));
     return auth;
   }
 
@@ -49,9 +49,8 @@ void main() {
         AuthFailure.fromFirebase(
           FirebaseAuthException(code: 'invalid-credential'),
         ).message,
-        AuthFailure.fromFirebase(
-          FirebaseAuthException(code: 'wrong-password'),
-        ).message,
+        AuthFailure.fromFirebase(FirebaseAuthException(code: 'wrong-password'))
+            .message,
       );
     });
 
@@ -198,10 +197,8 @@ void main() {
 
   group('createAccount', () {
     test('returns the user and records a sign_up', () async {
-      final user = await repo(signedOut()).createAccount(
-        email: 'new@b.co',
-        password: 'password',
-      );
+      final user = await repo(signedOut())
+          .createAccount(email: 'new@b.co', password: 'password');
 
       expect(user.id, isNotEmpty);
       expect(analytics.eventNames, contains('sign_up'));
@@ -232,10 +229,9 @@ void main() {
       final user = await repo(signedOut()).signInAnonymously();
 
       expect(user.id, isNotEmpty);
-      expect(
-        analytics.events.firstWhere((e) => e.name == 'login').parameters,
-        {'method': 'anonymous'},
-      );
+      expect(analytics.events.firstWhere((e) => e.name == 'login').parameters, {
+        'method': 'anonymous',
+      });
     });
   });
 
@@ -292,15 +288,11 @@ void main() {
 
   group('updatePhotoUrl', () {
     test('applies the url', () async {
-      final user = await repo(
-        signedIn(),
-      ).updatePhotoUrl('https://example.com/a.png');
+      final user = await repo(signedIn())
+          .updatePhotoUrl('https://example.com/a.png');
 
       expect(user.photoUrl, 'https://example.com/a.png');
-      expect(
-        analytics.events.last.parameters,
-        {'field': 'photo_url'},
-      );
+      expect(analytics.events.last.parameters, {'field': 'photo_url'});
     });
 
     test('throws when signed out', () async {

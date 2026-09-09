@@ -21,10 +21,7 @@ const defaultPageSize = 30;
 /// disagree.
 @immutable
 class PageWindow {
-  const PageWindow({
-    this.size = defaultPageSize,
-    this.pageSize = defaultPageSize,
-  });
+  const new({this.size = defaultPageSize, this.pageSize = defaultPageSize});
 
   /// Rows currently requested.
   final int size;
@@ -61,7 +58,7 @@ class PageWindow {
 
 /// Drives a [PageWindow]. One per paged list.
 class PageWindowController extends Notifier<PageWindow> {
-  PageWindowController({this.pageSize = defaultPageSize});
+  new({this.pageSize = defaultPageSize});
 
   final int pageSize;
 

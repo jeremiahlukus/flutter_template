@@ -14,7 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// the real interceptor chain, options merging, and error classification, which
 /// mocking `Dio` itself would skip entirely.
 class _ScriptedAdapter implements HttpClientAdapter {
-  _ScriptedAdapter(this.respond);
+  new(this.respond);
 
   /// Called for every request. Return a response or throw.
   ResponseBody Function(RequestOptions options) respond;
@@ -139,10 +139,7 @@ void main() {
     test('a transport throw maps to network', () async {
       adapter.respond = (_) => throw const _SocketishError();
 
-      await expectLater(
-        client.get<void>('/x'),
-        throwsA(isA<ApiFailure>()),
-      );
+      await expectLater(client.get<void>('/x'), throwsA(isA<ApiFailure>()));
     });
 
     test('a decode failure is reported, not thrown as a TypeError', () async {
@@ -352,5 +349,5 @@ void main() {
 
 /// Stand-in for a socket-level failure.
 class _SocketishError implements Exception {
-  const _SocketishError();
+  const new();
 }

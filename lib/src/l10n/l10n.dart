@@ -21,10 +21,7 @@ abstract final class AppLocales {
 
   /// Shown in the language picker. Each name is written in its own language,
   /// which is the convention users expect.
-  static const names = <String, String>{
-    'en': 'English',
-    'es': 'Español',
-  };
+  static const names = <String, String>{'en': 'English', 'es': 'Español'};
 
   static String nameOf(Locale locale) =>
       names[locale.languageCode] ?? locale.languageCode;

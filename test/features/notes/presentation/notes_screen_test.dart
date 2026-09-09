@@ -169,9 +169,7 @@ void main() {
         user: testUser(),
         extraOverrides: [
           notesProvider.overrideWith(
-            (ref) => Stream<List<Note>>.error(
-              StateError('cache unavailable'),
-            ),
+            (ref) => Stream<List<Note>>.error(StateError('cache unavailable')),
           ),
         ],
       );

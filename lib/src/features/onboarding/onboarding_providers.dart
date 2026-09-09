@@ -33,9 +33,7 @@ class OnboardingController extends AsyncNotifier<bool> {
 }
 
 final onboardingControllerProvider =
-    AsyncNotifierProvider<OnboardingController, bool>(
-      OnboardingController.new,
-    );
+    AsyncNotifierProvider<OnboardingController, bool>(OnboardingController.new);
 
 /// Synchronous view used by the route guard.
 ///

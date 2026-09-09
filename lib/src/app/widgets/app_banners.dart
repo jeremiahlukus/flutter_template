@@ -13,7 +13,7 @@ import 'package:flutter_template/src/l10n/l10n.dart';
 /// ([spec 0002]), so the copy tells the user their work is safe rather than
 /// implying failure.
 class OfflineBanner extends ConsumerWidget {
-  const OfflineBanner({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -65,7 +65,7 @@ class OfflineBanner extends ConsumerWidget {
 /// The single cheapest way to stop someone filing a bug — or worse, running a
 /// demo — against the wrong backend.
 class EnvironmentBanner extends ConsumerWidget {
-  const EnvironmentBanner({required this.child, super.key});
+  const new({required this.child, super.key});
 
   final Widget child;
 

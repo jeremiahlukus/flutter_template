@@ -7,7 +7,7 @@ part 'app_database.g.dart';
 
 @DriftDatabase(tables: [Notes, SettingsEntries])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase([QueryExecutor? executor])
+  new([QueryExecutor? executor])
     : super(executor ?? driftDatabase(name: databaseName));
 
   /// The on-disk database file name.
@@ -73,7 +73,12 @@ class AppDatabase extends _$AppDatabase {
   Future<int> countNotes() async {
     final count = notes.id.count();
     final row = await (selectOnly(notes)..addColumns([count])).getSingle();
-    return row.read(count) ?? 0;
+    // Read into a local first. Returning `row.read(count) ?? 0` directly trips
+    // very_good_analysis 11's `async_return_with_no_await`, which misreads the
+    // `??` on a generic call as a returned Future — `read` is `D? read<D>(...)`,
+    // so this is an `int?` and there is no future here.
+    final value = row.read(count);
+    return value ?? 0;
   }
 
   Stream<int> watchNoteCount() {
@@ -126,9 +131,8 @@ class AppDatabase extends _$AppDatabase {
   }
 
   Future<void> writeSetting(String key, String value) =>
-      into(settingsEntries).insertOnConflictUpdate(
-        SettingRow(key: key, value: value),
-      );
+      into(settingsEntries)
+          .insertOnConflictUpdate(SettingRow(key: key, value: value));
 
   Future<int> removeSetting(String key) =>
       (delete(settingsEntries)..where((t) => t.key.equals(key))).go();

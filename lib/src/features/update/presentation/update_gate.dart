@@ -16,7 +16,7 @@ import 'package:url_launcher/url_launcher.dart';
 /// An optional update is not gated at all — nagging is not the same as
 /// informing, and Settings is the right place for "a newer version exists".
 class UpdateGate extends ConsumerWidget {
-  const UpdateGate({required this.child, super.key});
+  const new({required this.child, super.key});
 
   final Widget child;
 
@@ -28,7 +28,7 @@ class UpdateGate extends ConsumerWidget {
 }
 
 class UpdateRequiredScreen extends ConsumerWidget {
-  const UpdateRequiredScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -61,7 +61,7 @@ class UpdateRequiredScreen extends ConsumerWidget {
 
 /// A quiet row for Settings when a newer version exists.
 class OptionalUpdateTile extends ConsumerWidget {
-  const OptionalUpdateTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

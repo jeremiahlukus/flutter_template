@@ -43,10 +43,7 @@ void main() {
     });
 
     test('accepts a title of exactly the maximum', () {
-      expect(
-        testNote(title: 'x' * Note.maxTitleLength).exceededLimit,
-        isNull,
-      );
+      expect(testNote(title: 'x' * Note.maxTitleLength).exceededLimit, isNull);
     });
 
     test('reports a title one over', () {
@@ -93,18 +90,14 @@ void main() {
     test('rejects an over-long title as a NotesFailure, not a crash', () async {
       await expectLater(
         notes.save(testNote(title: 'x' * (Note.maxTitleLength + 1))),
-        throwsA(
-          isA<NotesFailure>().having((e) => e.code, 'code', 'too-long'),
-        ),
+        throwsA(isA<NotesFailure>().having((e) => e.code, 'code', 'too-long')),
       );
     });
 
     test('rejects an over-long body', () async {
       await expectLater(
         notes.save(testNote(body: 'y' * (Note.maxBodyLength + 1))),
-        throwsA(
-          isA<NotesFailure>().having((e) => e.code, 'code', 'too-long'),
-        ),
+        throwsA(isA<NotesFailure>().having((e) => e.code, 'code', 'too-long')),
       );
     });
 

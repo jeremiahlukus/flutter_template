@@ -16,7 +16,7 @@ import 'package:flutter_template/src/routing/app_router.dart';
 /// inside a `ProviderScope` with overrides and exercise the real app rather than
 /// a stand-in.
 class TemplateApp extends ConsumerWidget {
-  const TemplateApp({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

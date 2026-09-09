@@ -12,7 +12,7 @@ import 'package:flutter_template/src/core/network/api_failure.dart';
 /// `getIdToken()` returns the cached token until it is close to expiry, so this
 /// is cheap.
 class AuthTokenInterceptor extends Interceptor {
-  AuthTokenInterceptor(this._auth);
+  new(this._auth);
 
   final FirebaseAuth _auth;
 
@@ -44,7 +44,7 @@ class AuthTokenInterceptor extends Interceptor {
 /// only idempotent methods — replaying a POST could double-charge a card or
 /// create two records.
 class RetryInterceptor extends Interceptor {
-  RetryInterceptor({
+  new({
     required Dio dio,
     this.maxAttempts = 3,
     this.baseDelay = const Duration(milliseconds: 300),
@@ -96,7 +96,7 @@ class RetryInterceptor extends Interceptor {
 
 /// Logs requests and failures. Verbose only where the environment says so.
 class ApiLogInterceptor extends Interceptor {
-  const ApiLogInterceptor({required this.verbose});
+  const new({required this.verbose});
 
   final bool verbose;
 

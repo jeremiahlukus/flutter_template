@@ -8,9 +8,9 @@ import 'package:flutter_template/src/features/auth/app_user.dart';
 /// Firebase error codes are mapped to human sentences here, once, rather than in
 /// each screen's catch block.
 class AuthFailure implements Exception {
-  const AuthFailure(this.code, this.message);
+  const new(this.code, this.message);
 
-  factory AuthFailure.fromFirebase(FirebaseAuthException e) => AuthFailure(
+  factory fromFirebase(FirebaseAuthException e) => AuthFailure(
     e.code,
     _messages[e.code] ?? e.message ?? 'Authentication failed.',
   );
@@ -38,11 +38,9 @@ class AuthFailure implements Exception {
 
 /// All authentication behaviour, expressed in the app's own vocabulary.
 class AuthRepository {
-  AuthRepository({
-    required FirebaseAuth auth,
-    required AnalyticsService analytics,
-  }) : _auth = auth,
-       _analytics = analytics;
+  new({required FirebaseAuth auth, required AnalyticsService analytics})
+    : _auth = auth,
+      _analytics = analytics;
 
   final FirebaseAuth _auth;
   final AnalyticsService _analytics;
@@ -153,9 +151,7 @@ class AuthRepository {
         await user.reload();
         await _analytics.logEvent(
           'profile_updated',
-          parameters: {
-            'field': 'display_name',
-          },
+          parameters: {'field': 'display_name'},
         );
         return AppUser.fromFirebase(_auth.currentUser ?? user);
       });
@@ -169,9 +165,7 @@ class AuthRepository {
     await user.reload();
     await _analytics.logEvent(
       'profile_updated',
-      parameters: {
-        'field': 'photo_url',
-      },
+      parameters: {'field': 'photo_url'},
     );
     return AppUser.fromFirebase(_auth.currentUser ?? user);
   });

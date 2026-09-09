@@ -10,7 +10,7 @@ enum AppEnvironment {
   staging('staging', 'STAGING'),
   prod('prod', null);
 
-  const AppEnvironment(this.key, this.banner);
+  new(this.key, this.banner);
 
   /// Value expected in `--dart-define=APP_ENV=…`.
   final String key;
@@ -49,7 +49,7 @@ enum AppEnvironment {
 /// place and testable without rebuilding.
 @immutable
 class AppConfig {
-  const AppConfig({
+  const new({
     required this.environment,
     required this.apiBaseUrl,
     required this.analyticsEnabled,
@@ -60,7 +60,7 @@ class AppConfig {
   });
 
   /// The config for [environment].
-  factory AppConfig.forEnvironment(
+  factory forEnvironment(
     AppEnvironment environment, {
     bool useEmulators = false,
   }) => switch (environment) {
@@ -95,7 +95,7 @@ class AppConfig {
   };
 
   /// The config for the environment this binary was compiled for.
-  factory AppConfig.current() => AppConfig.forEnvironment(
+  factory current() => AppConfig.forEnvironment(
     AppEnvironment.current,
     // Production must never be pointed at a local emulator, whatever the
     // build flag says — a release build that silently talks to localhost

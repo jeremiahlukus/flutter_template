@@ -7,7 +7,7 @@ import 'package:flutter_template/src/core/errors/error_reporter.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class _MockCrashlytics extends Mock implements FirebaseCrashlytics {}
+class _MockCrashlytics extends Mock implements FirebaseCrashlytics;
 
 void main() {
   final details = FlutterErrorDetails(
@@ -122,9 +122,8 @@ void main() {
     });
 
     test('forwards a framework error as fatal', () async {
-      when(
-        () => crashlytics.recordFlutterFatalError(any()),
-      ).thenAnswer((_) async {});
+      when(() => crashlytics.recordFlutterFatalError(any()))
+          .thenAnswer((_) async {});
 
       await reporter.recordFlutterError(details);
 
@@ -149,9 +148,8 @@ void main() {
     });
 
     test('forwards custom keys and breadcrumbs', () async {
-      when(
-        () => crashlytics.setCustomKey(any(), any()),
-      ).thenAnswer((_) async {});
+      when(() => crashlytics.setCustomKey(any(), any()))
+          .thenAnswer((_) async {});
       when(() => crashlytics.log(any())).thenAnswer((_) async {});
 
       await reporter.setCustomKey('env', 'prod');
@@ -181,25 +179,22 @@ void main() {
       });
 
       test('recordFlutterError swallows a throw', () async {
-        when(
-          () => crashlytics.recordFlutterFatalError(any()),
-        ).thenThrow(Exception('offline'));
+        when(() => crashlytics.recordFlutterFatalError(any()))
+            .thenThrow(Exception('offline'));
 
         await expectLater(reporter.recordFlutterError(details), completes);
       });
 
       test('setUserId swallows a throw', () async {
-        when(
-          () => crashlytics.setUserIdentifier(any()),
-        ).thenThrow(Exception('offline'));
+        when(() => crashlytics.setUserIdentifier(any()))
+            .thenThrow(Exception('offline'));
 
         await expectLater(reporter.setUserId('u'), completes);
       });
 
       test('setCustomKey swallows a throw', () async {
-        when(
-          () => crashlytics.setCustomKey(any(), any()),
-        ).thenThrow(Exception('offline'));
+        when(() => crashlytics.setCustomKey(any(), any()))
+            .thenThrow(Exception('offline'));
 
         await expectLater(reporter.setCustomKey('k', 'v'), completes);
       });

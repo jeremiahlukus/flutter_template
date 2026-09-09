@@ -26,10 +26,7 @@ void main() {
     final container = ProviderContainer();
     addTearDown(container.dispose);
 
-    expect(
-      container.read(firestoreProvider),
-      same(FirebaseFirestore.instance),
-    );
+    expect(container.read(firestoreProvider), same(FirebaseFirestore.instance));
   });
 
   // `FirebaseStorage.instance` is deliberately not exercised: unlike Auth,
