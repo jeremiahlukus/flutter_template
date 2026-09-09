@@ -13,13 +13,12 @@ import '../../helpers/test_helpers.dart';
 // what a mock is for, and only one test needs it (see the pull-failure case).
 // ignore_for_file: subtype_of_sealed_class
 
-class _MockFirestore extends Mock implements FirebaseFirestore {}
+class _MockFirestore extends Mock implements FirebaseFirestore;
 
 class _MockCollection extends Mock
-    implements CollectionReference<Map<String, dynamic>> {}
+    implements CollectionReference<Map<String, dynamic>>;
 
-class _MockDoc extends Mock
-    implements DocumentReference<Map<String, dynamic>> {}
+class _MockDoc extends Mock implements DocumentReference<Map<String, dynamic>>;
 
 void main() {
   const userId = 'user-1';
@@ -84,9 +83,7 @@ void main() {
     });
 
     test('stamps updatedAt from the clock, ignoring the caller', () async {
-      final saved = await repo.save(
-        testNote(updatedAt: DateTime.utc(1999)),
-      );
+      final saved = await repo.save(testNote(updatedAt: DateTime.utc(1999)));
 
       expect(saved.updatedAt, fixedNow);
     });
@@ -306,9 +303,9 @@ void main() {
       when(() => broken.collection('users')).thenReturn(users);
       when(() => users.doc(userId)).thenReturn(userDoc);
       when(() => userDoc.collection('notes')).thenReturn(notes);
-      when(notes.get).thenThrow(
-        FirebaseException(plugin: 'firestore', code: 'unavailable'),
-      );
+      when(
+        notes.get,
+      ).thenThrow(FirebaseException(plugin: 'firestore', code: 'unavailable'));
 
       repo = NotesRepository(
         firestore: broken,

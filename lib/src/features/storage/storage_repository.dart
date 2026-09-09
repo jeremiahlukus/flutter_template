@@ -5,18 +5,16 @@ import 'package:flutter_template/src/core/logging/app_logger.dart';
 import 'package:flutter_template/src/core/providers/firebase_providers.dart';
 
 class StorageFailure implements Exception {
-  const StorageFailure(this.code, this.message);
+  const new(this.code, this.message);
 
-  factory StorageFailure.fromFirebase(FirebaseException e) => StorageFailure(
-    e.code,
-    switch (e.code) {
-      'unauthorized' => 'You do not have permission to do that.',
-      'object-not-found' => 'That file no longer exists.',
-      'quota-exceeded' => 'Storage quota exceeded.',
-      'canceled' => 'Upload canceled.',
-      _ => e.message ?? 'File operation failed.',
-    },
-  );
+  factory fromFirebase(FirebaseException e) =>
+      StorageFailure(e.code, switch (e.code) {
+        'unauthorized' => 'You do not have permission to do that.',
+        'object-not-found' => 'That file no longer exists.',
+        'quota-exceeded' => 'Storage quota exceeded.',
+        'canceled' => 'Upload canceled.',
+        _ => e.message ?? 'File operation failed.',
+      });
 
   final String code;
   final String message;
@@ -56,7 +54,7 @@ abstract interface class StorageRepository {
 }
 
 class FirebaseStorageRepository implements StorageRepository {
-  const FirebaseStorageRepository(this._storage);
+  const new(this._storage);
 
   final FirebaseStorage _storage;
 
@@ -81,7 +79,7 @@ class FirebaseStorageRepository implements StorageRepository {
       bytes,
       SettableMetadata(contentType: contentType ?? 'application/octet-stream'),
     );
-    return ref.getDownloadURL();
+    return await ref.getDownloadURL();
   });
 
   @override
@@ -89,10 +87,8 @@ class FirebaseStorageRepository implements StorageRepository {
       _run('url:$path', () => _storage.ref(path).getDownloadURL());
 
   @override
-  Future<Uint8List?> readBytes(String path) => _run(
-    'read:$path',
-    () => _storage.ref(path).getData(maxDownloadBytes),
-  );
+  Future<Uint8List?> readBytes(String path) =>
+      _run('read:$path', () => _storage.ref(path).getData(maxDownloadBytes));
 
   @override
   Future<void> delete(String path) =>

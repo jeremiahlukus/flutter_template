@@ -14,7 +14,7 @@ import 'package:flutter_template/src/l10n/l10n.dart';
 /// [firebaseAuthProvider] so widget tests can drive it with `MockFirebaseAuth`
 /// instead of a live project.
 class TemplateSignInScreen extends ConsumerWidget {
-  const TemplateSignInScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -89,7 +89,7 @@ class TemplateSignInScreen extends ConsumerWidget {
 }
 
 class _Header extends StatelessWidget {
-  const _Header();
+  const new();
 
   @override
   Widget build(BuildContext context) {

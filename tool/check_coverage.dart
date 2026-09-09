@@ -57,9 +57,7 @@ void main(List<String> args) {
     if (worst.isNotEmpty) {
       stderr.writeln('Least-covered files to look at first:');
       for (final entry in worst) {
-        stderr.writeln(
-          '  ${entry.percent.toStringAsFixed(1)}%  ${entry.path}',
-        );
+        stderr.writeln('  ${entry.percent.toStringAsFixed(1)}%  ${entry.path}');
       }
     }
     exit(1);

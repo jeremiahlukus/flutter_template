@@ -590,24 +590,22 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [notes, settingsEntries];
 }
 
-typedef $$NotesTableCreateCompanionBuilder =
-    NotesCompanion Function({
-      required String id,
-      required String title,
-      Value<String> body,
-      required DateTime updatedAt,
-      Value<bool> pendingSync,
-      Value<int> rowid,
-    });
-typedef $$NotesTableUpdateCompanionBuilder =
-    NotesCompanion Function({
-      Value<String> id,
-      Value<String> title,
-      Value<String> body,
-      Value<DateTime> updatedAt,
-      Value<bool> pendingSync,
-      Value<int> rowid,
-    });
+typedef $$NotesTableCreateCompanionBuilder = NotesCompanion Function({
+  required String id,
+  required String title,
+  Value<String> body,
+  required DateTime updatedAt,
+  Value<bool> pendingSync,
+  Value<int> rowid,
+});
+typedef $$NotesTableUpdateCompanionBuilder = NotesCompanion Function({
+  Value<String> id,
+  Value<String> title,
+  Value<String> body,
+  Value<DateTime> updatedAt,
+  Value<bool> pendingSync,
+  Value<int> rowid,
+});
 
 class $$NotesTableFilterComposer extends Composer<_$AppDatabase, $NotesTable> {
   $$NotesTableFilterComposer({
@@ -894,16 +892,11 @@ class $$SettingsEntriesTableTableManager
               $$SettingsEntriesTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
               $$SettingsEntriesTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> key = const Value.absent(),
-                Value<String> value = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => SettingsEntriesCompanion(
-                key: key,
-                value: value,
-                rowid: rowid,
-              ),
+          updateCompanionCallback: ({
+            Value<String> key = const Value.absent(),
+            Value<String> value = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) => SettingsEntriesCompanion(key: key, value: value, rowid: rowid),
           createCompanionCallback:
               ({
                 required String key,

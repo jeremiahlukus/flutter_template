@@ -27,7 +27,7 @@ import 'package:go_router/go_router.dart';
 /// should not mean editing this file, because an edited file is what makes the
 /// next template pull a conflict.
 class SettingsScreen extends ConsumerWidget {
-  const SettingsScreen({this.showBackButton = true, super.key});
+  const new({this.showBackButton = true, super.key});
 
   /// Whether to show a back arrow. False for a top-level tab destination.
   final bool showBackButton;
@@ -67,7 +67,7 @@ class SettingsScreen extends ConsumerWidget {
 /// ])
 /// ```
 class SettingsSections extends ConsumerWidget {
-  const SettingsSections({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -123,7 +123,7 @@ class SettingsSections extends ConsumerWidget {
 }
 
 class ThemeModeSection extends ConsumerWidget {
-  const ThemeModeSection({super.key});
+  const new({super.key});
 
   static String label(AppLocalizations l10n, ThemeMode mode) => switch (mode) {
     ThemeMode.system => l10n.themeSystem,
@@ -160,7 +160,7 @@ class ThemeModeSection extends ConsumerWidget {
 
 /// Horizontal swatch row. Tapping one re-seeds the whole theme.
 class BrandSection extends ConsumerWidget {
-  const BrandSection({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -210,7 +210,7 @@ class BrandSection extends ConsumerWidget {
 }
 
 class LanguageSection extends ConsumerWidget {
-  const LanguageSection({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -247,7 +247,7 @@ class LanguageSection extends ConsumerWidget {
 /// permission. Requesting permission only when the user turns the switch on is
 /// deliberate — prompting unasked is the fastest way to get denied forever.
 class PushSection extends ConsumerWidget {
-  const PushSection({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -280,7 +280,7 @@ class PushSection extends ConsumerWidget {
 }
 
 class AnalyticsSection extends ConsumerWidget {
-  const AnalyticsSection({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -302,7 +302,7 @@ class AnalyticsSection extends ConsumerWidget {
 }
 
 class SyncSection extends ConsumerWidget {
-  const SyncSection({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -336,7 +336,7 @@ class SyncSection extends ConsumerWidget {
 }
 
 class SettingsSectionHeader extends StatelessWidget {
-  const SettingsSectionHeader(this.title, {super.key});
+  const new(this.title, {super.key});
 
   final String title;
 

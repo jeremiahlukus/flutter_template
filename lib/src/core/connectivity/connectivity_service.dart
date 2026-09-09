@@ -28,7 +28,7 @@ abstract interface class ConnectivityService {
 }
 
 class PlatformConnectivityService implements ConnectivityService {
-  const PlatformConnectivityService(this._connectivity);
+  const new(this._connectivity);
 
   final Connectivity _connectivity;
 
@@ -90,7 +90,7 @@ class PlatformConnectivityService implements ConnectivityService {
 /// Controllable implementation for tests.
 @visibleForTesting
 class FakeConnectivityService implements ConnectivityService {
-  FakeConnectivityService([this._status = NetworkStatus.online]);
+  new([this._status = NetworkStatus.online]);
 
   final _controller = StreamController<NetworkStatus>.broadcast();
   NetworkStatus _status;

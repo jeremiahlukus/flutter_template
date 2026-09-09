@@ -31,7 +31,7 @@ const excludedPatterns = <String>[
 
 /// One `SF`/`LF`/`LH` record from an lcov report.
 class FileCoverage {
-  const FileCoverage(this.path, this.found, this.hit);
+  const new(this.path, this.found, this.hit);
 
   final String path;
 
@@ -53,14 +53,14 @@ class FileCoverage {
 
 /// Aggregate of the files that count.
 class CoverageReport {
-  const CoverageReport(this.files);
+  const new(this.files);
 
   /// Parses the `SF`/`LF`/`LH` triples of an lcov report.
   ///
   /// Unknown lines are ignored, and a record without a terminating
   /// `end_of_record` is dropped — a truncated report should not be silently
   /// treated as a passing one.
-  factory CoverageReport.parse(List<String> lines) {
+  factory parse(List<String> lines) {
     final results = <FileCoverage>[];
     String? path;
     var found = 0;

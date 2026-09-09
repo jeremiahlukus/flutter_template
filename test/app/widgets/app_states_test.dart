@@ -4,9 +4,8 @@ import 'package:flutter_template/src/app/widgets/app_states.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  Future<void> pump(WidgetTester tester, Widget child) => tester.pumpWidget(
-    MaterialApp(home: Scaffold(body: child)),
-  );
+  Future<void> pump(WidgetTester tester, Widget child) =>
+      tester.pumpWidget(MaterialApp(home: Scaffold(body: child)));
 
   group('AppEmptyState', () {
     testWidgets('shows the icon and title', (tester) async {
@@ -91,11 +90,7 @@ void main() {
     testWidgets('uses a custom retry label', (tester) async {
       await pump(
         tester,
-        AppErrorState(
-          title: 'Broke',
-          onRetry: () {},
-          retryLabel: 'Try again',
-        ),
+        AppErrorState(title: 'Broke', onRetry: () {}, retryLabel: 'Try again'),
       );
 
       expect(find.text('Try again'), findsOne);

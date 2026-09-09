@@ -5,7 +5,7 @@ import 'package:flutter_template/src/core/connectivity/connectivity_service.dart
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class _MockConnectivity extends Mock implements Connectivity {}
+class _MockConnectivity extends Mock implements Connectivity;
 
 /// Exercises the real implementation against a mocked `connectivity_plus`.
 ///
@@ -19,9 +19,8 @@ void main() {
   setUp(() {
     connectivity = _MockConnectivity();
     changes = StreamController<List<ConnectivityResult>>.broadcast();
-    when(
-      () => connectivity.onConnectivityChanged,
-    ).thenAnswer((_) => changes.stream);
+    when(() => connectivity.onConnectivityChanged)
+        .thenAnswer((_) => changes.stream);
     service = PlatformConnectivityService(connectivity);
   });
 
@@ -120,10 +119,7 @@ void main() {
       stubCheck([ConnectivityResult.wifi]);
 
       final errors = <Object>[];
-      final sub = service.onStatusChanged().listen(
-        (_) {},
-        onError: errors.add,
-      );
+      final sub = service.onStatusChanged().listen((_) {}, onError: errors.add);
       await pumpEventQueue();
 
       changes.addError(Exception('platform blew up'));

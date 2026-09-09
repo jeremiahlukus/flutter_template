@@ -6,19 +6,19 @@ import 'package:flutter_template/src/features/storage/storage_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class _MockStorage extends Mock implements FirebaseStorage {}
+class _MockStorage extends Mock implements FirebaseStorage;
 
-class _MockReference extends Mock implements Reference {}
+class _MockReference extends Mock implements Reference;
 
-class _MockListResult extends Mock implements ListResult {}
+class _MockListResult extends Mock implements ListResult;
 
-class _MockSnapshot extends Mock implements TaskSnapshot {}
+class _MockSnapshot extends Mock implements TaskSnapshot;
 
 /// `UploadTask` is a `Future<TaskSnapshot>`, so a fake only has to forward the
 /// `Future` surface to a real future. Mocking `then` directly is far more
 /// fragile than this.
 class _FakeUploadTask implements UploadTask {
-  _FakeUploadTask(this._future);
+  new(this._future);
 
   final Future<TaskSnapshot> _future;
 
@@ -78,9 +78,8 @@ void main() {
   group('uploadBytes', () {
     setUp(() {
       // `UploadTask` is itself a `Future`, so mocktail rejects `thenReturn`.
-      when(
-        () => ref.putData(any(), any()),
-      ).thenAnswer((_) => _FakeUploadTask(Future.value(_MockSnapshot())));
+      when(() => ref.putData(any(), any()))
+          .thenAnswer((_) => _FakeUploadTask(Future.value(_MockSnapshot())));
       when(ref.getDownloadURL).thenAnswer((_) async => 'https://cdn/a.png');
     });
 
@@ -153,9 +152,8 @@ void main() {
     });
 
     test('maps object-not-found', () async {
-      when(ref.getDownloadURL).thenThrow(
-        FirebaseException(plugin: 'p', code: 'object-not-found'),
-      );
+      when(ref.getDownloadURL)
+          .thenThrow(FirebaseException(plugin: 'p', code: 'object-not-found'));
 
       await expectLater(
         repo.downloadUrl('x'),
@@ -175,9 +173,8 @@ void main() {
       when(() => ref.getData(any())).thenAnswer((_) async => bytes);
 
       expect(await repo.readBytes('x'), bytes);
-      verify(
-        () => ref.getData(FirebaseStorageRepository.maxDownloadBytes),
-      ).called(1);
+      verify(() => ref.getData(FirebaseStorageRepository.maxDownloadBytes))
+          .called(1);
     });
 
     test('caps downloads at 8 MB', () {
@@ -186,9 +183,8 @@ void main() {
     });
 
     test('maps a quota error', () async {
-      when(() => ref.getData(any())).thenThrow(
-        FirebaseException(plugin: 'p', code: 'quota-exceeded'),
-      );
+      when(() => ref.getData(any()))
+          .thenThrow(FirebaseException(plugin: 'p', code: 'quota-exceeded'));
 
       await expectLater(
         repo.readBytes('x'),
@@ -213,9 +209,8 @@ void main() {
     });
 
     test('maps a cancellation', () async {
-      when(
-        ref.delete,
-      ).thenThrow(FirebaseException(plugin: 'p', code: 'canceled'));
+      when(ref.delete)
+          .thenThrow(FirebaseException(plugin: 'p', code: 'canceled'));
 
       await expectLater(
         repo.delete('x'),
@@ -241,10 +236,7 @@ void main() {
       when(() => result.items).thenReturn([a, b]);
       when(ref.listAll).thenAnswer((_) async => result);
 
-      expect(
-        await repo.list('users/u1'),
-        ['users/u1/a.png', 'users/u1/b.png'],
-      );
+      expect(await repo.list('users/u1'), ['users/u1/a.png', 'users/u1/b.png']);
     });
 
     test('returns empty for an empty directory', () async {

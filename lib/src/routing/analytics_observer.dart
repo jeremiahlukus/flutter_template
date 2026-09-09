@@ -6,7 +6,7 @@ import 'package:flutter_template/src/core/analytics/analytics_service.dart';
 /// Attached to the router rather than sprinkled through `initState`, so a new
 /// screen is tracked the moment it has a route — no per-screen wiring to forget.
 class AnalyticsNavigatorObserver extends NavigatorObserver {
-  AnalyticsNavigatorObserver(this._analytics);
+  new(this._analytics);
 
   final AnalyticsService _analytics;
 

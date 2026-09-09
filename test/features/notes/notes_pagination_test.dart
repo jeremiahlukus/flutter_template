@@ -67,10 +67,11 @@ void main() {
       }
 
       // Ties break on id descending, so paging cannot skip or repeat a row.
-      expect(
-        (await db.watchNotes(limit: 3).first).map((r) => r.id),
-        ['c', 'b', 'a'],
-      );
+      expect((await db.watchNotes(limit: 3).first).map((r) => r.id), [
+        'c',
+        'b',
+        'a',
+      ]);
     });
 
     test('countNotes reports the row count', () async {
@@ -119,10 +120,7 @@ void main() {
       harness.read(notesWindowProvider.notifier).loadMore();
       await pumpEventQueue();
 
-      expect(
-        harness.read(notesProvider).value,
-        hasLength(defaultPageSize * 2),
-      );
+      expect(harness.read(notesProvider).value, hasLength(defaultPageSize * 2));
     });
 
     test('a short result tells the list it has reached the end', () async {
@@ -237,26 +235,23 @@ void main() {
       expect(await harness.database.countNotes(), 250);
     });
 
-    test(
-      'pulls an exact multiple of the page size without duplicating',
-      () async {
-        final harness = TestHarness.create(user: testUser());
-        await harness.container.read(authStateProvider.future);
-        final repo = harness.read(notesRepositoryProvider)!;
+    test('pulls an exact multiple of the page size without duplicating', () async {
+      final harness = TestHarness.create(user: testUser());
+      await harness.container.read(authStateProvider.future);
+      final repo = harness.read(notesRepositoryProvider)!;
 
-        await seedRemoteNotes(harness.firestore, 'user-1', [
-          for (var i = 0; i < 200; i++)
-            testNote(id: 'r${i.toString().padLeft(4, '0')}'),
-        ]);
+      await seedRemoteNotes(harness.firestore, 'user-1', [
+        for (var i = 0; i < 200; i++)
+          testNote(id: 'r${i.toString().padLeft(4, '0')}'),
+      ]);
 
-        final report = await repo.sync();
+      final report = await repo.sync();
 
-        // The boundary case: a full final page must not cause an extra read that
-        // re-adds the last document.
-        expect(report.pulled, 200);
-        expect(await harness.database.countNotes(), 200);
-      },
-    );
+      // The boundary case: a full final page must not cause an extra read that
+      // re-adds the last document.
+      expect(report.pulled, 200);
+      expect(await harness.database.countNotes(), 200);
+    });
 
     test('an empty collection pulls nothing', () async {
       final harness = TestHarness.create(user: testUser());

@@ -25,9 +25,7 @@ void main() {
       await installErrorHandlers(harness.container);
       addTearDown(() => FlutterError.onError = FlutterError.presentError);
 
-      FlutterError.onError!(
-        FlutterErrorDetails(exception: StateError('boom')),
-      );
+      FlutterError.onError!(FlutterErrorDetails(exception: StateError('boom')));
 
       expect(harness.errorReporter.errors, hasLength(1));
       expect(harness.errorReporter.errors.single.fatal, isTrue);
@@ -118,9 +116,7 @@ void main() {
         createContainer: () {
           return created = ProviderContainer(
             overrides: [
-              errorReporterProvider.overrideWithValue(
-                RecordingErrorReporter(),
-              ),
+              errorReporterProvider.overrideWithValue(RecordingErrorReporter()),
             ],
           );
         },

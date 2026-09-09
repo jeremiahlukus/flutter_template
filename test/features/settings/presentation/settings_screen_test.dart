@@ -55,10 +55,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(harness.read(themeModeProvider), ThemeMode.dark);
-      expect(
-        await harness.database.readSetting(SettingKeys.themeMode),
-        'dark',
-      );
+      expect(await harness.database.readSetting(SettingKeys.themeMode), 'dark');
     });
 
     testWidgets('choosing light persists the choice', (tester) async {
@@ -274,10 +271,7 @@ void main() {
 
       expect(find.byKey(const ValueKey('locale_system')), findsOne);
       for (final locale in AppLocales.supported) {
-        expect(
-          find.byKey(ValueKey('locale_${locale.languageCode}')),
-          findsOne,
-        );
+        expect(find.byKey(ValueKey('locale_${locale.languageCode}')), findsOne);
       }
     });
 

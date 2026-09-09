@@ -13,7 +13,7 @@ concurrency:
 
 env:
   # Pin the toolchain so a Flutter release cannot turn a green PR red.
-  FLUTTER_VERSION: "3.44.0"
+  FLUTTER_VERSION: "3.47.2"
   COVERAGE_MINIMUM: "85"
 
 jobs:

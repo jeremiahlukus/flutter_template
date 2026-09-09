@@ -5,7 +5,7 @@ import 'package:flutter_template/src/database/app_database.dart';
 import 'package:flutter_template/src/features/notes/note.dart';
 
 class NotesFailure implements Exception {
-  const NotesFailure(this.code, this.message);
+  const new(this.code, this.message);
 
   final String code;
   final String message;
@@ -23,7 +23,7 @@ class NotesFailure implements Exception {
 /// The invariant worth protecting: a local edit is never lost because a remote
 /// pull happened to land first. [AppDatabase.replaceNotes] enforces it.
 class NotesRepository {
-  NotesRepository({
+  new({
     required FirebaseFirestore firestore,
     required AppDatabase database,
     required AnalyticsService analytics,
@@ -182,10 +182,7 @@ class NotesRepository {
 
     await _analytics.logEvent(
       'note_sync',
-      parameters: {
-        'pushed': pushed,
-        'pulled': pulled,
-      },
+      parameters: {'pushed': pushed, 'pulled': pulled},
     );
     return SyncReport(
       pushed: pushed,
@@ -196,12 +193,8 @@ class NotesRepository {
   }
 
   /// Builds a new, empty note with a Firestore-generated id.
-  Note draft() => Note(
-    id: _collection.doc().id,
-    title: '',
-    body: '',
-    updatedAt: _clock(),
-  );
+  Note draft() =>
+      Note(id: _collection.doc().id, title: '', body: '', updatedAt: _clock());
 
   /// Drops the local cache. Call on sign-out so the next user sees nothing.
   Future<void> clearCache() => _db.clearNotes();
@@ -209,7 +202,7 @@ class NotesRepository {
 
 /// Outcome of a [NotesRepository.sync] pass.
 class SyncReport {
-  const SyncReport({
+  const new({
     required this.pushed,
     required this.pulled,
     required this.failed,

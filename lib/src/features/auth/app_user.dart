@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 /// swapping the auth backend (or testing) does not ripple through the UI.
 @immutable
 class AppUser {
-  const AppUser({
+  const new({
     required this.id,
     required this.email,
     required this.displayName,
@@ -17,7 +17,7 @@ class AppUser {
   });
 
   /// Adapts a Firebase [User]. Kept as the single conversion point.
-  factory AppUser.fromFirebase(User user) => AppUser(
+  factory fromFirebase(User user) => AppUser(
     id: user.uid,
     email: user.email,
     displayName: user.displayName,

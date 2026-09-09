@@ -31,14 +31,12 @@ String localisedAuthMessage(AppLocalizations l10n, AuthFailure failure) =>
       _ => failure.message,
     };
 
-String localisedStorageMessage(
-  AppLocalizations l10n,
-  StorageFailure failure,
-) => switch (failure.code) {
-  'unauthorized' => l10n.storageUnauthorized,
-  'object-not-found' => l10n.storageNotFound,
-  'quota-exceeded' => l10n.storageQuotaExceeded,
-  'canceled' => l10n.storageCanceled,
-  'unknown' => l10n.storageGeneric,
-  _ => failure.message,
-};
+String localisedStorageMessage(AppLocalizations l10n, StorageFailure failure) =>
+    switch (failure.code) {
+      'unauthorized' => l10n.storageUnauthorized,
+      'object-not-found' => l10n.storageNotFound,
+      'quota-exceeded' => l10n.storageQuotaExceeded,
+      'canceled' => l10n.storageCanceled,
+      'unknown' => l10n.storageGeneric,
+      _ => failure.message,
+    };

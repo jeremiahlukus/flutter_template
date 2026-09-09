@@ -16,7 +16,7 @@ import 'package:go_router/go_router.dart';
 /// decoration — it is what lets integration drivers (and `flutter-skill`) target
 /// a specific row instead of guessing at screen coordinates.
 class NotesScreen extends ConsumerWidget {
-  const NotesScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -106,9 +106,7 @@ class NotesScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final report = await ref.read(notesControllerProvider.notifier).sync();
     if (!context.mounted) return;
-    messenger.showSnackBar(
-      SnackBar(content: Text(syncMessage(l10n, report))),
-    );
+    messenger.showSnackBar(SnackBar(content: Text(syncMessage(l10n, report))));
   }
 }
 
@@ -124,7 +122,7 @@ String syncMessage(AppLocalizations l10n, SyncReport? report) {
 
 /// Paged list. Grows its window as the user approaches the bottom.
 class _NotesList extends ConsumerStatefulWidget {
-  const _NotesList({required this.notes});
+  const new({required this.notes});
 
   final List<Note> notes;
 

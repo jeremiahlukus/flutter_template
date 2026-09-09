@@ -181,14 +181,8 @@ bool _isVendored(String path) => const [
   '.git',
 ].any((dir) => path.split(Platform.pathSeparator).contains(dir));
 
-bool _isText(String path) => const [
-  '.dart',
-  '.yaml',
-  '.yml',
-  '.json',
-  '.md',
-  '.arb',
-].any(path.endsWith);
+bool _isText(String path) =>
+    const ['.dart', '.yaml', '.yml', '.json', '.md', '.arb'].any(path.endsWith);
 
 Future<void> _run(String executable, List<String> arguments) async {
   final result = await Process.run(executable, arguments);

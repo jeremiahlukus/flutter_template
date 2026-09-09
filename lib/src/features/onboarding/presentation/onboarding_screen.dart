@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 
 /// Three-page intro, shown once per device before sign-in.
 class OnboardingScreen extends ConsumerStatefulWidget {
-  const OnboardingScreen({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -97,9 +97,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       borderRadius: AppRadius.pill,
                       color: i == _page
                           ? Theme.of(context).colorScheme.primary
-                          : Theme.of(
-                              context,
-                            ).colorScheme.surfaceContainerHighest,
+                          : Theme.of(context)
+                                .colorScheme
+                                .surfaceContainerHighest,
                     ),
                   ),
               ],
@@ -109,9 +109,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               child: FilledButton(
                 key: const ValueKey('onboarding_next'),
                 onPressed: () => _next(pages.length - 1),
-                child: Text(
-                  isLast ? l10n.onboardingDone : l10n.onboardingNext,
-                ),
+                child: Text(isLast ? l10n.onboardingDone : l10n.onboardingNext),
               ),
             ),
           ],
@@ -122,7 +120,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 }
 
 class _Page extends StatelessWidget {
-  const _Page(this.icon, this.title, this.body);
+  const new(this.icon, this.title, this.body);
 
   final IconData icon;
   final String title;

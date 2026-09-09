@@ -81,16 +81,12 @@ void main() {
                     Chip(
                       label: const Text('Success'),
                       backgroundColor: colors.successContainer,
-                      labelStyle: TextStyle(
-                        color: colors.onSuccessContainer,
-                      ),
+                      labelStyle: TextStyle(color: colors.onSuccessContainer),
                     ),
                     Chip(
                       label: const Text('Warning'),
                       backgroundColor: colors.warningContainer,
-                      labelStyle: TextStyle(
-                        color: colors.onWarningContainer,
-                      ),
+                      labelStyle: TextStyle(color: colors.onWarningContainer),
                     ),
                     Chip(
                       label: const Text('Info'),

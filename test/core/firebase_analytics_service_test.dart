@@ -3,7 +3,7 @@ import 'package:flutter_template/src/core/analytics/analytics_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class _MockAnalytics extends Mock implements FirebaseAnalytics {}
+class _MockAnalytics extends Mock implements FirebaseAnalytics;
 
 void main() {
   late _MockAnalytics analytics;
@@ -46,9 +46,8 @@ void main() {
 
   group('logScreenView', () {
     test('forwards the screen name', () async {
-      when(
-        () => analytics.logScreenView(screenName: any(named: 'screenName')),
-      ).thenAnswer((_) async {});
+      when(() => analytics.logScreenView(screenName: any(named: 'screenName')))
+          .thenAnswer((_) async {});
 
       await service.logScreenView('notes');
 
@@ -58,9 +57,8 @@ void main() {
 
   group('logLogin', () {
     test('forwards the method', () async {
-      when(
-        () => analytics.logLogin(loginMethod: any(named: 'loginMethod')),
-      ).thenAnswer((_) async {});
+      when(() => analytics.logLogin(loginMethod: any(named: 'loginMethod')))
+          .thenAnswer((_) async {});
 
       await service.logLogin('password');
 
@@ -70,9 +68,8 @@ void main() {
 
   group('logSignUp', () {
     test('forwards the method', () async {
-      when(
-        () => analytics.logSignUp(signUpMethod: any(named: 'signUpMethod')),
-      ).thenAnswer((_) async {});
+      when(() => analytics.logSignUp(signUpMethod: any(named: 'signUpMethod')))
+          .thenAnswer((_) async {});
 
       await service.logSignUp('google');
 
@@ -82,9 +79,8 @@ void main() {
 
   group('setUserId', () {
     test('forwards an id', () async {
-      when(
-        () => analytics.setUserId(id: any(named: 'id')),
-      ).thenAnswer((_) async {});
+      when(() => analytics.setUserId(id: any(named: 'id')))
+          .thenAnswer((_) async {});
 
       await service.setUserId('u1');
 
@@ -92,9 +88,8 @@ void main() {
     });
 
     test('forwards a null id to clear it', () async {
-      when(
-        () => analytics.setUserId(id: any(named: 'id')),
-      ).thenAnswer((_) async {});
+      when(() => analytics.setUserId(id: any(named: 'id')))
+          .thenAnswer((_) async {});
 
       await service.setUserId(null);
 
@@ -118,33 +113,29 @@ void main() {
     });
 
     test('logScreenView swallows a throw', () async {
-      when(
-        () => analytics.logScreenView(screenName: any(named: 'screenName')),
-      ).thenThrow(Exception('offline'));
+      when(() => analytics.logScreenView(screenName: any(named: 'screenName')))
+          .thenThrow(Exception('offline'));
 
       await expectLater(service.logScreenView('x'), completes);
     });
 
     test('logLogin swallows a throw', () async {
-      when(
-        () => analytics.logLogin(loginMethod: any(named: 'loginMethod')),
-      ).thenThrow(Exception('offline'));
+      when(() => analytics.logLogin(loginMethod: any(named: 'loginMethod')))
+          .thenThrow(Exception('offline'));
 
       await expectLater(service.logLogin('x'), completes);
     });
 
     test('logSignUp swallows a throw', () async {
-      when(
-        () => analytics.logSignUp(signUpMethod: any(named: 'signUpMethod')),
-      ).thenThrow(Exception('offline'));
+      when(() => analytics.logSignUp(signUpMethod: any(named: 'signUpMethod')))
+          .thenThrow(Exception('offline'));
 
       await expectLater(service.logSignUp('x'), completes);
     });
 
     test('setUserId swallows a throw', () async {
-      when(
-        () => analytics.setUserId(id: any(named: 'id')),
-      ).thenThrow(Exception('offline'));
+      when(() => analytics.setUserId(id: any(named: 'id')))
+          .thenThrow(Exception('offline'));
 
       await expectLater(service.setUserId('x'), completes);
     });

@@ -8,10 +8,8 @@ import '../../helpers/test_helpers.dart';
 
 void main() {
   /// Seeds the policy document the app reads on launch.
-  Future<void> seedPolicy(
-    TestHarness harness,
-    Map<String, dynamic> policy,
-  ) => harness.firestore.doc(UpdatePolicyLocation.path).set(policy);
+  Future<void> seedPolicy(TestHarness harness, Map<String, dynamic> policy) =>
+      harness.firestore.doc(UpdatePolicyLocation.path).set(policy);
 
   group('updatePolicyProvider', () {
     test('is empty when the document is missing', () async {
@@ -56,10 +54,7 @@ void main() {
     test('is none with no policy', () async {
       final harness = await withPolicy(const {});
 
-      expect(
-        harness.read(updateRequirementProvider),
-        UpdateRequirement.none,
-      );
+      expect(harness.read(updateRequirementProvider), UpdateRequirement.none);
       expect(harness.read(updateBlocksUseProvider), isFalse);
     });
 
@@ -208,10 +203,7 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('settings_button')));
       await tester.pumpAndSettle();
 
-      expect(
-        find.byKey(const ValueKey('optional_update_tile')),
-        findsNothing,
-      );
+      expect(find.byKey(const ValueKey('optional_update_tile')), findsNothing);
     });
   });
 }

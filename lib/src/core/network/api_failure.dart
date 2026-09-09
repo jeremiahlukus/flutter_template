@@ -60,7 +60,7 @@ enum ApiFailureKind {
 /// plus an English fallback message, with the localised copy chosen by the UI.
 @immutable
 class ApiFailure implements Exception {
-  const ApiFailure({
+  const new({
     required this.kind,
     required this.message,
     this.statusCode,
@@ -69,7 +69,7 @@ class ApiFailure implements Exception {
   });
 
   /// Classifies a [DioException]. The single conversion point.
-  factory ApiFailure.fromDio(DioException error) {
+  factory fromDio(DioException error) {
     final status = error.response?.statusCode;
 
     final kind = switch (error.type) {

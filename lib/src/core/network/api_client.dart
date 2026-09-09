@@ -8,7 +8,7 @@ import 'package:flutter_template/src/core/network/api_failure.dart';
 /// their SDKs. That is what keeps error handling uniform across the app — and
 /// what makes a repository testable against `DioAdapter`-style fakes.
 class ApiClient {
-  const ApiClient(this._dio);
+  const new(this._dio);
 
   final Dio _dio;
 

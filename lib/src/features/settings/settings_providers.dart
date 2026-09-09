@@ -15,9 +15,7 @@ class ThemeModeController extends AsyncNotifier<ThemeMode> {
   Future<ThemeMode> build() async {
     final stored = await ref
         .watch(appDatabaseProvider)
-        .readSetting(
-          SettingKeys.themeMode,
-        );
+        .readSetting(SettingKeys.themeMode);
     return decode(stored);
   }
 
@@ -84,9 +82,7 @@ class AnalyticsEnabledController extends AsyncNotifier<bool> {
   Future<bool> build() async {
     final stored = await ref
         .watch(appDatabaseProvider)
-        .readSetting(
-          SettingKeys.analyticsEnabled,
-        );
+        .readSetting(SettingKeys.analyticsEnabled);
     // Default on; only an explicit 'false' opts out.
     return stored != 'false';
   }
@@ -95,10 +91,7 @@ class AnalyticsEnabledController extends AsyncNotifier<bool> {
     state = AsyncValue.data(enabled);
     await ref
         .read(appDatabaseProvider)
-        .writeSetting(
-          SettingKeys.analyticsEnabled,
-          enabled.toString(),
-        );
+        .writeSetting(SettingKeys.analyticsEnabled, enabled.toString());
   }
 }
 

@@ -15,7 +15,7 @@ import 'package:go_router/go_router.dart';
 /// the editor is instant and works offline. An id with no match is treated as a
 /// brand-new note — that is the case when the FAB hands over a fresh draft.
 class NoteEditorScreen extends ConsumerStatefulWidget {
-  const NoteEditorScreen({required this.noteId, super.key});
+  const new({required this.noteId, super.key});
 
   final String noteId;
 
@@ -111,9 +111,9 @@ class _NoteEditorScreenState extends ConsumerState<NoteEditorScreen> {
     if (mounted) context.goNamed(AppRoute.notes.name);
   }
 
-  void _snack(String message) => ScaffoldMessenger.of(
-    context,
-  ).showSnackBar(SnackBar(content: Text(message)));
+  void _snack(String message) =>
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
 
   /// Why the save failed, in the user's language.
   ///
@@ -191,13 +191,12 @@ class _NoteEditorScreenState extends ConsumerState<NoteEditorScreen> {
                       maxLength: Note.maxBodyLength,
                       maxLengthEnforcement: MaxLengthEnforcement.enforced,
                       // The counter is noise on a body this long.
-                      buildCounter:
-                          (
-                            _, {
-                            required currentLength,
-                            required isFocused,
-                            required maxLength,
-                          }) => null,
+                      buildCounter: (
+                        _, {
+                        required currentLength,
+                        required isFocused,
+                        required maxLength,
+                      }) => null,
                       expands: true,
                       maxLines: null,
                       textAlignVertical: TextAlignVertical.top,

@@ -21,9 +21,11 @@ const firebaseMinimumIosVersion = 15.0;
 String _read(String path) => File(path).readAsStringSync();
 
 /// Every `android:scheme="..."` value in the manifest.
-Set<String> _androidSchemes(String manifest) => RegExp(
-  'android:scheme="([^"]+)"',
-).allMatches(manifest).map((m) => m.group(1)!).toSet();
+Set<String> _androidSchemes(String manifest) =>
+    RegExp('android:scheme="([^"]+)"')
+        .allMatches(manifest)
+        .map((m) => m.group(1)!)
+        .toSet();
 
 /// The `<string>` entries inside the `CFBundleURLSchemes` array.
 Set<String> _iosSchemes(String plist) {
@@ -32,9 +34,10 @@ Set<String> _iosSchemes(String plist) {
     dotAll: true,
   ).firstMatch(plist);
   if (array == null) return const {};
-  return RegExp(
-    '<string>([^<]+)</string>',
-  ).allMatches(array.group(1)!).map((m) => m.group(1)!).toSet();
+  return RegExp('<string>([^<]+)</string>')
+      .allMatches(array.group(1)!)
+      .map((m) => m.group(1)!)
+      .toSet();
 }
 
 void main() {
@@ -90,9 +93,9 @@ void main() {
 
   group('platform deployment targets satisfy every Firebase plugin', () {
     test('the iOS Podfile targets at least the Firebase minimum', () {
-      final declared = RegExp(
-        r"platform :ios, '([\d.]+)'",
-      ).firstMatch(_read('ios/Podfile'))?.group(1);
+      final declared = RegExp(r"platform :ios, '([\d.]+)'")
+          .firstMatch(_read('ios/Podfile'))
+          ?.group(1);
 
       expect(declared, isNotNull, reason: 'ios/Podfile declares no platform');
       expect(
@@ -108,9 +111,9 @@ void main() {
       // Disagreement builds locally and fails on a clean machine, which is the
       // worst place to find it.
       final podfile = double.parse(
-        RegExp(
-          r"platform :ios, '([\d.]+)'",
-        ).firstMatch(_read('ios/Podfile'))!.group(1)!,
+        RegExp(r"platform :ios, '([\d.]+)'")
+            .firstMatch(_read('ios/Podfile'))!
+            .group(1)!,
       );
       final targets = RegExp(r'IPHONEOS_DEPLOYMENT_TARGET = ([\d.]+);')
           .allMatches(_read('ios/Runner.xcodeproj/project.pbxproj'))

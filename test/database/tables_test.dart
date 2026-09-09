@@ -22,10 +22,13 @@ void main() {
     });
 
     test('declares the expected columns', () {
-      expect(
-        db.notes.$columns.map((c) => c.name).toSet(),
-        {'id', 'title', 'body', 'updated_at', 'pending_sync'},
-      );
+      expect(db.notes.$columns.map((c) => c.name).toSet(), {
+        'id',
+        'title',
+        'body',
+        'updated_at',
+        'pending_sync',
+      });
     });
 
     test('title, body, id and updated_at are required', () {
@@ -103,10 +106,10 @@ void main() {
     });
 
     test('declares only a key and a value', () {
-      expect(
-        db.settingsEntries.$columns.map((c) => c.name).toSet(),
-        {'key', 'value'},
-      );
+      expect(db.settingsEntries.$columns.map((c) => c.name).toSet(), {
+        'key',
+        'value',
+      });
     });
 
     test('both columns are required', () {
@@ -116,10 +119,7 @@ void main() {
     });
 
     test('the data class is SettingRow', () {
-      expect(
-        const SettingRow(key: 'k', value: 'v'),
-        isA<SettingRow>(),
-      );
+      expect(const SettingRow(key: 'k', value: 'v'), isA<SettingRow>());
     });
   });
 
@@ -143,10 +143,7 @@ void main() {
 
     test('table getters are usable as query targets', () {
       expect(db.notes, isA<TableInfo<Notes, NoteRow>>());
-      expect(
-        db.settingsEntries,
-        isA<TableInfo<SettingsEntries, SettingRow>>(),
-      );
+      expect(db.settingsEntries, isA<TableInfo<SettingsEntries, SettingRow>>());
     });
   });
 }

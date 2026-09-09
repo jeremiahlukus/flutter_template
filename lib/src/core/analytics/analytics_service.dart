@@ -28,7 +28,7 @@ abstract interface class AnalyticsService {
 /// Every call is best-effort: analytics must never be the reason a user-facing
 /// action fails, so failures are logged and swallowed.
 class FirebaseAnalyticsService implements AnalyticsService {
-  const FirebaseAnalyticsService(this._analytics);
+  const new(this._analytics);
 
   final FirebaseAnalytics _analytics;
 
@@ -58,22 +58,16 @@ class FirebaseAnalyticsService implements AnalyticsService {
   );
 
   @override
-  Future<void> logLogin(String method) => _guard(
-    'logLogin',
-    () => _analytics.logLogin(loginMethod: method),
-  );
+  Future<void> logLogin(String method) =>
+      _guard('logLogin', () => _analytics.logLogin(loginMethod: method));
 
   @override
-  Future<void> logSignUp(String method) => _guard(
-    'logSignUp',
-    () => _analytics.logSignUp(signUpMethod: method),
-  );
+  Future<void> logSignUp(String method) =>
+      _guard('logSignUp', () => _analytics.logSignUp(signUpMethod: method));
 
   @override
-  Future<void> setUserId(String? id) => _guard(
-    'setUserId',
-    () => _analytics.setUserId(id: id),
-  );
+  Future<void> setUserId(String? id) =>
+      _guard('setUserId', () => _analytics.setUserId(id: id));
 }
 
 /// In-memory implementation that records calls instead of sending them.
@@ -111,7 +105,7 @@ class RecordingAnalyticsService implements AnalyticsService {
 
 @immutable
 class AnalyticsEvent {
-  const AnalyticsEvent(this.name, this.parameters);
+  const new(this.name, this.parameters);
 
   final String name;
   final Map<String, Object> parameters;
@@ -145,7 +139,7 @@ class AnalyticsEvent {
 /// The check is a callback, not a captured bool, so a mid-session opt-out takes
 /// effect on the very next event.
 class ConsentGatedAnalyticsService implements AnalyticsService {
-  const ConsentGatedAnalyticsService({
+  const new({
     required AnalyticsService delegate,
     required bool Function() isEnabled,
   }) : _delegate = delegate,

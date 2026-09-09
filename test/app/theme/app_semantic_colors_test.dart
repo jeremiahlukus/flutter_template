@@ -96,23 +96,20 @@ void main() {
         onInfoContainer: black,
       );
 
-      expect(
-        [
-          updated.success,
-          updated.onSuccess,
-          updated.successContainer,
-          updated.onSuccessContainer,
-          updated.warning,
-          updated.onWarning,
-          updated.warningContainer,
-          updated.onWarningContainer,
-          updated.info,
-          updated.onInfo,
-          updated.infoContainer,
-          updated.onInfoContainer,
-        ],
-        everyElement(black),
-      );
+      expect([
+        updated.success,
+        updated.onSuccess,
+        updated.successContainer,
+        updated.onSuccessContainer,
+        updated.warning,
+        updated.onWarning,
+        updated.warningContainer,
+        updated.onWarningContainer,
+        updated.info,
+        updated.onInfo,
+        updated.infoContainer,
+        updated.onInfoContainer,
+      ], everyElement(black));
     });
   });
 

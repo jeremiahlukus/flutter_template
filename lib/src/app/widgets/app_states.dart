@@ -7,7 +7,7 @@ import 'package:flutter_template/src/app/theme/design_tokens.dart';
 /// Every screen needs an empty state and they should all look the same; this is
 /// the one place that layout is decided.
 class AppEmptyState extends StatelessWidget {
-  const AppEmptyState({
+  const new({
     required this.icon,
     required this.title,
     this.message,
@@ -61,7 +61,7 @@ class AppEmptyState extends StatelessWidget {
 /// reading their own screen needs to know what broke. Swap [error] for a mapped
 /// message before shipping to users if that leaks too much.
 class AppErrorState extends StatelessWidget {
-  const AppErrorState({
+  const new({
     required this.title,
     this.error,
     this.onRetry,
@@ -94,7 +94,7 @@ class AppErrorState extends StatelessWidget {
 
 /// The app's single loading affordance.
 class AppLoadingIndicator extends StatelessWidget {
-  const AppLoadingIndicator({this.label, super.key});
+  const new({this.label, super.key});
 
   final String? label;
 
@@ -122,7 +122,7 @@ class AppLoadingIndicator extends StatelessWidget {
 /// from "loading", and conflating them is the most common way an empty screen
 /// ends up showing a spinner forever.
 class AsyncValueView<T> extends StatelessWidget {
-  const AsyncValueView({
+  const new({
     required this.value,
     required this.data,
     this.errorTitle,

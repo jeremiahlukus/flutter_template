@@ -17,7 +17,7 @@ import 'package:go_router/go_router.dart';
 /// bytes go to Storage, and the resulting URL goes back onto the Firebase user
 /// record so every other screen can read it from [currentUserProvider].
 class ProfileScreen extends ConsumerStatefulWidget {
-  const ProfileScreen({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
@@ -34,9 +34,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     super.dispose();
   }
 
-  void _snack(String message) => ScaffoldMessenger.of(
-    context,
-  ).showSnackBar(SnackBar(content: Text(message)));
+  void _snack(String message) =>
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
 
   /// Localised copy for whatever the auth controller last failed with.
   ///

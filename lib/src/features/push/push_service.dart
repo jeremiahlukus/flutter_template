@@ -29,14 +29,9 @@ enum PushPermission {
 /// A received push, reduced to what the app acts on.
 @immutable
 class PushMessage {
-  const PushMessage({
-    required this.data,
-    this.title,
-    this.body,
-    this.messageId,
-  });
+  const new({required this.data, this.title, this.body, this.messageId});
 
-  factory PushMessage.fromRemote(RemoteMessage message) => PushMessage(
+  factory fromRemote(RemoteMessage message) => PushMessage(
     data: message.data,
     title: message.notification?.title,
     body: message.notification?.body,
@@ -90,7 +85,7 @@ abstract interface class PushService {
 }
 
 class FirebasePushService implements PushService {
-  const FirebasePushService(this._messaging);
+  const new(this._messaging);
 
   final FirebaseMessaging _messaging;
 
@@ -182,7 +177,7 @@ class FirebasePushService implements PushService {
 /// Controllable implementation for tests.
 @visibleForTesting
 class FakePushService implements PushService {
-  FakePushService({
+  new({
     this.permission = PushPermission.notDetermined,
     this.permissionAfterPrompt = PushPermission.granted,
     this.currentToken = 'fake-token',

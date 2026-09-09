@@ -17,14 +17,17 @@ enum ImageOrigin { camera, gallery }
 // One member today, but the seam is the point: a fork will add
 // `pickMultiple` or `pickVideo` here, and a top-level function cannot be
 // swapped out by a provider override.
-// ignore: one_member_abstracts
+//
+// This used to carry `// ignore: one_member_abstracts`. very_good_analysis 11
+// no longer reports that rule on an `abstract interface class`, and the ignore
+// itself became a `unnecessary_ignore` failure, so it is gone.
 abstract interface class ImageSourceService {
   /// Returns compressed JPEG bytes, or null if the user cancelled.
   Future<Uint8List?> pickImage(ImageOrigin origin);
 }
 
 class PlatformImageSourceService implements ImageSourceService {
-  const PlatformImageSourceService(this._picker);
+  const new(this._picker);
 
   final ImagePicker _picker;
 
@@ -55,7 +58,7 @@ class PlatformImageSourceService implements ImageSourceService {
     if (file == null) return null;
 
     final raw = await file.readAsBytes();
-    return compress(raw);
+    return await compress(raw);
   }
 
   /// Re-encodes to JPEG at [jpegQuality].
@@ -83,7 +86,7 @@ class PlatformImageSourceService implements ImageSourceService {
 /// Returns scripted bytes. Used by tests and by the placeholder avatar flow.
 @visibleForTesting
 class FakeImageSourceService implements ImageSourceService {
-  FakeImageSourceService({this.result, this.throwOnPick = false});
+  new({this.result, this.throwOnPick = false});
 
   /// Bytes to return. Null models the user cancelling.
   Uint8List? result;
@@ -102,7 +105,7 @@ class FakeImageSourceService implements ImageSourceService {
 
 /// A picker that could not read the chosen image.
 class ImagePickFailure implements Exception {
-  const ImagePickFailure(this.message);
+  const new(this.message);
 
   final String message;
 

@@ -67,7 +67,7 @@ final pushPermissionProvider = FutureProvider<PushPermission>(
 /// rotation is the failure everyone forgets: without it a device silently stops
 /// receiving after a reinstall or a restore.
 class PushRegistrar {
-  PushRegistrar(this._ref) {
+  new(this._ref) {
     _authSub = _ref.listen(currentUserProvider, (_, _) => _sync());
     _optInSub = _ref.listen(pushEnabledProvider, (_, _) => _sync());
 
