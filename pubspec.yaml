@@ -55,7 +55,7 @@ dev_dependencies:
   # never reaches a release build. Entrypoint: tool/main_dev.dart.
   flutter_launcher_icons: ^0.14.4
   flutter_native_splash: ^2.4.8
-  flutter_skill: ^0.9.36
+  flutter_skill: ^0.9.37
   flutter_test:
     sdk: flutter
   mock_exceptions: ^0.8.2
