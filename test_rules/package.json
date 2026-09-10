@@ -11,7 +11,7 @@
   "devDependencies": {
     "@firebase/rules-unit-testing": "^5.0.2",
     "firebase-tools": "^15.29.0",
-    "vitest": "^4.1.11",
+    "vitest": "^5.0.0",
     "firebase": "^12.0.0"
   },
   "overrides": {
