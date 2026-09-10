@@ -41,6 +41,24 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # `flutter pub get` honours the lockfile: it only re-resolves a package
+      # whose locked version cannot satisfy pubspec.yaml *under this SDK*. So a
+      # pubspec.lock that changes here is one that was generated against a
+      # different toolchain than FLUTTER_VERSION pins — which is what Dependabot
+      # produces whenever its SDK runs ahead of the pin.
+      #
+      # This was real and silent: the lock carried intl 0.20.3, meta 1.19.0,
+      # matcher 0.12.20 and test_api 0.7.12, while the then-pinned Flutter 3.44.0
+      # resolved every one of them lower. Nothing caught it. The build still went
+      # green, because pub just quietly downgraded whatever the SDK caps and
+      # carried on, so the committed lock described a toolchain nobody ran.
+      - name: Verify pubspec.lock is reproducible
+        run: |
+          if ! git diff --exit-code --stat -- pubspec.lock; then
+            echo "::error::pubspec.lock is not what Flutter $FLUTTER_VERSION resolves. Run 'flutter pub get' on Flutter $FLUTTER_VERSION and commit the result."
+            exit 1
+          fi
+
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed lib test tool
 
@@ -49,10 +67,10 @@ jobs:
           dart run build_runner build
           flutter gen-l10n
           # Scoped to the generated paths, not the whole repo. A repo-wide diff
-          # also trips on anything else the toolchain happens to touch — a
-          # refreshed pubspec.lock on a dependency-bump PR, say — and reports it
-          # as "generated files are stale", which sends the reader somewhere
-          # useless.
+          # also trips on anything else the toolchain happens to touch and
+          # reports it as "generated files are stale", which sends the reader
+          # somewhere useless. pubspec.lock was the example that used to give:
+          # it now has its own gate above, which says what actually went wrong.
           if ! git diff --exit-code --stat -- \
               '*.g.dart' 'lib/src/l10n/generated'; then
             echo "::error::Generated files are stale. Run 'dart run build_runner build && flutter gen-l10n' and commit the result."
