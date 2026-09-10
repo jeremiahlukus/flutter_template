@@ -33,6 +33,7 @@ being a gate. Two specific ways that happens:
 | 0007-R13 | Every repo path named in a Verification row MUST exist. |
 | 0007-R14 | An `Accepted` spec MUST explain every unproven requirement, not just leave `—`. |
 | 0007-R15 | The counts of unresolved paths, stale test names, and unverifiable rows MUST NOT grow silently. |
+| 0007-R16 | The committed `pubspec.lock` MUST be what the pinned Flutter version resolves. |
 
 ## Non-goals
 
@@ -62,6 +63,7 @@ being a gate. Two specific ways that happens:
 | 0007-R13 | `…` › `Verify every requirement names a real test` (path existence) |
 | 0007-R14 | `…` › `Verify every requirement names a real test` (an Accepted spec must explain a `—`) |
 | 0007-R15 | `…` › `Verify every requirement names a real test` (budgets in `.specify/verification.json` are ratchets) |
+| 0007-R16 | `.github/workflows/ci.yaml` › `Verify pubspec.lock is reproducible` |
 
 ### Dependabot and SDK-pinned packages
 
@@ -80,6 +82,23 @@ code's fault.
 Also worth knowing: the codegen-freshness check diffs **only** the generated
 paths, not the whole repo. A repo-wide diff reports an incidentally-touched file
 as "generated files are stale", which sends the reader somewhere useless.
+
+That scoping left a real gap, which 0007-R16 closes. Dependabot generates
+`pubspec.lock` with *its own* SDK, not the one `FLUTTER_VERSION` pins, and when
+the two disagree the lock it commits describes a toolchain nobody runs. This
+happened: the lock carried `intl` 0.20.3, `meta` 1.19.0, `matcher` 0.12.20 and
+`test_api` 0.7.12 while the then-pinned Flutter 3.44.0 resolved every one of them
+lower. Nothing failed. `flutter pub get` simply downgraded whatever the SDK caps
+and carried on, so a clean checkout never matched the committed lock — on any
+machine, including the runner.
+
+It is worth a gate rather than vigilance because `pub get` honours the lockfile:
+it re-resolves a package only when the locked version cannot satisfy
+`pubspec.yaml` under the current SDK. A lock that moves during CI has therefore
+already proven it was built against a different toolchain, which makes the check
+precise rather than merely noisy. The cure is the same either way — regenerate on
+the pinned version and commit — and the bump that surfaced this (Flutter 3.47.2)
+also happened to realign the two.
 
 ## Open questions
 
