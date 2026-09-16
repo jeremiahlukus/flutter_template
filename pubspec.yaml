@@ -17,7 +17,7 @@ dependencies:
   firebase_ui_auth: ^3.1.0
 
   # --- Local storage ---------------------------------------------------------
-  drift: ^2.34.4
+  drift: ^2.35.0
   # Supplies the platform sqlite3 binaries and the default connection.
   drift_flutter: ^0.3.1
   path: ^1.9.1
