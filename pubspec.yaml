@@ -24,7 +24,7 @@ dependencies:
   path_provider: ^2.1.6
 
   # --- App plumbing ----------------------------------------------------------
-  cupertino_icons: ^1.0.8
+  cupertino_icons: ^2.0.0
   flutter:
     sdk: flutter
   flutter_localizations:
