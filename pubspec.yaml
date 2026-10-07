@@ -39,7 +39,7 @@ dependencies:
   dio: ^5.11.1
   image_picker: ^1.2.3
   flutter_image_compress: ^2.5.1
-  url_launcher: ^6.3.2
+  url_launcher: ^6.3.3
   firebase_messaging: ^16.6.0
 
 dev_dependencies:
